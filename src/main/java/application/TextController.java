@@ -12,13 +12,15 @@ public class TextController {
     ReadingText txt;
     Text score;
     Text fKInterpretation;
+    Text levelPercentage;
 
 
-    public TextController(TextArea text, Text score, Text fKInterpretation) {
+    public TextController(TextArea text, Text score, Text fKInterpretation, Text levelPercentage) {
         txt = new ReadingText();
         this.text = text;
         this.score = score;
         this.fKInterpretation = fKInterpretation;
+        this.levelPercentage = levelPercentage;
     }
 
     public void loadText() {
@@ -45,7 +47,8 @@ public class TextController {
         fKInterpretation.setText(fsk);
     }
 
-    public void level(){
-        String level = String.valueOf(txt.percentOfLevelWords());
+    public void percentageKet(){
+        String percentage = String.valueOf(txt.percentOfLevelWords());
+        levelPercentage.setText(percentage);
     }
 }

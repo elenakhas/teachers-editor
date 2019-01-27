@@ -98,6 +98,11 @@ public class ReadingText extends Document {
         return numSyllables;
     }
 
+    public HashMap<String, Integer> getFrequencyLevel(){
+        //this.levelWords = super.levelWords;
+        return super.levelWords;
+    }
+
     /**
      * Interprets the Flesch-Kincaid grade readability score for a text
      * @param score
@@ -146,7 +151,7 @@ public class ReadingText extends Document {
      * @return
      */
     public double percentOfLevelWords() {
-        return levelWords.size() / numWords;
+        return wordsOfALevel()/numWords;
     }
     public static void main(String[] args) throws IOException {
         ReadingText text = new ReadingText();
@@ -162,7 +167,7 @@ public class ReadingText extends Document {
         System.out.println(text.getFleschScore());
         System.out.println(text.fleschKincaid());
         System.out.println(text.interpretFleshKincaid(text.fleschKincaid()));
-        //System.out.printl
+        System.out.println(text.levelWords);
 
     }
 

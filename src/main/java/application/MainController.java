@@ -4,10 +4,7 @@ import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.Orientation;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
-import javafx.scene.control.CheckBox;
-import javafx.scene.control.TextArea;
-import javafx.scene.control.ToolBar;
+import javafx.scene.control.*;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Font;
@@ -29,27 +26,31 @@ public class MainController {
         loadButton.setText("Text");
         loadButton.setMinWidth(100);
         toolBar.getItems().add(loadButton);
+        toolBar.getItems().add(new Separator());
 
         // create a Flesch score button
         Button fleschButton = new Button();
         fleschButton.setText("Flesch");
         fleschButton.setMinWidth(100);
         toolBar.getItems().add(fleschButton);
+        toolBar.getItems().add(new Separator());
+
 
         // create a FleschKincaid button
         Button fleschkincaid = new Button();
         fleschkincaid.setText("FleschKincaid");
         fleschkincaid.setMinWidth(100);
         toolBar.getItems().add(fleschkincaid);
+        toolBar.getItems().add(new Separator());
 
-
-        // create a text area
+        // create a text area for results
         TextArea text = new TextArea();
         Text fscore = new Text();
         Text fKInterpretation = new Text();
+        Text levelPercentage = new Text();
 
         // set actions for buttons
-        final TextController ctrl = new TextController(text, fscore, fKInterpretation);
+        final TextController ctrl = new TextController(text, fscore, fKInterpretation, levelPercentage);
         loadButton.setOnAction(new EventHandler<ActionEvent>() {
 
             @Override
@@ -72,9 +73,22 @@ public class MainController {
         });
 
         // create a checkbox for levels
-        CheckBox cbKET = new CheckBox("KET");
-        cbKET.setIndeterminate(true);
-        boolean isSelected = cbKET.isSelected();
+        final CheckBox cbKET = new CheckBox("KET");
+        //cbKET.setIndeterminate(true);
+       // boolean isSelected = cbKET.isSelected();
+        toolBar.getItems().add(cbKET);
+
+        // set actions for checkbox
+        cbKET.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+                if (cbKET.isSelected()){
+
+
+                }
+            }
+        });
+
 
 
 // set parameters for the text area

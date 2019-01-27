@@ -111,12 +111,13 @@ public abstract class Document {
      */
     public HashMap<String, Integer> frequencyLevel(List<String> text, HashSet<String> vocab) {
         this.levelWords = new HashMap();
-        for (String word:text) {
+        for (String word : text) {
             if (vocab.contains(word)) {
-                levelWords = frequency(text);
+                Integer occurences = this.levelWords.get(word);
+                levelWords.put(word, (occurences == null) ? 1 : occurences + 1);
             }
         }
-        return this.levelWords;
+            return this.levelWords;
     }
 
     // calculates the number of words in a set that contains the words from vocabulary in a text
@@ -126,7 +127,7 @@ public abstract class Document {
 
     // returns words and their frequencies
     public HashMap<String, Integer> frequency(List<String> text) {
-        HashMap <String, Integer> frequency = new HashMap<>();
+        this.frequency = new HashMap<>();
         for (String word:text) {
             Integer occurences = frequency.get(word);
             frequency.put(word, (occurences == null) ? 1 : occurences + 1);
