@@ -1,9 +1,9 @@
 package application;
 
 import document.Vocabulary;
+import javafx.scene.control.ContextMenu;
 import spellcheck.AutocompleteOptions;
 import spellcheck.SuggestionsSpelling;
-import javafx.scene.control.ContextMenu;
 
 import java.util.List;
 
@@ -27,7 +27,6 @@ public class AutospellingController {
     private AutocompleteOptions ac;
     private Vocabulary voc;
     private SuggestionsSpelling ss;
-
 
 
 }

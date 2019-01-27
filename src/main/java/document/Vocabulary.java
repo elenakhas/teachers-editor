@@ -14,40 +14,43 @@ public class Vocabulary {
     public String filename; // wordlist / dictionary file
     //private String s;
 
-    /**load vocabulary once the object is constructed*/
+    /**
+     * load vocabulary once the object is constructed
+     */
     public Vocabulary(String filename) {
         this.filename = filename;
         this.vocab = new HashSet<String>();
         loadVocabulary();
     }
 
-    private void loadVocabulary(){
+    private void loadVocabulary() {
         //this.vocab = new HashSet<String>();
-            // Dictionary files have 1 word per line
-            try {
-                BufferedReader reader = null;
-                String nextWord;
-                reader = new BufferedReader(new FileReader(filename));
-                while ((nextWord = reader.readLine()) != null) {
-                    vocab.add(nextWord.toLowerCase());
-                }
-            } catch (IOException e) {
-                System.err.println("Problem loading the file: " + filename);
-                e.printStackTrace();
+        // Dictionary files have 1 word per line
+        try {
+            String nextWord;
+            BufferedReader reader = new BufferedReader(new FileReader(filename));
+            while ((nextWord = reader.readLine()) != null) {
+                vocab.add(nextWord.toLowerCase());
             }
+        } catch (IOException e) {
+            System.err.println("Problem loading the file: " + filename);
+            e.printStackTrace();
+        }
     }
 
-    public HashSet <String> getVocab(){
+    public HashSet<String> getVocab() {
         return this.vocab;
     }
 
-    /**convert to lowercase for search purposes
+    /**
+     * convert to lowercase for search purposes
+     *
      * @param word The word to add
      * @return true if the word was added to the dictionary
      * (it wasn't already there).
      */
     public boolean addWord(String word) {
-            return vocab.add(word.toLowerCase());
+        return vocab.add(word.toLowerCase());
     }
 
     /**
@@ -63,6 +66,7 @@ public class Vocabulary {
     public int size() {
         return vocab.size();
     }
+
     public static void main(String[] args) {
         Vocabulary v = new Vocabulary("data/pet_dict.txt");
         //LoadFile.loadDictionary(d, filename);

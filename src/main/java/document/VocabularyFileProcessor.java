@@ -13,15 +13,17 @@ import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-// The class preprocesses file and writes it into a new file for further processing
-public class Preprocessing{
+// The class preprocesses a vocabulary file and writes it into a new file for further processing;
+// will probably be a different program
+public class VocabularyFileProcessor {
     /**
-    * 1. The method reads a file from a given filename
-    * and returns a string representation of the file
-    * @param filename
-    * @return content String representation of a file
-    * @throws IOException if file not found
-    */
+     * 1. The method reads a file from a given filename
+     * and returns a string representation of the file
+     *
+     * @param filename
+     * @return content String representation of a file
+     * @throws IOException if file not found
+     */
     public String getContent(String filename) throws IOException {
         String content = new String(Files.readAllBytes(Paths.get(filename)), StandardCharsets.UTF_8);
         return content;
@@ -29,6 +31,7 @@ public class Preprocessing{
 
     /**
      * 2. The method tokenizes the string content of the
+     *
      * @param pattern
      * @param content
      * @return tokens, an ArrayList containing the matched regex tokens
@@ -45,10 +48,11 @@ public class Preprocessing{
 
     /**
      * 3. Returns all words from a file as a set
+     *
      * @param content
      * @return
      */
-    public List<String> getVocab(String content){
+    public List<String> getVocab(String content) {
         ArrayList words = tokenizer("[a-zA-Z]+", content);
         HashSet<String> set = new HashSet<String>(words);
         List<String> sortedList = new ArrayList(set);
@@ -58,6 +62,7 @@ public class Preprocessing{
 
     /**
      * Writes vocabulary in a file
+     *
      * @param sortedVocab
      * @param newfilename
      * @throws IOException
@@ -65,16 +70,17 @@ public class Preprocessing{
     public void writeVocab(List<String> sortedVocab, String newfilename) throws IOException {
         FileWriter fw = new FileWriter(newfilename);
         BufferedWriter out = new BufferedWriter(fw);
-        for(String str :sortedVocab){
+        for (String str : sortedVocab) {
             out.write(str);
             out.write(System.getProperty("line.separator"));
             out.flush();
         }
-            out.close();
-        }
+        out.close();
+    }
 
     /**
      * Creates a vocabulary file - 1 word per line
+     *
      * @param filename
      * @param newfilename
      * @throws IOException
@@ -86,8 +92,8 @@ public class Preprocessing{
     }
 
     public static void main(String[] args) throws IOException {
-       Preprocessing pr = new Preprocessing();
-       pr.createVocabularyFile("data/pet.txt", "data/testnewfile.txt");
+        VocabularyFileProcessor pr = new VocabularyFileProcessor();
+        pr.createVocabularyFile("data/pet.txt", "data/testnewfile.txt");
 
     }
 }

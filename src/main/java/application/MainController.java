@@ -2,9 +2,12 @@ package application;
 
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
+import javafx.geometry.Orientation;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.CheckBox;
 import javafx.scene.control.TextArea;
+import javafx.scene.control.ToolBar;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Font;
@@ -13,23 +16,41 @@ import javafx.stage.Stage;
 
 public class MainController {
 
-    MainController(){
+    MainController() {
 
     }
 
     public void start(Stage primaryStage) {
-        Button btn = new Button();
-        btn.setText("LoadText");
-        btn.setMinWidth(100);
-        Button flesch = new Button();
+
+        ToolBar toolBar = new ToolBar();
+        toolBar.setOrientation(Orientation.VERTICAL);
+        // create a Load Text button
+        Button loadButton = new Button();
+        loadButton.setText("Text");
+        loadButton.setMinWidth(100);
+        toolBar.getItems().add(loadButton);
+
+        // create a Flesch score button
+        Button fleschButton = new Button();
+        fleschButton.setText("Flesch");
+        fleschButton.setMinWidth(100);
+        toolBar.getItems().add(fleschButton);
+
+        // create a FleschKincaid button
         Button fleschkincaid = new Button();
-        flesch.setText("Flesch Score");
         fleschkincaid.setText("FleschKincaid");
+        fleschkincaid.setMinWidth(100);
+        toolBar.getItems().add(fleschkincaid);
+
+
+        // create a text area
         TextArea text = new TextArea();
         Text fscore = new Text();
         Text fKInterpretation = new Text();
+
+        // set actions for buttons
         final TextController ctrl = new TextController(text, fscore, fKInterpretation);
-        btn.setOnAction(new EventHandler<ActionEvent>() {
+        loadButton.setOnAction(new EventHandler<ActionEvent>() {
 
             @Override
             public void handle(ActionEvent event) {
@@ -37,7 +58,7 @@ public class MainController {
 
             }
         });
-        flesch.setOnAction(new EventHandler<ActionEvent>() {
+        fleschButton.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
                 ctrl.getFlesch();
@@ -50,25 +71,37 @@ public class MainController {
             }
         });
 
+        // create a checkbox for levels
+        CheckBox cbKET = new CheckBox("KET");
+        cbKET.setIndeterminate(true);
+        boolean isSelected = cbKET.isSelected();
 
+
+// set parameters for the text area
         text.setFont(new Font(12));
         text.setText("");
 
         // create the general layout
         HBox root = new HBox();
+        // create textfield area
         VBox textField = new VBox();
         root.getChildren().add(textField);
         textField.getChildren().add(text);
         text.setWrapText(true);
-        VBox buttonField = new VBox();
+
+        // create area for buttons
+        VBox buttonField = new VBox(toolBar);
+
         root.getChildren().add(buttonField);
-        buttonField.getChildren().add(btn);
-        buttonField.getChildren().add(flesch);
-        buttonField.getChildren().add(fleschkincaid);
+//        buttonField.getChildren().add(loadButton);
+//        buttonField.getChildren().add(fleschButton);
+//        buttonField.getChildren().add(fleschkincaid);
+
+        // create area for displaying information under the text area
         HBox fleschField = new HBox();
         textField.getChildren().add(fleschField);
-        fleschField.getChildren().add(fscore);
-        fleschField.getChildren().add(fKInterpretation);
+        textField.getChildren().add(fscore);
+        textField.getChildren().add(fKInterpretation);
         //textField.getChildren().add(fleschkincaid);
 
         //fscore.setText("fscore");
@@ -76,7 +109,7 @@ public class MainController {
 
         Scene scene = new Scene(root, 300, 250);
 
-        primaryStage.setTitle("Hello World!");
+        primaryStage.setTitle("Teacher's Editor");
         primaryStage.setScene(scene);
         primaryStage.show();
     }

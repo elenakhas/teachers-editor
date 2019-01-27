@@ -14,14 +14,14 @@ public class TextController {
     Text fKInterpretation;
 
 
-    public TextController(TextArea text, Text score, Text fKInterpretation){
+    public TextController(TextArea text, Text score, Text fKInterpretation) {
         txt = new ReadingText();
         this.text = text;
         this.score = score;
         this.fKInterpretation = fKInterpretation;
     }
 
-    public void loadText(){
+    public void loadText() {
 
         txt.filename = "data/testsentences.txt";
         String content = null;
@@ -34,14 +34,18 @@ public class TextController {
         text.setText(content);
     }
 
-    public void getFlesch(){
+    public void getFlesch() {
         double fscore = txt.getFleschScore();
         score.setText(String.valueOf(fscore));
         //System.out.println(fscore);
     }
 
-    public void fleschKincaid(){
+    public void fleschKincaid() {
         String fsk = txt.interpretFleshKincaid(txt.fleschKincaid());
         fKInterpretation.setText(fsk);
+    }
+
+    public void level(){
+        String level = String.valueOf(txt.percentOfLevelWords());
     }
 }
