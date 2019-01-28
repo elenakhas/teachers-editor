@@ -11,6 +11,8 @@ import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
+import java.io.IOException;
+
 public class MainController {
 
     MainController() {
@@ -55,7 +57,11 @@ public class MainController {
 
             @Override
             public void handle(ActionEvent event) {
-                ctrl.loadText();
+                try {
+                    ctrl.loadText();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
 
             }
         });

@@ -7,28 +7,29 @@ import java.util.HashSet;
 import java.util.List;
 
 /**
- *  Represents a text document - string content of the file, and its methods
+ *  Represents a text document - string content of the file, and its methods.
+ *  Extended by TextForReading class
  * @author Elena Khasanova
  * @version 1.1;
  *
  */
 public abstract class Document {
 
-
-    private String filename;
-    private String content;
+    public String content;
+    public List<String> words;
     public HashMap<String, Integer> levelWords;
     public HashMap<String, Integer> frequency;
+    public int numWords;
+    public int numSyllables;
+    public int numSentences;
 
     /**
-     * Create a new document from the given file
+     * Create a new document with the given content
      */
     //initialize the constructor
-    public Document() {
-    }
-
     public Document(String content) {
         this.content = content;
+        getProperties(content);
     }
 
     // method to get the text content of the file
@@ -36,9 +37,14 @@ public abstract class Document {
         return this.content;
     }
 
-    // the following methods will be used for calculating readability score
+    // THE FOLLOWING METHODS WILL BE USED FOR CALCULATING READABILITY SCORE
 
-    // Y is considered a vowel
+    /**
+     * Calculates the number of syllables in the text according to a set of rules.
+     * Will be used for calculating readability scores.
+     * @param word
+     * @return
+     */
     public int getSyllables(String word) {
         int num = 0;   //
         char[] characters = word.toCharArray();
@@ -67,27 +73,64 @@ public abstract class Document {
 
         return num;
     }
-/// don't need this method
-    public ArrayList<String> getWords(String content) {
+    /**
+     * Check if a string is a word
+     * @param sentence
+     * @return boolean
+     */
+    private boolean isWord(String sentence) {
+        return !(sentence.indexOf("!") >= 0 || sentence.indexOf(".") >= 0 || sentence.indexOf("?") >= 0);
+    }
+
+    /**
+     * Calculate and save properties of the text in class variables, get all the words from the text as a list
+     * @param content
+     * @return list of words from the text
+     */
+    public List<String> getProperties(String content) {
         Tokenizer tkn = new Tokenizer();
-        ArrayList words = tkn.tokenize("[a-zA-Z]+", content);
+        List<String> tokens = tkn.tokenize("[!?.]+|[a-zA-Z]+", content);
+        this.words = new ArrayList<>();
+        for (int i = 0; i < tokens.size(); i++) {
+            if (isWord(tokens.get(i))) {
+                numWords++;
+                words.add(tokens.get(i));
+                numSyllables += getSyllables((tokens.get(i)));
+            }
+            if (isWord(tokens.get(i)) == true && i == tokens.size() - 1) {
+                numSentences++;
+            }
+            if (isWord(tokens.get(i)) == false) {
+                numSentences++;
+            }
+        }
+        return this.words;
+    }
+
+    public List<String> getWords(){
         return words;
     }
 
     /**
      * Return the number of words in this document
      */
-    public abstract int getNumWords();
+    public int getNumWords(){
+        return numWords;
+    }
 
     /**
      * Return the number of sentences in this document
      */
-    public abstract int getNumSentences();
+    public int getNumSentences(){
+        return numSentences;
+    }
 
     /**
      * Return the number of syllables in this document
      */
-    public abstract int getNumSyllables();
+    public int getNumSyllables(){
+        return numSyllables;
+    }
 
     /**
      * return the Flesch readability score of this document
@@ -109,7 +152,7 @@ public abstract class Document {
      * @param vocab
      * @return HashMap from a word in a level vocabulary to its frequency in the text file
      */
-    public HashMap<String, Integer> frequencyLevel(List<String> text, HashSet<String> vocab) {
+    public HashMap<String, Integer> wordsOfLevel(List<String> text, HashSet<String> vocab) {
         this.levelWords = new HashMap();
         for (String word : text) {
             if (vocab.contains(word)) {
@@ -117,14 +160,16 @@ public abstract class Document {
                 levelWords.put(word, (occurences == null) ? 1 : occurences + 1);
             }
         }
-            return this.levelWords;
+        return this.levelWords;
     }
 
-    // calculates the number of words in a set that contains the words from vocabulary in a text
-    public int wordsOfALevel() {
-        return levelWords.size();
-    }
+    /**
+     * Gives the percentage of words of a certain level
+     * */  // Later - exclude articles
 
+    public float wordsOfALevel() {
+        return (float)this.levelWords.size() / getNumWords() * 100;
+    }
     // returns words and their frequencies
     public HashMap<String, Integer> frequency(List<String> text) {
         this.frequency = new HashMap<>();
@@ -132,6 +177,9 @@ public abstract class Document {
             Integer occurences = frequency.get(word);
             frequency.put(word, (occurences == null) ? 1 : occurences + 1);
         }
-        return frequency;
+        return this.frequency;
     }
+
+    public abstract String interpretFleshKincaid(double fleschKincaid);
+
 }
