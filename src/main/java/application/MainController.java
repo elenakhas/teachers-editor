@@ -89,8 +89,7 @@ public class MainController {
             @Override
             public void handle(ActionEvent event) {
                 if (cbKET.isSelected()){
-
-
+                    ctrl.percentageKet();
                 }
             }
         });
@@ -122,6 +121,7 @@ public class MainController {
         textField.getChildren().add(fleschField);
         textField.getChildren().add(fscore);
         textField.getChildren().add(fKInterpretation);
+        textField.getChildren().add(levelPercentage);
         //textField.getChildren().add(fleschkincaid);
 
         //fscore.setText("fscore");

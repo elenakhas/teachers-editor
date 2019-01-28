@@ -3,10 +3,12 @@ package application;
 import document.Document;
 import document.FileContent;
 import document.ReadingText;
+import document.Vocabulary;
 import javafx.scene.control.TextArea;
 import javafx.scene.text.Text;
 
 import java.io.IOException;
+import java.util.HashMap;
 
 public class TextController {
 
@@ -36,7 +38,6 @@ public class TextController {
     public void getFlesch() {
         double fscore = txt.getFleschScore();
         score.setText(String.valueOf(fscore));
-        //System.out.println(fscore);
     }
 
     public void fleschKincaid() {
@@ -45,6 +46,8 @@ public class TextController {
     }
 
     public void percentageKet(){
+        Vocabulary voc = new Vocabulary("data/KETnew.txt");
+        txt.wordsOfLevel(txt.getWords(), voc.getVocab());
         String percentage = String.valueOf(txt.wordsOfALevel());
         levelPercentage.setText(percentage + "% of KET words");
     }
