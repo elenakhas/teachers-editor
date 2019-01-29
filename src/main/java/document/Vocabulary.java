@@ -67,12 +67,9 @@ public class Vocabulary {
         return vocab.size();
     }
 
-    public static void main(String[] args) {
-        Vocabulary v = new Vocabulary("data/pet_dict.txt");
-        //LoadFile.loadDictionary(d, filename);
-
-        System.out.println(v.size());
-
-
-    }
+//    public static void main(String[] args) {
+//        Vocabulary v = new Vocabulary("data/pet.txt");
+//        //LoadFile.loadDictionary(d, filename);
+//        System.out.println(v.size());
+//    }
 }

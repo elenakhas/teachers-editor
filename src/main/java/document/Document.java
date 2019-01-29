@@ -6,6 +6,7 @@ import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 
+
 /**
  *  Represents a text document - string content of the file, and its methods.
  *  Extended by TextForReading class
@@ -135,15 +136,16 @@ public abstract class Document {
     /**
      * return the Flesch readability score of this document
      */
-    public double getFleschScore() {
-        double score = 206.835 - 1.015 * ((double) getNumWords() / (double) getNumSentences())
-                - 84.6 * ((double) getNumSyllables() / (double) getNumWords());
+    public float getFleschScore() {
+        float score = (float) (206.835 - 1.015 * ((float) getNumWords() / (float) getNumSentences())
+                        - 84.6 * ((float) getNumSyllables() / (float) getNumWords()));
         return score;
     }
 
-    public double fleschKincaid() {
-        double score = (0.39 * ((double) getNumWords() / (double) getNumSentences()))
-                - (11.8 * ((double) getNumSyllables() / (double) getNumWords()) - 15.59);
+    public float fleschKincaid() {
+        float score = (float) ((0.39 * ((float) getNumWords() / (float) getNumSentences()))
+                        - (11.8 * ((float) getNumSyllables() / (float) getNumWords()) - 15.59));
+
         return score;
     }
 
@@ -153,6 +155,7 @@ public abstract class Document {
      * @return HashMap from a word in a level vocabulary to its frequency in the text file
      */
     public HashMap<String, Integer> wordsOfLevel(List<String> text, HashSet<String> vocab) {
+        //levelWords.clear();
         this.levelWords = new HashMap();
         for (String word : text) {
             if (vocab.contains(word)) {
@@ -168,7 +171,8 @@ public abstract class Document {
      * */  // Later - exclude articles
 
     public float wordsOfALevel() {
-        return (float)this.levelWords.size() / getNumWords() * 100;
+        float value = (float)this.levelWords.size() / getNumWords() * 100;
+        return value;
     }
     // returns words and their frequencies
     public HashMap<String, Integer> frequency(List<String> text) {

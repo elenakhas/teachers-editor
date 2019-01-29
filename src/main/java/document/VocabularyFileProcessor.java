@@ -93,7 +93,7 @@ public class VocabularyFileProcessor {
 
     public static void main(String[] args) throws IOException {
         VocabularyFileProcessor pr = new VocabularyFileProcessor();
-        pr.createVocabularyFile("data/pet.txt", "data/testnewfile.txt");
-
+        pr.createVocabularyFile("data/YLE-starters.txt", "data/STARTERSwordlist.txt");
+        System.out.println("The vocabulary file has been created");
     }
 }

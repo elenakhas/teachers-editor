@@ -9,15 +9,18 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
+import javafx.scene.text.TextFlow;
 import javafx.stage.Stage;
 
 import java.io.IOException;
+import java.util.ArrayList;
 
 public class MainController {
 
     MainController() {
 
     }
+
 
     public void start(Stage primaryStage) {
 
@@ -45,14 +48,30 @@ public class MainController {
         toolBar.getItems().add(fleschkincaid);
         toolBar.getItems().add(new Separator());
 
+        // create a button to check the level
+        Button checkLevel = new Button();
+        checkLevel.setText("Check the level");
+        checkLevel.setMinWidth(100);
+
+
         // create a text area for results
         TextArea text = new TextArea();
         Text fscore = new Text();
         Text fKInterpretation = new Text();
         Text levelPercentage = new Text();
+//        Text petPercentage = new Text();
+//        Text startersPercentage = new Text();
+//        Text moversPercentage = new Text();
+//        Text flyersPercentage = new Text();
+//        Text toeflPercentage = new Text();
+//        Text fcePercentage = new Text();
+//        Text ieltsPercentage = new Text();
 
         // set actions for buttons
         final TextController ctrl = new TextController(text, fscore, fKInterpretation, levelPercentage);
+        // ketPercentage, petPercentage,
+          //      startersPercentage, moversPercentage, flyersPercentage, toeflPercentage,
+            //    fcePercentage, ieltsPercentage);
         loadButton.setOnAction(new EventHandler<ActionEvent>() {
 
             @Override
@@ -62,7 +81,6 @@ public class MainController {
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
-
             }
         });
         fleschButton.setOnAction(new EventHandler<ActionEvent>() {
@@ -83,16 +101,78 @@ public class MainController {
         //cbKET.setIndeterminate(true);
        // boolean isSelected = cbKET.isSelected();
         toolBar.getItems().add(cbKET);
+        final CheckBox cbPET = new CheckBox("PET");
+        toolBar.getItems().add(cbPET);
+        final CheckBox cbStarters = new CheckBox("Starters");
+        toolBar.getItems().add(cbStarters);
+        final CheckBox cbMovers = new CheckBox("Movers");
+        toolBar.getItems().add(cbMovers);
+        final CheckBox cbFlyers = new CheckBox("Flyers");
+        toolBar.getItems().add(cbFlyers);
+        final CheckBox cbFCE = new CheckBox("FCE");
+        toolBar.getItems().add(cbFCE);
+        final CheckBox cbIELTS = new CheckBox("IELTS");
+        toolBar.getItems().add(cbIELTS);
+        final CheckBox cbTOEFL = new CheckBox("TOEFL");
+        toolBar.getItems().add(cbTOEFL);
+        toolBar.getItems().add(new Separator());
+        toolBar.getItems().add(checkLevel);
 
-        // set actions for checkbox
-        cbKET.setOnAction(new EventHandler<ActionEvent>() {
+        // set actions for checkLevel button:
+        checkLevel.setOnAction(new EventHandler<ActionEvent>(){
             @Override
             public void handle(ActionEvent event) {
-                if (cbKET.isSelected()){
-                    ctrl.percentageKet();
-                }
+                ctrl.handleCheckboxes(cbKET, cbPET, cbStarters, cbMovers, cbFlyers);
             }
         });
+
+
+//        // set actions for checkbox
+//        cbKET.setOnAction(new EventHandler<ActionEvent>() {
+//            @Override
+//            public void handle(ActionEvent event) {
+//                if (cbKET.isSelected()){
+//                    ctrl.percentageKet();
+//                }
+//
+//            }
+//        });
+//
+//        cbPET.setOnAction(new EventHandler<ActionEvent>() {
+//            @Override
+//            public void handle(ActionEvent event) {
+//                if (cbPET.isSelected()){
+//                    ctrl.percentagePet();
+//                }
+//            }
+//        });
+
+//        cbStarters.setOnAction(new EventHandler<ActionEvent>() {
+//            @Override
+//            public void handle(ActionEvent event) {
+//                if (cbStarters.isSelected()){
+//                    ctrl.percentageStarters();
+//                }
+//            }
+//        });
+//
+//        cbMovers.setOnAction(new EventHandler<ActionEvent>() {
+//            @Override
+//            public void handle(ActionEvent event) {
+//                if (cbMovers.isSelected()){
+//                    ctrl.percentageMovers();
+//                }
+//            }
+//        });
+//
+//        cbFlyers.setOnAction(new EventHandler<ActionEvent>() {
+//            @Override
+//            public void handle(ActionEvent event) {
+//                if (cbFlyers.isSelected()){
+//                    ctrl.percentageFlyers();
+//                }
+//            }
+//        });
 
 
 
@@ -110,7 +190,6 @@ public class MainController {
 
         // create area for buttons
         VBox buttonField = new VBox(toolBar);
-
         root.getChildren().add(buttonField);
 //        buttonField.getChildren().add(loadButton);
 //        buttonField.getChildren().add(fleschButton);
@@ -122,6 +201,9 @@ public class MainController {
         textField.getChildren().add(fscore);
         textField.getChildren().add(fKInterpretation);
         textField.getChildren().add(levelPercentage);
+        //textField.getChildren().add(petPercentage);
+
+
         //textField.getChildren().add(fleschkincaid);
 
         //fscore.setText("fscore");
@@ -133,9 +215,17 @@ public class MainController {
         primaryStage.setScene(scene);
         primaryStage.show();
     }
+
+
+
 }
 // save button
 // file chooser
 // disappearing information when click Hide
 // autocomplete
 // spelling
+/*#TODO: file chooser;
+save;
+unit tests;
+autocomplete;
+hide text if unchecked;*/
