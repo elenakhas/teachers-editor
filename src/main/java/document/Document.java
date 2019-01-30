@@ -14,15 +14,15 @@ import java.util.List;
  * @version 1.1;
  *
  */
-public abstract class Document {
+public abstract class Document implements TextEvaluator {
 
     public String content;
     public List<String> words;
     public HashMap<String, Integer> levelWords;
     public HashMap<String, Integer> frequency;
-    public int numWords;
-    public int numSyllables;
-    public int numSentences;
+    private int numWords;
+    private int numSyllables;
+    private int numSentences;
 
     /**
      * Create a new document with the given content
@@ -52,22 +52,23 @@ public abstract class Document {
         // if the previous character is a vowel that forms a syllable
         boolean ifSyllable = true;
         String vowels = "aeiouyAEIOUY";
-        for (int i = 0; i < characters.length; i++) {
+        for (int i = 0; i < characters.length; i++) { // nightingale
             // if the vowel is the last silent e and is not the only syllable, substract 1
-            if (i == characters.length - 1 && characters[i] == 'e' && ifSyllable && num > 0) {
+            if (i == characters.length-1 && characters[i] == 'e' && ifSyllable && num > 0) {
                 num--;
+            }
+//          if the word ends with le, and the letter before is a consonant, add 1
+           if (characters.length > 2 && i == characters.length - 1 && characters[i] == 'e' && characters[i-1] == 'l' &&
+                   vowels.indexOf(characters[i-2])<0 && ifSyllable) {
+                num++;
             }
             // if the char is a vowel and the previous letter is not (it is not a diphtong or a triphtong), increment the count
             if (ifSyllable && vowels.indexOf(characters[i]) >= 0) {
                 ifSyllable = false;
                 num++;
             }
-            // if the word ends with le, and the letter before is a consonant, add 1
-            if (i == characters.length - 1 && characters[i] == 'e' && !ifSyllable) {
-                num++;
-            }
             // if the letter is not a vowel, set the previous letter as syllable
-            if (vowels.indexOf(characters[i]) < 0) {
+            else if (vowels.indexOf(characters[i]) < 0) {
                 ifSyllable = true;
             }
         }
@@ -75,7 +76,7 @@ public abstract class Document {
         return num;
     }
     /**
-     * Check if a string is a word
+     * Check if a string is a word (not punctuation)
      * @param sentence
      * @return boolean
      */
@@ -136,11 +137,13 @@ public abstract class Document {
     /**
      * return the Flesch readability score of this document
      */
-    public float getFleschScore() {
+    public float getFleschScore() { //
         float score = (float) (206.835 - 1.015 * ((float) getNumWords() / (float) getNumSentences())
                         - 84.6 * ((float) getNumSyllables() / (float) getNumWords()));
         return score;
     }
+    // oneWordDocument
+    //
 
     public float fleschKincaid() {
         float score = (float) ((0.39 * ((float) getNumWords() / (float) getNumSentences()))
@@ -171,11 +174,20 @@ public abstract class Document {
      * */  // Later - exclude articles
 
     public float wordsOfALevel() {
-        float value = (float)this.levelWords.size() / getNumWords() * 100;
-        return value;
+        int sum = 0;
+        for (int value : levelWords.values()) {
+            sum += value;
+        }
+        float result = (float)sum / getNumWords() * 100;
+        return result;
+    }
+
+    public float uniqueWordsOfALevel(){
+        float result = (float)this.levelWords.size() / getNumWords() * 100;
+        return result;
     }
     // returns words and their frequencies
-    public HashMap<String, Integer> frequency(List<String> text) {
+    public HashMap<String, Integer> frequencyOfWords(List<String> text) {
         this.frequency = new HashMap<>();
         for (String word:text) {
             Integer occurences = frequency.get(word);
@@ -186,4 +198,9 @@ public abstract class Document {
 
     public abstract String interpretFleshKincaid(double fleschKincaid);
 
+
+    @Override
+    public int variety(HashMap<String, Integer> words) {
+        return words.size();
+    }
 }

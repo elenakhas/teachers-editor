@@ -12,13 +12,13 @@ public interface TextEvaluator {
 
     int getNumSyllables();
 
-    double getFleschScore();
+    float getFleschScore();
 
-    double fleschKincaid();
+    float fleschKincaid();
 
-    HashMap<String, Integer> frequencyLevel(List<String> text, HashSet<String> vocab);
+    HashMap<String, Integer> wordsOfLevel(List<String> text, HashSet<String> vocab);
 
-    int wordsOfALevel(); // number of words of a certain level
+    float wordsOfALevel(); // number of words of a certain level
 
     HashMap<String, Integer> frequencyOfWords(List<String> text); // frequency of words in a text
 
