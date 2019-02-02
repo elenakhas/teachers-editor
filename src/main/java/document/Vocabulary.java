@@ -4,10 +4,12 @@ import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.HashSet;
-
 /**
- * This class represents vocabulary (wordlist or a reference dictionary) and its methods
+ * This class represents vocabulary (wordlist or a reference dictionary)
+ * @author Elena Khasanova
+ * @version 1.1;
  */
+
 public class Vocabulary {
 
     private HashSet<String> vocab;  // all words from a given wordlist / dictionary
@@ -23,8 +25,7 @@ public class Vocabulary {
         loadVocabulary();
     }
 
-    private void loadVocabulary() {
-        //this.vocab = new HashSet<String>();
+    public void loadVocabulary() {
         // Dictionary files have 1 word per line
         try {
             String nextWord;

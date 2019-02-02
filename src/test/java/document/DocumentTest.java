@@ -3,28 +3,34 @@ package document;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
-
 import java.io.IOException;
-import java.util.Arrays;
-import java.util.List;
+import java.util.*;
 
 import static java.lang.Float.isNaN;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
+/**
+ * Test class for Document
+ * @author Elena Khasanova
+ * @version 1.1;
+ */
 
 public class DocumentTest {
 
 
-    private Document doc;
     private Document docOne;
+    private Document docTwo;
     private Document emptyDoc;
+    private HashSet<String> vocab;
 
     @Before
     public void setUp() throws Exception {
         FileContent fc = new FileContent("src/test/test_data/testsentences.txt");
-        doc = new ReadingText(fc.getContent());
-        docOne = new ReadingText("A cat sat on a mat. Did you see that cat?");
+        docOne = new ReadingText(fc.getContent());
+        docTwo = new ReadingText("A cat sat on a mat. Did you see that cat?");
         emptyDoc = new ReadingText("");
+        Vocabulary voc = new document.Vocabulary("src/test/test_data/test_vocabulary");
+        this.vocab = voc.getVocab();
     }
 
     @Test
@@ -32,12 +38,12 @@ public class DocumentTest {
         ExpectedException exception = ExpectedException.none();
         exception.expect(IOException.class);
 
-        assertEquals("Check it returns the right content ", "A cat sat on a mat. Did you see that cat?", docOne.getContent());
+        assertEquals("Check it returns the right content ", "A cat sat on a mat. Did you see that cat?", docTwo.getContent());
         assertEquals("Check it returns the right content ", "", emptyDoc.getContent());
         assertEquals("Check it returns the right content ",
                     "This is the test. This is a very good test!!!! " +
                             "Why??? The number of sentences? It should be 5! Or maybe six... Or even seven",
-                    doc.getContent());
+                    docOne.getContent());
 
     }
     @Test
@@ -67,17 +73,14 @@ public class DocumentTest {
     @Test // tested in getter methods
     public void testGetProperties() throws IOException {
         // test on a document from a file
-       // String content = doc.getContent();
-       // doc.getProperties(content);
         List<String> expectedDoc = Arrays.asList("This", "is", "the", "test", "This", "is", "a", "very", "good", "test",
                 "Why", "The", "number", "of", "sentences", "It", "should", "be", "Or", "maybe", "six", "Or", "even", "seven");
-        assertEquals("Check two lists are the same", expectedDoc, doc.getWords());
-//        System.out.println(doc.getNumWords());
-        assertEquals("Check number of words", 24, doc.getNumWords());
-        assertEquals("Check number of sentences", 7, doc.getNumSentences());
-        assertEquals("Check number of syllables", 30, doc.getNumSyllables());
+        assertEquals("Check two lists are the same", expectedDoc, docOne.getWords());
+        assertEquals("Check number of words", 24, docOne.getNumWords());
+        assertEquals("Check number of sentences", 7, docOne.getNumSentences());
+        assertEquals("Check number of syllables", 30, docOne.getNumSyllables());
         // test on an empty document
-        List<String> expectedEmptyDoc = Arrays.asList();
+        List<String> expectedEmptyDoc = Collections.emptyList();
         assertEquals("Check two lists are the same", expectedEmptyDoc, emptyDoc.getWords());
         assertEquals("Check number of words", 0, emptyDoc.getNumWords());
         assertEquals("Check number of sentences", 0, emptyDoc.getNumSentences());
@@ -96,35 +99,70 @@ public class DocumentTest {
     @Test
     public void testGetFleschScore() {
         // check the document from file
-        assertEquals("Check the Flesch Score", (float)97.605, doc.getFleschScore(), 0.02);
+        assertEquals("Check the Flesch Score", (float)97.605, docOne.getFleschScore(), 0.02);
         // check the empty document
         assertTrue("Check the Flesch Score", isNaN(emptyDoc.getFleschScore()));
         // check the document with one word, negative value
         Document oneWord = new ReadingText("Oneworddocument"); //
-        System.out.println(oneWord.getNumSyllables());
         assertEquals("Check the Flesch Score", -301.78, oneWord.getFleschScore(), 0.02);
     }
 
     @Test
     public void testFleschKincaid() {
         // check the document from file
-        assertEquals("Check the Flesch-Kincaid Score", (float)2.177, doc.fleschKincaid(), 0.02);
+        assertEquals("Check the Flesch-Kincaid Score", (float)0.49, docOne.fleschKincaid(), 0.02);
         // check the empty document
-        assertTrue("Check the Flesch Score", isNaN(emptyDoc.getFleschScore()));
-        // check the document with one word, negative value
-        Document oneWord = new ReadingText("Oneworddocument");
-        assertEquals("Check the Flesch Score", -54.82, oneWord.fleschKincaid(), 0.02);
+        assertTrue("Check the Flesch-Kincaid Score", isNaN(emptyDoc.getFleschScore()));
     }
 
     @Test
-    public void wordsOfLevel() {
+    public void testWordsOfLevel() {
+        // check that the returned words and frequencies are correct
+        List<String> text = Arrays.asList("I", "love", "eating", "apple", "Apple", "potato", "soup", "soup", "Soup");
+        // construct a vocabulary HashSet
+        // we test it on emptyDoc as we pass the content and the wordlist separately
+        HashMap<String, Integer> wordsFromVocab = emptyDoc.wordsOfLevel(text, vocab);
+        HashMap<String, Integer> result = new HashMap<>();
+        result.put("apple", 2);
+        result.put("potato", 1);
+        result.put("soup", 3);
+        assertEquals("Check the content of the HashMap", result, wordsFromVocab);
     }
 
     @Test
-    public void wordsOfALevel() {
+    public void testPercentWordsOfLevel() {
+        // should return correct percentage of words of a certain level
+        // call the method wordsOfLevel to initialize the variable used in PercentWordsOfLevel method
+        HashMap<String, Integer> levelWords = docOne.wordsOfLevel(docOne.getWords(), vocab);
+        float result = docOne.percentWordsOfLevel();
+        assertEquals("Check the percentage is the same", 25.0, result, 0.02);
     }
 
     @Test
-    public void frequencyOfWords() {
+    public void testFrequencyOfWords() {
+        HashMap frequency = docOne.frequencyOfWords(docOne.getWords());
+        // check that the correct value is returned for several keys; words include both
+        // capitalized and non-capitalized ones
+        assertEquals("Check the frequency is correct", 1, frequency.get("maybe"));
+        assertEquals("Check the frequency is correct", 2, frequency.get("this"));
+        // if the word is not in the document, assert its frequency is null
+        assertEquals("Check the frequency is correct", null, frequency.get("cat"));
+
+        //check on an empty doc - all values should be null
+        HashMap freqEmpty = emptyDoc.frequencyOfWords(emptyDoc.getWords());
+        assertEquals("Check the frequency is correct", null, freqEmpty.get("cat"));
+
     }
+
+    @Test
+    public void testWordsVariety(){
+        int variety = docOne.frequencyOfWords(docOne.getWords()).size();
+        assertEquals("Check the frequency is correct", 19, variety);
+
+
+
+
+    }
+
+
 }

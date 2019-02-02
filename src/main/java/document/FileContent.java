@@ -18,8 +18,15 @@ public class FileContent {
      * @return
      * @throws IOException
      */
-    public String getContent() throws IOException {
-        String s = new String(Files.readAllBytes(Paths.get(filename)), StandardCharsets.UTF_8);
+    public String getContent() {
+        String s = null;
+        try {
+            s = new String(Files.readAllBytes(Paths.get(filename)), StandardCharsets.UTF_8);
+        }
+        catch (IOException e) {
+            System.err.println("Problem reading a file: " + filename);
+            e.printStackTrace();
+        }
         return s;
     }
 

@@ -5,7 +5,9 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 /**
- * The class used for tokenization of text files
+ * This class is used for tokenization of text files
+ * @author Elena Khasanova
+ * @version 1.1;
  */
 public class Tokenizer {
 
@@ -18,5 +20,4 @@ public class Tokenizer {
         }
         return tokens;
     }
-
 }

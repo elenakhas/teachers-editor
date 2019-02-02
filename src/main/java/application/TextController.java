@@ -44,7 +44,7 @@ public class TextController {
     }
 
     public void loadText() throws IOException {
-        String filename = "data/testsentences.txt";
+        String filename = "src/test/test_data/textKET";
         FileContent fc = new FileContent(filename);
         //String content = null;
         txt = new ReadingText(fc.getContent());
@@ -65,7 +65,7 @@ public class TextController {
     private String percentageKet(){
         Vocabulary voc = new Vocabulary("data/KETwordlist.txt");
         txt.wordsOfLevel(txt.getWords(), voc.getVocab());
-        String percentage = (String.format("%.2f", txt.wordsOfALevel()));
+        String percentage = (String.format("%.2f", txt.percentWordsOfLevel()));
         String levelPercentage = percentage + "% of KET words";
         return levelPercentage;
     }
@@ -73,14 +73,14 @@ public class TextController {
     private String percentagePet(){
         Vocabulary voc = new Vocabulary("data/PETwordlist.txt");
         txt.wordsOfLevel(txt.getWords(), voc.getVocab());
-        String percentage = (String.format("%.2f", txt.wordsOfALevel()));
+        String percentage = (String.format("%.2f", txt.percentWordsOfLevel()));
         String levelPercentage = percentage + "% of PET words";
         return levelPercentage;
     }
     private String percentageStarters(){
         Vocabulary voc = new Vocabulary("data/STARTERSwordlist.txt");
         txt.wordsOfLevel(txt.getWords(), voc.getVocab());
-        String percentage = (String.format("%.2f", txt.wordsOfALevel()));
+        String percentage = (String.format("%.2f", txt.percentWordsOfLevel()));
         String levelPercentage = percentage + "% of Starters words";
         return levelPercentage;
     }
@@ -88,7 +88,7 @@ public class TextController {
     public String percentageMovers(){
         Vocabulary voc = new Vocabulary("data/MOVERSwordlist.txt");
         txt.wordsOfLevel(txt.getWords(), voc.getVocab());
-        String percentage = (String.format("%.2f", txt.wordsOfALevel()));
+        String percentage = (String.format("%.2f", txt.percentWordsOfLevel()));
         String levelPercentage = percentage + "% of Movers words";
         return levelPercentage;
     }
@@ -96,7 +96,7 @@ public class TextController {
     public String percentageFlyers(){
         Vocabulary voc = new Vocabulary("data/FLYERSwordlist.txt");
         txt.wordsOfLevel(txt.getWords(), voc.getVocab());
-        String percentage = (String.format("%.2f", txt.wordsOfALevel()));
+        String percentage = (String.format("%.2f", txt.percentWordsOfLevel()));
         String levelPercentage = percentage + "% of Flyers words";
         return levelPercentage;
     }

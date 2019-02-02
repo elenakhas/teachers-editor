@@ -1,4 +1,12 @@
 package document;
+/**
+ *  Class represents a text used for reading exercises
+ *  Extended by ReadingText class. Extends Document with an interpretation
+ *  of FleschKincaid score for a reading text.
+ * @author Elena Khasanova
+ * @version 1.2;
+ *
+ */
 
 public class ReadingText extends Document{
 

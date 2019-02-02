@@ -12,9 +12,13 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-
-// The class preprocesses a vocabulary file and writes it into a new file for further processing;
-// will probably be a different program
+/**
+ *  Class  preprocesses a vocabulary file and writes it into a new file;
+ *  the file is then manually reviewed
+ *  /////////////////////////will probably be a different program
+ * @author Elena Khasanova
+ * @version 1.2;
+ */
 public class VocabularyFileProcessor {
     /**
      * 1. The method reads a file from a given filename
@@ -91,9 +95,9 @@ public class VocabularyFileProcessor {
         writeVocab(vocabulary, newfilename);
     }
 
-    public static void main(String[] args) throws IOException {
-        VocabularyFileProcessor pr = new VocabularyFileProcessor();
-        pr.createVocabularyFile("data/YLE-starters.txt", "data/STARTERSwordlist.txt");
-        System.out.println("The vocabulary file has been created");
-    }
+//    public static void main(String[] args) throws IOException {
+//        VocabularyFileProcessor pr = new VocabularyFileProcessor();
+//        pr.createVocabularyFile("data/YLE-starters.txt", "data/STARTERSwordlist.txt");
+//        System.out.println("The vocabulary file has been created");
+//    }
 }

@@ -18,11 +18,14 @@ public interface TextEvaluator {
 
     HashMap<String, Integer> wordsOfLevel(List<String> text, HashSet<String> vocab);
 
-    float wordsOfALevel(); // number of words of a certain level
+    float percentWordsOfLevel(); // number of words of a certain level
+
+
 
     HashMap<String, Integer> frequencyOfWords(List<String> text); // frequency of words in a text
 
-    int variety(HashMap<String, Integer> words); // proportion of unique words in a text
+    int wordsVariety(HashMap<String, Integer> words); // proportion of unique words in a text
 
+/// add the function that returns the level based on several wordlists?
 
 }

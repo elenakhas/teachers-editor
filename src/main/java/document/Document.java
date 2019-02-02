@@ -9,9 +9,9 @@ import java.util.List;
 
 /**
  *  Represents a text document - string content of the file, and its methods.
- *  Extended by TextForReading class
+ *  Extended by ReadingText class
  * @author Elena Khasanova
- * @version 1.1;
+ * @version 1.2;
  *
  */
 public abstract class Document implements TextEvaluator {
@@ -109,6 +109,7 @@ public abstract class Document implements TextEvaluator {
         return this.words;
     }
 
+    // get all words in this document
     public List<String> getWords(){
         return words;
     }
@@ -142,12 +143,15 @@ public abstract class Document implements TextEvaluator {
                         - 84.6 * ((float) getNumSyllables() / (float) getNumWords()));
         return score;
     }
-    // oneWordDocument
-    //
+
+    /**
+     * Calculate Flesch-Kincaid level readability score
+     * @return float score
+     */
 
     public float fleschKincaid() {
         float score = (float) ((0.39 * ((float) getNumWords() / (float) getNumSentences()))
-                        - (11.8 * ((float) getNumSyllables() / (float) getNumWords()) - 15.59));
+                        + (11.8 * ((float) getNumSyllables() / (float) getNumWords())) - 15.59);
 
         return score;
     }
@@ -156,12 +160,15 @@ public abstract class Document implements TextEvaluator {
      * @param text
      * @param vocab
      * @return HashMap from a word in a level vocabulary to its frequency in the text file
+     * these words are highlighted in the TextArea. We exclude articles from the count as they
+     * are frequent but do not contribute to understanding if the text is of an appropriate level
      */
     public HashMap<String, Integer> wordsOfLevel(List<String> text, HashSet<String> vocab) {
         //levelWords.clear();
         this.levelWords = new HashMap();
         for (String word : text) {
-            if (vocab.contains(word)) {
+            word = word.toLowerCase();
+            if (vocab.contains(word) && !word.equals("a") && !word.equals("the")) {
                 Integer occurences = this.levelWords.get(word);
                 levelWords.put(word, (occurences == null) ? 1 : occurences + 1);
             }
@@ -171,9 +178,9 @@ public abstract class Document implements TextEvaluator {
 
     /**
      * Gives the percentage of words of a certain level
-     * */  // Later - exclude articles
+     * */
 
-    public float wordsOfALevel() {
+    public float percentWordsOfLevel() {
         int sum = 0;
         for (int value : levelWords.values()) {
             sum += value;
@@ -182,14 +189,19 @@ public abstract class Document implements TextEvaluator {
         return result;
     }
 
+    /**
+     * Gives the percentage of unique words of a certain level in a text
+     * @return
+     */
     public float uniqueWordsOfALevel(){
         float result = (float)this.levelWords.size() / getNumWords() * 100;
         return result;
     }
-    // returns words and their frequencies
+    // returns words and their frequencies; words are converted to lowercase
     public HashMap<String, Integer> frequencyOfWords(List<String> text) {
         this.frequency = new HashMap<>();
         for (String word:text) {
+            word = word.toLowerCase();
             Integer occurences = frequency.get(word);
             frequency.put(word, (occurences == null) ? 1 : occurences + 1);
         }
@@ -200,7 +212,7 @@ public abstract class Document implements TextEvaluator {
 
 
     @Override
-    public int variety(HashMap<String, Integer> words) {
-        return words.size();
+    public int wordsVariety(HashMap<String, Integer> frequency) {
+        return frequency.size();
     }
 }
