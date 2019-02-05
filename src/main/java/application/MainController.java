@@ -4,33 +4,40 @@ import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.Orientation;
 import javafx.scene.Scene;
+import javafx.scene.control.Button;
+import javafx.scene.control.TextArea;
 import javafx.scene.control.*;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
-import javafx.scene.text.TextFlow;
 import javafx.stage.Stage;
 
+import java.awt.*;
 import java.io.IOException;
-import java.util.ArrayList;
 
 public class MainController {
 
     MainController() {
 
     }
-
+    private Desktop desktop = Desktop.getDesktop();
 
     public void start(Stage primaryStage) {
 
         ToolBar toolBar = new ToolBar();
         toolBar.setOrientation(Orientation.VERTICAL);
         // create a Load Text button
-        Button loadButton = new Button();
-        loadButton.setText("Text");
-        loadButton.setMinWidth(100);
-        toolBar.getItems().add(loadButton);
+//        Button loadButton = new Button();
+//        loadButton.setText("Text");
+//        loadButton.setMinWidth(100);
+//        toolBar.getItems().add(loadButton);
+//        toolBar.getItems().add(new Separator());
+
+        Button chooser = new Button();
+        chooser.setText("Open...");
+        chooser.setMinWidth(100);
+        toolBar.getItems().add(chooser);
         toolBar.getItems().add(new Separator());
 
         // create a Flesch score button
@@ -72,10 +79,27 @@ public class MainController {
         // ketPercentage, petPercentage,
           //      startersPercentage, moversPercentage, flyersPercentage, toeflPercentage,
             //    fcePercentage, ieltsPercentage);
-        loadButton.setOnAction(new EventHandler<ActionEvent>() {
+
+
+
+
+        chooser.setOnAction(new EventHandler<ActionEvent>() {
 
             @Override
             public void handle(ActionEvent event) {
+//                FileChooser fc = new FileChooser();
+//                File selected = fc.showOpenDialog(null);
+//                if (selected != null){
+//                    try {
+//                        desktop.open(selected);
+//                    } catch (IOException e) {
+//                        Logger.getLogger(
+//                                FileChooser.class.getName()).log(
+//                                Level.SEVERE, null, e
+//                        );
+//                    }
+//                }
+
                 try {
                     ctrl.loadText();
                 } catch (IOException e) {
@@ -83,6 +107,22 @@ public class MainController {
                 }
             }
         });
+
+
+
+
+
+//        loadButton.setOnAction(new EventHandler<ActionEvent>() {
+//
+//            @Override
+//            public void handle(ActionEvent event) {
+//                try {
+//                    ctrl.loadText();
+//                } catch (IOException e) {
+//                    e.printStackTrace();
+//                }
+//            }
+//        });
         fleschButton.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {

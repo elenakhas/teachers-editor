@@ -7,7 +7,10 @@ import document.Vocabulary;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.TextArea;
 import javafx.scene.text.Text;
+import javafx.stage.FileChooser;
 
+import java.awt.*;
+import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 
@@ -18,6 +21,7 @@ public class TextController {
     Text score;
     Text fKInterpretation;
     Text levelPercentage;
+    private Desktop desktop = Desktop.getDesktop();
 //    Text petPercentage;
 //    Text startersPercentage;
 //    Text moversPercentage;
@@ -44,14 +48,19 @@ public class TextController {
     }
 
     public void loadText() throws IOException {
-        String filename = "src/test/test_data/textKET";
-        FileContent fc = new FileContent(filename);
-        //String content = null;
-        txt = new ReadingText(fc.getContent());
-        String content = txt.getContent();
-        text.setText(content);
+        FileChooser fc = new FileChooser();
+        File selected = fc.showOpenDialog(null);
+        if (selected != null) {
+            String filename = selected.getAbsolutePath();
+            //desktop.open(selected);
+            //String filename = "src/test/test_data/textKET";
+            FileContent fcon = new FileContent(filename);
+            //String content = null;
+            txt = new ReadingText(fcon.getContent());
+            String content = txt.getContent();
+            text.setText(content);
+        }
     }
-
     public void getFlesch() {
         double fscore = txt.getFleschScore();
         score.setText(String.format("%.2f", fscore));
