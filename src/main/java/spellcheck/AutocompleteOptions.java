@@ -101,18 +101,18 @@ public class AutocompleteOptions implements Autocompleter {
      * in the list of returned words.
      * If this stem is not in the trie, it returns an empty list.
      *
-     * @param stem           The text to use at the word stem
+     * @param prefix           The text to use at the word stem
      * @param numCompletions The maximum number of predictions desired.
      * @return A list containing the up to numCompletions best predictions
      */
-    public List<String> predictCompletions(String stem, int numCompletions) {
+    public List<String> predictCompletions(String prefix, int numCompletions) {
         // I. Find the stem in the trie.  If the stem does not appear in the trie, return an empty list
         LinkedList<TrieNode> queue = new LinkedList();
         //    Create a list of completions to return (initially empty)
         List<String> completions = new LinkedList();
         List<String> emptyList = new LinkedList();
         TrieNode curr = root;
-        char[] stemChar = stem.toCharArray();
+        char[] stemChar = prefix.toCharArray();
         for (char ch : stemChar) {
             if (curr.getChild(ch) == null) {
                 return emptyList;

@@ -215,4 +215,7 @@ public abstract class Document implements TextEvaluator {
     public int wordsVariety(HashMap<String, Integer> frequency) {
         return frequency.size();
     }
+
+    // GET LEMMATIZED VERSIONS FOR THE WORDS IN THE DOCUMENT//
+    // THINK ABOUT A CLASSIFIER - TOPICS
 }
