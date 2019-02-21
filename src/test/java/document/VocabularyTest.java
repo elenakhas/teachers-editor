@@ -2,12 +2,13 @@ package document;
 
 import org.junit.Before;
 import org.junit.Test;
+import vocabulary.Vocabulary;
+import vocabulary.VocabularyLoader;
 
 import static org.junit.Assert.assertEquals;
 
 public class VocabularyTest {
 
-    private String emptyVocabFile = "data/emptyVocab.txt";
     private String largeVocabFile = "data/dict.txt";
 
     Vocabulary emptyVocab;
@@ -16,9 +17,10 @@ public class VocabularyTest {
 
     @Before
     public void setUp() throws Exception {
-        emptyVocab = new Vocabulary(emptyVocabFile);
-        smallVocab = new Vocabulary(emptyVocabFile);
-        largeVocab = new Vocabulary(largeVocabFile);
+        VocabularyLoader vl = new VocabularyLoader();
+        emptyVocab = new Vocabulary();
+        smallVocab = new Vocabulary();
+        largeVocab = new Vocabulary();
 
         smallVocab.addWord("Hello");
         smallVocab.addWord("HElLo");
@@ -26,7 +28,7 @@ public class VocabularyTest {
         smallVocab.addWord("a");
         smallVocab.addWord("ubiquitous");
 
-        largeVocab.loadVocabulary();
+        VocabularyLoader.loadVocabulary(largeVocab, largeVocabFile);
     }
 
     /**
