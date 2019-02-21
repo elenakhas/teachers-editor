@@ -9,6 +9,7 @@ import java.util.regex.Pattern;
  * @author Elena Khasanova
  * @version 1.1;
  */
+@SuppressWarnings("unchecked")
 public class Tokenizer {
 
     public ArrayList<String> tokenize(String pattern, String content) {

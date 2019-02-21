@@ -1,6 +1,8 @@
 package spellcheck;
 
-import document.Vocabulary;
+import vocabulary.Vocabulary;
+import vocabulary.VocabularyBuilder;
+import vocabulary.VocabularyLoader;
 
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -10,27 +12,32 @@ import java.util.List;
 public class SuggestionsSpelling implements Spellcheker {
     // THRESHOLD to limit long searching
     private static final int THRESHOLD = 1000;
-    private Vocabulary dic;
+    private final VocabularyBuilder dic;
+    private int spellingMistakes;
 
-    public SuggestionsSpelling(String filename) {//Vocabulary vb = new Vocabulary(filename);
-        this.dic = new Vocabulary(filename);
+    public SuggestionsSpelling(VocabularyBuilder dic) {//vocabulary vb = new vocabulary(filename);
+        this.dic = dic;
         // this.dic = dic;
     }
 
-    /**
-     * Return the list of Strings that are one modification away
-     * from the input string.
-     *
-     * @param input     The original String
-     * @param wordsOnly controls whether to return only words or any String
-     * @return list of Strings which are nearby the original string
-     */
-    private List<String> distanceOne(String input, boolean wordsOnly) {
-        List<String> retList = new ArrayList<String>();
-        oneCharInsertions(input, retList, wordsOnly);
-        oneCharSubstitution(input, retList, wordsOnly);
-        oneCharDeletions(input, retList, wordsOnly);
-        return retList;
+    public static void main(String[] args) {
+//	   //basic testing code to get started
+        String word = "ai";
+        VocabularyBuilder dict = new Vocabulary();
+        String filename = "data/dict.txt";
+        VocabularyLoader.loadVocabulary(dict, filename);
+        //vocabulary vb = new vocabulary(filename);
+        //HashSet<String> dictionary = dict.getVocab();
+        SuggestionsSpelling w = new SuggestionsSpelling(dict);
+        List<String> l = w.distanceOne(word, true);
+        System.out.println("One away word Strings for for \"" + word + "\" are:");
+        System.out.println(l + "\n");
+//
+        word = "tailo";
+        List<String> suggest = w.getSuggestions(word, 10);
+        System.out.println("Spelling Suggestions for \"" + word + "\" are:");
+        System.out.println(suggest);
+
     }
 
     /**
@@ -114,6 +121,22 @@ public class SuggestionsSpelling implements Spellcheker {
     }
 
     /**
+     * Return the list of Strings that are one modification away
+     * from the input string.
+     *
+     * @param input     The original String
+     * @param wordsOnly controls whether to return only words or any String
+     * @return list of Strings which are nearby the original string
+     */
+    private List<String> distanceOne(String input, boolean wordsOnly) {
+        List<String> retList = new ArrayList<>();
+        oneCharInsertions(input, retList, wordsOnly);
+        oneCharSubstitution(input, retList, wordsOnly);
+        oneCharDeletions(input, retList, wordsOnly);
+        return retList;
+    }
+
+    /**
      * Add to the currentList Strings that are one character deletion away
      * from the input string.
      *
@@ -127,10 +150,10 @@ public class SuggestionsSpelling implements Spellcheker {
 //		Input:  number of maximum suggestions to provide
 //		Output: list of spelling suggestions
         // initial variables
-        List<String> queue = new LinkedList<String>();     // String to explore;  create a queue to hold words to explore
-        HashSet<String> visited = new HashSet<String>();   // to avoid exploring the same
+        List<String> queue = new LinkedList<>();     // String to explore;  create a queue to hold words to explore
+        HashSet<String> visited = new HashSet<>();   // to avoid exploring the same
         // string multiple times
-        List<String> retList = new LinkedList<String>();   // words to return
+        List<String> retList = new LinkedList<>();   // words to return
         boolean wordsOnly = true;
         // insert first node;
         queue.add(word);
@@ -166,23 +189,5 @@ public class SuggestionsSpelling implements Spellcheker {
 
     }
 
-    public static void main(String[] args) {
-//	   //basic testing code to get started
-        String word = "ai";
-//	   // Pass NearbyWords any Dictionary implementation you prefer
-        String filename = "data/dict.txt";
-        //Vocabulary vb = new Vocabulary(filename);
-        //HashSet<String> dictionary = vb.getVocab();
-        SuggestionsSpelling w = new SuggestionsSpelling(filename);
-        List<String> l = w.distanceOne(word, true);
-        System.out.println("One away word Strings for for \"" + word + "\" are:");
-        System.out.println(l + "\n");
-//
-        word = "tailo";
-        List<String> suggest = w.getSuggestions(word, 10);
-        System.out.println("Spelling Suggestions for \"" + word + "\" are:");
-        System.out.println(suggest);
-
-    }
 }
 

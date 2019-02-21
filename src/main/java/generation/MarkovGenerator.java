@@ -2,26 +2,12 @@
 //
 //import document.FileContent;
 //import document.Tokenizer;
-//import generation.MarkovGenerator.Counter;
 //
-//import java.util.ArrayList;
-//import java.util.HashMap;
-//import java.util.Map;
+//import java.util.*;
+//
 //
 //public class MarkovGenerator {
-//
-////    private class Counter<T> {
-////        final Map<T, Integer> counts = new HashMap<>();
-////
-////        public void add(T t) {
-////            counts.merge(t, 1, Integer::sum);
-////        }
-////
-////        public int count(T t) {
-////            return counts.getOrDefault(t, 0);
-////        }
-////    }
-//        public void train_lm(String fname, int order, int add_k) {
+//        public void train_lm(String fname, int order) {
 //            /** Trains a language model
 //             * @param String filename - path to a text
 //             * @param order the length of n-grams
@@ -34,59 +20,69 @@
 //            Tokenizer tkn = new Tokenizer();
 //            ArrayList <String> data = tkn.tokenize("[!?.]+|[a-zA-Z]+", content);
 //
-//            HashMap<ArrayList <String>, Float> lm = new HashMap();
+//            Map<String, HashMap <ArrayList, Integer>> lm = new HashMap();
 //            //pad = "~" * order
 //            //data = pad + data
-//            for (String word : data) {
-//                ArrayList<String> history = new ArrayList<>();
-//
-//                for (int i = 0; i<= data.size(); i++){
-//                    word = data.get(i+order);
-//                    history.add(data.get(i));
-//
-//
+//            // iterate over words
+//            String word;
+//                for (int i = 0; i <= data.size(); i++) {
+//                    HashMap<ArrayList, Integer> histCount = new HashMap<>();
+//                    ArrayList<String> history = new ArrayList<>();
+//                    word = data.get(i + order);
+//                    //get words that precede the word
+//                    for (int k = order; k > 0; k--) {
+//                        history.add(data.get(i));
+//                    }
+//                    // put history + number of occurrences
+//                    int count = histCount.getOrDefault(history, 0);
+//                    histCount.put(history, count + 1);
+//                    lm.put(word, histCount);
 //                }
+//            Set<String> vocabulary = new HashSet<String>(data);
 //
 //            }
-//            history,char =data[i:i + order],data[i + order]
-//            lm[history][ char] +=1
 //
-//            vocabulary = set(data) #set of all characters = Vocabulary
-//    #add_k - populate the dictionary with add_k values for
-//            for history in lm.keys():
-//            for char in vocabulary:
-//            lm[history][ char] +=add_k
 //
-//    #if the history is unseen, set probability to
-//            for char in vocabulary:
-//            lm[None][ char] =add_k
+//       //
 //
-//            def normalize (counter):
-//            s = float(sum(counter.values()))
-//            return [(c, cnt / s)for c, cnt in counter.items()]
-//            outlm = {hist:normalize(chars) for hist, chars in lm.items()}
-//            return outlm
+//                 //set of all characters = vocabulary
+//
+////    //add_k - populate the dictionary with add_k values for
+////            for ()history in lm.keys():
+////            for char in vocabulary:
+////            lm[history][ char] +=add_k
+////
+////    #if the history is unseen, set probability to
+////            for char in vocabulary:
+////            lm[None][ char] =add_k
+////
+////            def normalize (counter):
+////            s = float(sum(counter.values()))
+////            return [(c, cnt / s)for c, cnt in counter.items()]
+////            outlm = {hist:normalize(chars) for hist, chars in lm.items()}
+////            return outlm
+//
+//
+//        public String generate_word (Map<String, HashMap <ArrayList, Integer>> lm, ArrayList<String> history, int order) {
+////            '' ' Randomly chooses the next letter using the language model.
+////            Inputs:
+////            lm:
+////            The output from calling train_char_lm.
+////                    history:A sequence of text at least 'order' long.
+////                    order:The length of the n - grams in the language model.
+////
+////            Returns:
+////            A letter
+////            '' '
+//            history = history[-order:]
+//            dist = lm[history]
+//            x = random()
+//            for c, v in dist:
+//            x = x - v
+//            if x <= 0:
+//            return c
 //
 //        }
-//        def generate_word (lm, history, order):
-//                '' ' Randomly chooses the next letter using the language model.
-//        Inputs:
-//        lm:
-//        The output from calling train_char_lm.
-//                history:A sequence of text at least 'order' long.
-//        order:The length of the n - grams in the language model.
-//
-//                Returns:
-//        A letter
-//        '' '
-//        history = history[-order:]
-//        dist = lm[history]
-//        x = random()
-//        for c, v in dist:
-//        x = x - v
-//        if x <= 0:
-//                return c
-//
 //
 //        def generate_text (lm, order, nletters = 500):
 //                '' '
@@ -209,4 +205,4 @@
 //    lambdas = [0.1, 0.2, 0.3, 0.4]
 //    print(calculate_prob_with_backoff("e", "henc", lms, lambdas))
 //}
-//}
+//

@@ -1,15 +1,18 @@
 package spellcheck;
 
+import vocabulary.VocabularyBuilder;
+
 import java.util.LinkedList;
 import java.util.List;
 
-public class AutocompleteOptions implements Autocompleter {
+@SuppressWarnings({"unchecked", "ForLoopReplaceableByForEach"})
+public class AutocompleteOptions implements Autocompleter, VocabularyBuilder {
 
     /**
      * A trie data structure that implements the Dictionary and the AutoComplete
      */
 
-    private TrieNode root;
+    private final TrieNode root;
     //private int numNodes;
 
     public AutocompleteOptions() {
@@ -29,13 +32,13 @@ public class AutocompleteOptions implements Autocompleter {
         // find the stem - iterate over the characters in the word and check if they are in the trie
         // if ch is not in the trie, add it, link to the previous one, increment the size
         TrieNode curr = root;
-        for (int i = 0; i < word_array.length; i++) {
-            TrieNode child = curr.getChild(word_array[i]);
+        for (char c : word_array) {
+            TrieNode child = curr.getChild(c);
             if (child == null) {
-                curr.insert(word_array[i]);
+                curr.insert(c);
                 //   numNodes++;
             }
-            curr = curr.getChild(word_array[i]);
+            curr = curr.getChild(c);
         }
         //if the current node ends word - return False, it already existed
         if (curr.endsWord()) {
@@ -84,11 +87,11 @@ public class AutocompleteOptions implements Autocompleter {
         // if ch is in the trie, get the next one
         //if ch is not in the trie, return false
         TrieNode curr = root;
-        for (int i = 0; i < s_array.length; i++) {
-            if (curr.getChild(s_array[i]) == null) {
+        for (char c : s_array) {
+            if (curr.getChild(c) == null) {
                 return false; // if child equals null
             }
-            curr = curr.getChild(s_array[i]);
+            curr = curr.getChild(c);
         }
         return curr.endsWord();
     }
@@ -101,7 +104,7 @@ public class AutocompleteOptions implements Autocompleter {
      * in the list of returned words.
      * If this stem is not in the trie, it returns an empty list.
      *
-     * @param prefix           The text to use at the word stem
+     * @param prefix         The text to use at the word stem
      * @param numCompletions The maximum number of predictions desired.
      * @return A list containing the up to numCompletions best predictions
      */
@@ -129,7 +132,7 @@ public class AutocompleteOptions implements Autocompleter {
 //           remove the first Node from the queue
             TrieNode toRemove = queue.remove();
             //       If it is a word, add it to the completions list
-            if (toRemove.endsWord() == true) {
+            if (toRemove.endsWord()) {
                 completions.add(toRemove.getText());
             }
             //       Add all of its child nodes to the back of the queue
@@ -149,7 +152,7 @@ public class AutocompleteOptions implements Autocompleter {
     /**
      * Do a pre-order traversal from this node down
      */
-    public void printNode(TrieNode curr) {
+    private void printNode(TrieNode curr) {
         if (curr == null)
             return;
 
@@ -162,9 +165,9 @@ public class AutocompleteOptions implements Autocompleter {
         }
     }
 
-    // Return the list of completions
-    public List<String> predictedCompletions(String stem, int numCompletions) {
-        return null;
-    }
+//    // Return the list of completions
+//    public List<String> predictedCompletions(String stem, int numCompletions) {
+//        return null;
+//    }
 }
 

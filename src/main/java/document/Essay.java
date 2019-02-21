@@ -1,11 +1,17 @@
 package document;
 
+import vocabulary.VocabularyBuilder;
+
+import java.util.List;
+
 public class Essay extends Document {
-    public String fleschKincaidEvaluation;
+
+    private int spellingMistakes;
 
     public Essay(String content) {
         super(content);
     }
+
     @Override
     public String interpretFleshKincaid(double score) {
         String complexity = null;
@@ -33,18 +39,25 @@ public class Essay extends Document {
         }
         if (score >= 15) {
             complexity = "SKILLED";
-            explanation  = "High-level writing";
+            explanation = "High-level writing";
         }
 
-        fleschKincaidEvaluation = complexity + ": " + explanation;
+        String fleschKincaidEvaluation = complexity + ": " + explanation;
         return fleschKincaidEvaluation;
     }
 
+    public int unknownWords(List<String> words, VocabularyBuilder vocab){
+        for (String word : words) {
+            if (vocab.isWord(word)) {
+                spellingMistakes++;
+            }
+        }
+            return spellingMistakes;
+    }
 
     // other methods:
     // show POS
     // show words repeated in one paragraph
     // number of unique words
     // number of spelling mistakes
-    // add a scene to GUI - load an essay and a text separately
 }

@@ -1,7 +1,12 @@
 package document;
+
+import vocabulary.VocabularyBuilder;
+
+import java.util.List;
+
 /**
  *  Class represents a text used for reading exercises
- *  Extended by ReadingText class. Extends Document with an interpretation
+ *  Extends Document with an interpretation, does not evaluate spelling mistakes
  *  of FleschKincaid score for a reading text.
  * @author Elena Khasanova
  * @version 1.2;
@@ -9,8 +14,6 @@ package document;
  */
 
 public class ReadingText extends Document{
-
-    public String fleschKincaidEvaluation;
 
     public ReadingText(String content) {
         super(content);
@@ -54,8 +57,13 @@ public class ReadingText extends Document{
             explanation = "Proficient reader. Can read everything, including academic papers";
         }
 
-        fleschKincaidEvaluation = complexity + ": " + explanation;
+        String fleschKincaidEvaluation = complexity + ": " + explanation;
         return fleschKincaidEvaluation;
+    }
+
+    @Override
+    public int unknownWords(List<String> words, VocabularyBuilder vocab) {
+        return 0;
     }
 
 }

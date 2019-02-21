@@ -3,12 +3,15 @@ package document;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
+import vocabulary.Vocabulary;
+import vocabulary.VocabularyLoader;
+
 import java.io.IOException;
 import java.util.*;
 
 import static java.lang.Float.isNaN;
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.*;
+
 /**
  * Test class for Document
  * @author Elena Khasanova
@@ -29,7 +32,8 @@ public class DocumentTest {
         docOne = new ReadingText(fc.getContent());
         docTwo = new ReadingText("A cat sat on a mat. Did you see that cat?");
         emptyDoc = new ReadingText("");
-        Vocabulary voc = new document.Vocabulary("src/test/test_data/test_vocabulary");
+        Vocabulary voc = new Vocabulary();
+        VocabularyLoader.loadVocabulary(voc, "src/test/test_data/test_vocabulary");
         this.vocab = voc.getVocab();
     }
 
@@ -146,11 +150,11 @@ public class DocumentTest {
         assertEquals("Check the frequency is correct", 1, frequency.get("maybe"));
         assertEquals("Check the frequency is correct", 2, frequency.get("this"));
         // if the word is not in the document, assert its frequency is null
-        assertEquals("Check the frequency is correct", null, frequency.get("cat"));
+        assertNull("Check the frequency is correct", frequency.get("cat"));
 
         //check on an empty doc - all values should be null
         HashMap freqEmpty = emptyDoc.frequencyOfWords(emptyDoc.getWords());
-        assertEquals("Check the frequency is correct", null, freqEmpty.get("cat"));
+        assertNull("Check the frequency is correct", freqEmpty.get("cat"));
 
     }
 

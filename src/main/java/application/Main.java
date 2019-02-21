@@ -11,7 +11,7 @@ import javafx.stage.Stage;
 public class Main extends Application {
 
     public void start(Stage primaryStage) {
-        MainController controller = new MainController();
+        MainView controller = new MainView();
         controller.start(primaryStage);
     }
 

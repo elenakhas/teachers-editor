@@ -21,7 +21,7 @@ public class TrieNode {
     /**
      * Create a new TrieNode with a text String
      */
-    public TrieNode(String text) {
+    private TrieNode(String text) {
         this();
         this.text = text;
     }

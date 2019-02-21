@@ -7,7 +7,7 @@ import java.nio.file.Paths;
 
 public class FileContent {
 
-    private String filename;
+    private final String filename;
 
     public FileContent(String filename){
         this.filename = filename;
