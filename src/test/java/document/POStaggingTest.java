@@ -10,12 +10,12 @@
 //
 //public class POStaggingTest {
 //
-//    private StanfordPOS pstg;
+//    private PosTagger pstg;
 //    private String words;
 //
 //    @Before
 //    public void setUp() {
-//        pstg = new StanfordPOS();
+//        pstg = new PosTagger();
 //        words = "When Tamara was twenty years old, she started a cheaper university in Long Island. She should come. Jeux. She really enjoyed all her excellent time at university. There was a big university! The best, actually. Tamara's life was promptly great.";
 //
 //    }

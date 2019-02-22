@@ -13,25 +13,25 @@ import static java.lang.Float.isNaN;
 import static org.junit.Assert.*;
 
 /**
- * Test class for Document
+ * Test class for AbstractDocument
  * @author Elena Khasanova
  * @version 1.1;
  */
 
-public class DocumentTest {
+public class AbstractDocumentTest {
 
 
-    private Document docOne;
-    private Document docTwo;
-    private Document emptyDoc;
+    private AbstractDocument docOne;
+    private AbstractDocument docTwo;
+    private AbstractDocument emptyDoc;
     private HashSet<String> vocab;
 
     @Before
     public void setUp() throws Exception {
         FileContent fc = new FileContent("src/test/test_data/testsentences.txt");
-        docOne = new ReadingText(fc.getContent());
-        docTwo = new ReadingText("A cat sat on a mat. Did you see that cat?");
-        emptyDoc = new ReadingText("");
+        docOne = new ReadingMaterial(fc.getContent());
+        docTwo = new ReadingMaterial("A cat sat on a mat. Did you see that cat?");
+        emptyDoc = new ReadingMaterial("");
         Vocabulary voc = new Vocabulary();
         VocabularyLoader.loadVocabulary(voc, "src/test/test_data/test_vocabulary");
         this.vocab = voc.getVocab();
@@ -55,23 +55,23 @@ public class DocumentTest {
         // The content here is not important because we call the method on a word,
         // so an empty document is used just for accessing the methods
         // check empty string
-        assertEquals("Check the number of syllables", 0, emptyDoc.getSyllables(""));
+        assertEquals("Check the number of syllables", 0, emptyDoc.wordGetSyllables(""));
         // check one vowel string
-        assertEquals("Check the number of syllables", 1, emptyDoc.getSyllables("aaaaaaaaaaaaa"));
+        assertEquals("Check the number of syllables", 1, emptyDoc.wordGetSyllables("aaaaaaaaaaaaa"));
         // if the vowel is the last silent e and is not the only syllable
-        assertEquals("Check the number of syllables", 2, emptyDoc.getSyllables("sentence"));
+        assertEquals("Check the number of syllables", 2, emptyDoc.wordGetSyllables("sentence"));
         // if the vowel is the last silent e and it is the only syllable
-        assertEquals("Check the number of syllables", 1, emptyDoc.getSyllables("e"));
-        assertEquals("Check the number of syllables", 1, emptyDoc.getSyllables("the"));
+        assertEquals("Check the number of syllables", 1, emptyDoc.wordGetSyllables("e"));
+        assertEquals("Check the number of syllables", 1, emptyDoc.wordGetSyllables("the"));
         // if the char is a vowel and the previous letter is not (it is not a diphtong or a triphtong), increment the count
-        assertEquals("Check the number of syllables", 4, emptyDoc.getSyllables("bolorbolo"));
+        assertEquals("Check the number of syllables", 4, emptyDoc.wordGetSyllables("bolorbolo"));
         // if the word ends with le, and the letter before is a consonant
-        assertEquals("Check the number of syllables", 2, emptyDoc.getSyllables("people"));
+        assertEquals("Check the number of syllables", 2, emptyDoc.wordGetSyllables("people"));
         // if the word ends with le, and the letter before is a vowel
-        assertEquals("Check the number of syllables", 3, emptyDoc.getSyllables("nightingale"));
+        assertEquals("Check the number of syllables", 3, emptyDoc.wordGetSyllables("nightingale"));
         // check diphthongs and triphtongs
-        assertEquals("Check the number of syllables", 2, emptyDoc.getSyllables("goodbye"));
-        assertEquals("Check the number of syllables", 3, emptyDoc.getSyllables("beautiful"));
+        assertEquals("Check the number of syllables", 2, emptyDoc.wordGetSyllables("goodbye"));
+        assertEquals("Check the number of syllables", 3, emptyDoc.wordGetSyllables("beautiful"));
     }
 
     @Test // tested in getter methods
@@ -82,22 +82,22 @@ public class DocumentTest {
         assertEquals("Check two lists are the same", expectedDoc, docOne.getWords());
         assertEquals("Check number of words", 24, docOne.getNumWords());
         assertEquals("Check number of sentences", 7, docOne.getNumSentences());
-        assertEquals("Check number of syllables", 30, docOne.getNumSyllables());
+        assertEquals("Check number of syllables", 30, docOne.getTotalNumSyllables());
         // test on an empty document
         List<String> expectedEmptyDoc = Collections.emptyList();
         assertEquals("Check two lists are the same", expectedEmptyDoc, emptyDoc.getWords());
         assertEquals("Check number of words", 0, emptyDoc.getNumWords());
         assertEquals("Check number of sentences", 0, emptyDoc.getNumSentences());
-        assertEquals("Check number of syllables", 0, emptyDoc.getNumSyllables());
+        assertEquals("Check number of syllables", 0, emptyDoc.getTotalNumSyllables());
         // test on a document with many commas and dots
-        Document commas = new ReadingText("sentence, with, lots, of, commas.!" + "\n" +
+        AbstractDocument commas = new ReadingMaterial("sentence, with, lots, of, commas.!" + "\n" +
                 "(And some-thing else)).  The output is: 11.5.");
         List<String> expectedCommas = Arrays.asList("sentence", "with", "lots", "of",
                 "commas", "And", "some", "thing", "else", "The", "output","is");
         assertEquals("Check two lists are the same", expectedCommas, commas.getWords());
         assertEquals("Check number of words", 12, commas.getNumWords());
         assertEquals("Check number of sentences", 4, commas.getNumSentences());
-        assertEquals("Check number of syllables", 15, commas.getNumSyllables());
+        assertEquals("Check number of syllables", 15, commas.getTotalNumSyllables());
     }
 
     @Test
@@ -107,14 +107,14 @@ public class DocumentTest {
         // check the empty document
         assertTrue("Check the Flesch Score", isNaN(emptyDoc.getFleschScore()));
         // check the document with one word, negative value
-        Document oneWord = new ReadingText("Oneworddocument"); //
+        AbstractDocument oneWord = new ReadingMaterial("Oneworddocument"); //
         assertEquals("Check the Flesch Score", -301.78, oneWord.getFleschScore(), 0.02);
     }
 
     @Test
     public void testFleschKincaid() {
         // check the document from file
-        assertEquals("Check the Flesch-Kincaid Score", (float)0.49, docOne.fleschKincaid(), 0.02);
+        assertEquals("Check the Flesch-Kincaid Score", (float)0.49, docOne.getFleschKincaid(), 0.02);
         // check the empty document
         assertTrue("Check the Flesch-Kincaid Score", isNaN(emptyDoc.getFleschScore()));
     }

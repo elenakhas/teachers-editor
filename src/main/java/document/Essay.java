@@ -4,13 +4,26 @@ import vocabulary.VocabularyBuilder;
 
 import java.util.List;
 
-public class Essay extends Document {
+
+/**
+ *  Represents a document of a type Essay, a student's written work
+ *  Extends AbstractDocument
+ * @author Elena Khasanova
+ * @version 1.0;
+ * **/
+
+public class Essay extends AbstractDocument {
 
     private int spellingMistakes;
 
     public Essay(String content) {
         super(content);
     }
+
+    /** Gives explanation of Flesch-Kincaid score for an essay
+     * @param score - double value computed by getFleschKincaid method
+     * @return fleschKincaidEvaluation - string containing interpretation of a score
+     * **/
 
     @Override
     public String interpretFleshKincaid(double score) {
@@ -46,6 +59,10 @@ public class Essay extends Document {
         return fleschKincaidEvaluation;
     }
 
+    /** Calculates the number of spelling mistakes and words not contained in the reference dictionary of a spellcheker
+     * @param words - List of words in a document
+     * @return spellingMistakes - integer, count of mistaken words
+     * **/
     public int unknownWords(List<String> words, VocabularyBuilder vocab){
         for (String word : words) {
             if (vocab.isWord(word)) {
@@ -55,9 +72,4 @@ public class Essay extends Document {
             return spellingMistakes;
     }
 
-    // other methods:
-    // show POS
-    // show words repeated in one paragraph
-    // number of unique words
-    // number of spelling mistakes
 }

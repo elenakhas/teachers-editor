@@ -34,8 +34,8 @@ class TextEvalView {
     private Text superlativeAdj;
     private Text modalVerbs;
     private Text existentialThere;
-    private Text comparativeADv;
-    private Text superlativeADv;
+    private Text comparativeAdv;
+    private Text superlativeAdv;
     private Text imperativeForms;
     private Text presentSimple;
     private Text presentContinuous;
@@ -64,8 +64,8 @@ class TextEvalView {
         this.superlativeAdj = new Text();
         this.modalVerbs = new Text();
         this.existentialThere = new Text();
-        this.comparativeADv = new Text();
-        this.superlativeADv = new Text();
+        this.comparativeAdv = new Text();
+        this.superlativeAdv = new Text();
         this.imperativeForms = new Text();
         this.presentSimple = new Text();
         this.presentContinuous = new Text();
@@ -83,8 +83,6 @@ class TextEvalView {
 
 
     public void showNewWindow() throws IOException {
-
-        //PopupWindow statistics = new PopupWindow(){};
         VBox vbox = new VBox();
         Text title = new Text();
         title.setFont(Font.font("Verdana", 14));
@@ -138,7 +136,7 @@ class TextEvalView {
 
         TextEvalController tec = new TextEvalController(ctrl, numNouns, numAdj, numVerbs, numAdv, numNumbers,
                 numPron, numDet, numWh, numPrepConj, numOther,  comparativeAdj, superlativeAdj,
-                modalVerbs, existentialThere, comparativeADv, superlativeADv, imperativeForms,
+                modalVerbs, existentialThere, comparativeAdv, superlativeAdv, imperativeForms,
                 presentSimple, presentContinuous, pastSimple, pastContinuous, presentPerfectContinuousForms,
                 presentPerfect, pastPerfect, futureSimple, futureContinuousForms, futurePerfectForms);
 
@@ -214,8 +212,8 @@ class TextEvalView {
         grammar.addRow(2, subtitleColumn2);
         grammar.addRow(3, compAdj, comparativeAdj);
         grammar.addRow(4, supAdj, superlativeAdj);
-        grammar.addRow(5, compAdv, comparativeADv);
-        grammar.addRow(6, supAdv, superlativeADv);
+        grammar.addRow(5, compAdv, comparativeAdv);
+        grammar.addRow(6, supAdv, superlativeAdv);
         grammar.addRow(7, modals, modalVerbs);
         grammar.addRow(8, exist, existentialThere);
         grammar.addRow(9, imperative, imperativeForms);

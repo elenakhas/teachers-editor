@@ -1,9 +1,9 @@
 package application;
 
-import document.Document;
+import document.AbstractDocument;
 import document.Essay;
 import document.FileContent;
-import document.ReadingText;
+import document.ReadingMaterial;
 import javafx.scene.control.CheckBox;
 import javafx.scene.text.Text;
 import javafx.stage.FileChooser;
@@ -15,7 +15,7 @@ import java.util.ArrayList;
 class TextController {
 
     private AutocompleteArea text;
-    private Document txt;
+    private AbstractDocument txt;
     private Text score;
     private Text fKInterpretation;
     private Text levelPercentage;
@@ -40,10 +40,10 @@ class TextController {
         this.frequentWords = frequentWords;
         this.uniqueWords = uniqueWords;
     }
-
-    public TextController(AutocompleteArea text){
-        this.text = text;
-    }
+//
+//    public TextController(AutocompleteArea text){
+//        this.text = text;
+//    }
 
     private void clearing(){
         text.clear();
@@ -66,7 +66,7 @@ class TextController {
             String filename = selected.getAbsolutePath();
             name = selected.getPath();
             FileContent fcon = new FileContent(filename);
-            txt = new ReadingText(fcon.getContent());
+            txt = new ReadingMaterial(fcon.getContent());
             String content = txt.getContent();
             text.insertText(0, content);
         }
@@ -87,7 +87,7 @@ class TextController {
             text.insertText(0, content);
         }
     }
-    public Document getDoc(){
+    public AbstractDocument getDoc(){
         return txt;
     }
 
@@ -97,7 +97,7 @@ class TextController {
     }
 
     public void fleschKincaid() {
-        String fsk = txt.interpretFleshKincaid(txt.fleschKincaid());
+        String fsk = txt.interpretFleshKincaid(txt.getFleschKincaid());
         fKInterpretation.setText(fsk);
     }
 

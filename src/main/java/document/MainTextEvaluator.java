@@ -4,7 +4,7 @@ import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 
-interface TextEvaluator {
+public interface MainTextEvaluator {
 
 // basic evaluator
 
@@ -12,11 +12,11 @@ interface TextEvaluator {
 
     int getNumSentences();
 
-    int getNumSyllables();
+    int getTotalNumSyllables();
 
     float getFleschScore();
 
-    float fleschKincaid();
+    float getFleschKincaid();
 
     HashMap<String, Integer> wordsOfLevel(List<String> text, HashSet<String> vocab);
 

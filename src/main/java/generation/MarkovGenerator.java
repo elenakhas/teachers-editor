@@ -1,208 +1,156 @@
-//package generation;
-//
-//import document.FileContent;
-//import document.Tokenizer;
-//
-//import java.util.*;
-//
-//
-//public class MarkovGenerator {
-//        public void train_lm(String fname, int order) {
-//            /** Trains a language model
-//             * @param String filename - path to a text
-//             * @param order the length of n-grams
-//             * @param add_k value for smoothing
-//             * @return hashmap: {n-gram : word and its probability}
-//             */
-//
-//            FileContent fc = new FileContent(fname);
-//            String content = fc.getContent();
-//            Tokenizer tkn = new Tokenizer();
-//            ArrayList <String> data = tkn.tokenize("[!?.]+|[a-zA-Z]+", content);
-//
-//            Map<String, HashMap <ArrayList, Integer>> lm = new HashMap();
-//            //pad = "~" * order
-//            //data = pad + data
-//            // iterate over words
-//            String word;
-//                for (int i = 0; i <= data.size(); i++) {
-//                    HashMap<ArrayList, Integer> histCount = new HashMap<>();
-//                    ArrayList<String> history = new ArrayList<>();
-//                    word = data.get(i + order);
-//                    //get words that precede the word
-//                    for (int k = order; k > 0; k--) {
-//                        history.add(data.get(i));
-//                    }
-//                    // put history + number of occurrences
-//                    int count = histCount.getOrDefault(history, 0);
-//                    histCount.put(history, count + 1);
-//                    lm.put(word, histCount);
-//                }
-//            Set<String> vocabulary = new HashSet<String>(data);
-//
-//            }
-//
-//
-//       //
-//
-//                 //set of all characters = vocabulary
-//
-////    //add_k - populate the dictionary with add_k values for
-////            for ()history in lm.keys():
-////            for char in vocabulary:
-////            lm[history][ char] +=add_k
-////
-////    #if the history is unseen, set probability to
-////            for char in vocabulary:
-////            lm[None][ char] =add_k
-////
-////            def normalize (counter):
-////            s = float(sum(counter.values()))
-////            return [(c, cnt / s)for c, cnt in counter.items()]
-////            outlm = {hist:normalize(chars) for hist, chars in lm.items()}
-////            return outlm
-//
-//
-//        public String generate_word (Map<String, HashMap <ArrayList, Integer>> lm, ArrayList<String> history, int order) {
-////            '' ' Randomly chooses the next letter using the language model.
-////            Inputs:
-////            lm:
-////            The output from calling train_char_lm.
-////                    history:A sequence of text at least 'order' long.
-////                    order:The length of the n - grams in the language model.
-////
-////            Returns:
-////            A letter
-////            '' '
-//            history = history[-order:]
-//            dist = lm[history]
-//            x = random()
-//            for c, v in dist:
-//            x = x - v
-//            if x <= 0:
-//            return c
-//
-//        }
-//
-//        def generate_text (lm, order, nletters = 500):
-//                '' '
-//        Generates a bunch of random text based on the language model.
-//
-//                Inputs:
-//        lm:
-//        The output from calling train_char_lm.
-//                history:A sequence of previous text.
-//                order:The length of the n - grams in the language model.
-//
-//                Returns:
-//        A letter
-//        '' '
-//        history = "~" * order
-//        out = []
-//                for i in range(nletters):
-//        c = generate_letter(lm, history, order)
-//        history = history[-order:]+c
-//        out.append(c)
-//                return "".join(out)
-//
-//
-//        def probability (history, poss_character, lm, order):
-//                #access the distributions corresponding to history:
-//        history = history[-order:]
-//                try:
-//        distribution = lm[history]
-//        except KeyError:
-//        distribution = lm[None] #if the history is unseen
-//        for char,val in distribution:
-//                if char ==poss_character:
-//                return val
-//        raise ValueError
-//
-//
-//        def perplexity (test_filename, lm, order):
-//                '' '
-//        Computes the perplexity of a text file given the language model.
-//                Inputs:
-//        test_filename:
-//        path to text file
-//        lm:
-//        The output from calling train_char_lm.
-//                order:The length of the n - grams in the language model.
-//                Output:
-//        Float value for perplexity
-//        '' '
-//        test = open(test_filename, encoding = "latin-1").read()
-//        pad = "~" * order
-//                test = pad + test
-//        try:
-//        total_prob = (sum(log(probability(test[:index],test[index], lm, order))for index in
-//        range(order, len(test) - order)))
-//        perplexity = total_prob **(-1 / (len(test) - order))
-//                return perplexity
-//
-//        except ValueError:
-//                return float("inf")
-//
-//
-//        def build_lm (fname, order, add_k):
-//        lms = []
-//                for i in range(order):
-//        lm = train_char_lm(fname, order - i, add_k)
-//        lms.append(lm)
-//                return lms
-//
-//
-//        def calculate_prob_with_backoff ( char,history, lms, lambdas):
-//                '' 'Uses interpolation to compute the probability of char given a series of
-//        language models trained with different length n - grams.
-//                Inputs:
-//        char:Character to compute the probability of.
-//        history:
-//        A sequence of previous text.
-//                lms:A list of language models, outputted by calling train_char_lm.
-//        lambdas:A list of weights for each lambda model.These should sum to 1.
-//        Returns:
-//        Probability of char appearing next in the sequence.
-//                '' '
-//
-//
-//        probabilities = [probability(history, char,lms[i], order - i)for i in range(len(lms))]
-//                #print(probabilities)#
-//        prob = sum(probabilities[i] * lambdas[i] for i in range(len(probabilities)))
-//                return prob
-//
-//
-//        def set_lambdas (lms, dev_filename = None):
-//                '' 'Returns a list of lambda values that weight the contribution of each n-gram model
-//        This can either be done heuristically or by using a development set.
-//
-//        Inputs:
-//        lms:
-//        A list of language models, outputted by calling train_char_lm.
-//        dev_filename:Path to a development text file to optionally use for tuning the lmabdas.
-//                Returns:
-//        a list of lambda values.
-//        '' '
-//        lambdas = [random() for i in range(len(lms))]
-//        lambda_sum = sum(lambdas)
-//        lambdas = [lamb / lambda_sum for lamb in lambdas]
-//                return lambdas
-//    }
-//
-//if __name__ == '__main__':
-//    print('Training language model')
-//    # lm = train_char_lm("shakespeare_input.txt", order=4)
-//    order = 4
-//    add_k = 1
-//            # lm = train_char_lm("shakespeare_input.txt", order, add_k)
-//    # print(perplexity("shakespeare_sonnets.txt", lm, order))
-//            # print(perplexity("nytimes_article.txt", lm, order))
-//    lms = build_lm("shakespeare_input.txt", order, add_k)
-//    # lambdas = set_lambdas(lms)
-//    lambdas = [0.4, 0.3, 0.2, 0.1]
-//
-//    print(calculate_prob_with_backoff("e", "henc", lms, lambdas))
-//    lambdas = [0.1, 0.2, 0.3, 0.4]
-//    print(calculate_prob_with_backoff("e", "henc", lms, lambdas))
-//}
-//
+package generation;
+
+import document.FileContent;
+import document.Tokenizer;
+
+import java.util.*;
+
+
+
+
+
+public class MarkovGenerator {
+
+    ArrayList<String> data;
+    HashMap<String[], HashMap<String, Float>> lm;
+    Set<String> vocabulary;
+
+    MarkovGenerator(String fname) {
+        FileContent fc = new FileContent(fname);
+        Tokenizer tkn = new Tokenizer();
+        String content = fc.getContent();
+        this.data = tkn.tokenize("[!?.]+|[a-zA-Z]+", content);
+        this.vocabulary = new HashSet<String>(this.data);
+
+    }
+
+    public static void main(String[] args){
+
+
+        MarkovGenerator mg = new MarkovGenerator("src/test/test_data/textKET");
+        mg.train_lm(4);
+        mg.addK(1);
+        mg.normalization();
+        System.out.println("trained");
+        String result = mg.generateText(4, 20);
+        System.out.println(result);
+
+    }
+
+    public void train_lm(int order) {
+        /** Trains a language model
+         * @param String filename - path to a text
+         * @param order the length of n-grams
+         * @param add_k value for smoothing
+         * @return hashmap: {n-gram : word and its probability}
+         */
+
+        this.lm = new HashMap();
+
+        // iterate over words
+        String word;
+        for (int i = order; i < this.data.size(); i++) {
+            //Build hist
+            String[] history = new String[order];
+            for (int k = order; k > 0; k--) {
+                history[k - 1] = this.data.get(i - k);
+            }
+
+            // get the word count for the current hist, create it if it does not exist
+            HashMap<String, Float> wordCount = this.lm.getOrDefault(history, new HashMap<>());
+            this.lm.put(history, wordCount);
+            word = this.data.get(i);
+
+            // put history + number of occurrences
+            float count = wordCount.getOrDefault(history, (float) 0);
+            wordCount.put(word, count + 1);
+        }
+    }
+
+    public void addK(float k) {
+        for (HashMap<String, Float> wc : this.lm.values()) {
+            for (String word : vocabulary) {
+                float count = wc.getOrDefault(word, (float) 0);
+                wc.put(word, count + k);
+            }
+        }
+        HashMap<String, Float> wc = new HashMap<>();
+        for (String word : vocabulary) {
+            wc.put(word, k);
+        }
+        this.lm.put(null, wc);
+    }
+
+    public void normalization() {
+        for (HashMap<String, Float> wc : this.lm.values()) {
+            float totalCount = 0;
+            for (float count : wc.values()) {
+                totalCount += count;
+            }
+            for (String word : wc.keySet()) {
+                float normalizedCount = wc.get(word) / totalCount;
+                wc.put(word, normalizedCount);
+            }
+        }
+    }
+
+    /**
+     * Randomly chooses the next word using the language model
+     **/
+
+    public String generate_word(String[] prevWords) {
+        Random rnd = new Random();
+        float index = rnd.nextFloat();
+        String word = null;
+        HashMap<String, Float> distribution = this.getDistribution(prevWords);
+
+        for (Map.Entry<String, Float> entry : distribution.entrySet()) {
+
+            float prob = entry.getValue();
+            word = entry.getKey();
+            index = index - prob;
+            if (index <= 0) {
+                return word;
+            }
+        }
+        return word;
+    }
+
+    private HashMap<String, Float> getDistribution(String [] prevWords){
+        HashMap<String,Float> distribution;
+        //System.out.println(prevWords.length);
+        if(prevWords.length <= 0){
+            distribution = this.lm.getOrDefault(prevWords, this.lm.get(null));
+        }
+        else{
+            distribution = this.lm.getOrDefault(prevWords, this.getDistribution(Arrays.copyOfRange(prevWords, 1, prevWords.length)));
+
+        }
+        return distribution;
+    }
+
+    public String[] getHistory(ArrayList<String> data, int order) {
+        String[] history = new String[order];
+        while (data.size() < order) {
+            //System.err.println("Not enough data");
+            order--;
+        }
+        for (int k = order; k > 0; k--) {
+            history[k - 1] = data.get(data.size() - k);
+        }
+        return history;
+    }
+    // #TODO: write a function to loop over the orders - from max to min, add_k, finish with normalization
+
+    /**
+     * Generates a bunch of random text based on the language model
+     **/
+    public String generateText(int order, int nWords) {
+        ArrayList<String> generatedWords = new ArrayList<>();
+        for (int i = 1; i <= nWords; i++) {
+            String word = generate_word(getHistory(generatedWords, order));
+            generatedWords.add(word);
+        }
+        return String.join(" ", generatedWords);
+    }
+}

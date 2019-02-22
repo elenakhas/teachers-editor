@@ -1,13 +1,13 @@
 package application;
 //
 
-import document.Document;
+import document.AbstractDocument;
 import javafx.scene.text.Text;
 
 import java.io.IOException;
 
 class TextEvalController {
-    private Document txt;
+    private AbstractDocument txt;
     private Text nNouns;
     private Text nAdj;
     private Text nVerbs;
@@ -23,8 +23,8 @@ class TextEvalController {
     private Text superlativeAdj;
     private Text modalVerbs;
     private Text existentialThere;
-    private Text comparativeADv;
-    private Text superlativeADv;
+    private Text comparativeAdv;
+    private Text superlativeAdv;
     private Text imperativeForms;
     private Text presentSimple;
     private Text presentContinuous;
@@ -36,12 +36,13 @@ class TextEvalController {
     private Text futureSimple;
     private Text futureContinuousForms;
     private Text futurePerfectForms;
+    private int numWords;
 
     public TextEvalController(TextController ctrl, Text nNouns, Text nAdj, Text nVerbs, Text nAdv, Text nNumbers,
-            Text nPron, Text nDet, Text nWh, Text nPrepConj, Text nOther,  Text comparativeAdj, Text superlativeAdj,
-            Text modalVerbs, Text existentialThere, Text comparativeADv, Text superlativeADv, Text imperativeForms,
-            Text presentSimple, Text presentContinuous, Text pastSimple, Text pastContinuous, Text presentPerfectContinuousForms,
-            Text presentPerfect, Text pastPerfect, Text futureSimple, Text futureContinuousForms, Text futurePerfectForms){
+                              Text nPron, Text nDet, Text nWh, Text nPrepConj, Text nOther, Text comparativeAdj, Text superlativeAdj,
+                              Text modalVerbs, Text existentialThere, Text comparativeAdv, Text superlativeAdv, Text imperativeForms,
+                              Text presentSimple, Text presentContinuous, Text pastSimple, Text pastContinuous, Text presentPerfectContinuousForms,
+                              Text presentPerfect, Text pastPerfect, Text futureSimple, Text futureContinuousForms, Text futurePerfectForms){
         this.nNouns = nNouns;
         this.nAdj = nAdj;
         this.nVerbs = nVerbs;
@@ -56,8 +57,8 @@ class TextEvalController {
         this.superlativeAdj = superlativeAdj;
         this.modalVerbs = modalVerbs;
         this.existentialThere = existentialThere;
-        this.comparativeADv = comparativeADv;
-        this.superlativeADv = superlativeADv;
+        this.comparativeAdv = comparativeAdv;
+        this.superlativeAdv = superlativeAdv;
         this.imperativeForms = imperativeForms;
         this.presentSimple = presentSimple;
         this.presentContinuous = presentContinuous;
@@ -69,43 +70,64 @@ class TextEvalController {
         this.futureSimple = futureSimple;
         this.futureContinuousForms = futureContinuousForms;
         this.futurePerfectForms = futurePerfectForms;
-        TextController ctrl1 = ctrl;
         this.txt = ctrl.getDoc();
+        this.numWords = this.txt.getNumWords();
+
+    }
+
+    private static void setResults(Text text, int formCount, int numWords){
+        text.setText(formCount + " / " + String.format("%.2f", (double) formCount/numWords*100) + " %");
     }
 
     public void getVocabularyStatistics() throws IOException {
         txt.getPOStagging();
-        txt.getPOSNumbers();
-        nNouns.setText(txt.numNouns + " // " + String.format("%.2f", (double)txt.numNouns/txt.getNumWords()*100) + " %");
-        nAdj.setText(txt.numAdj + " // " + String.format("%.2f", (double)txt.numAdj/txt.getNumWords()*100) + " %");
-        nAdv.setText(txt.numAdv + " // " + String.format("%.2f", (double)txt.numAdv/txt.getNumWords()*100) + " %");
-        nVerbs.setText(txt.numVerbs + " // " + String.format("%.2f", (double)txt.numVerbs/txt.getNumWords()*100) + " %");
-        nNumbers.setText(txt.numNumbers + " // " + String.format("%.2f",(double) txt.numNumbers/txt.getNumWords()*100) + " %");
-        nDet.setText(txt.numDet + " // " + String.format("%.2f", (double)txt.numDet/txt.getNumWords()*100) + " %");
-        nPrepConj.setText(txt.numPrepConj + " // " + String.format("%.2f", (double)txt.numPrepConj/txt.getNumWords()*100) + " %");
-        nPron.setText(txt.numPron + " // " + String.format("%.2f", (double)txt.numPron/txt.getNumWords()*100) + " %");
-        nWh.setText(txt.numWh + " // " + String.format("%.2f", (double)txt.numWh/txt.getNumWords()*100) + " %");
-        nOther.setText(txt.numOther + " // " + String.format("%.2f", (double)txt.numOther/txt.getNumWords()*100) + " %");
+        txt.getPOSNumber();
+
+        setResults(this.nNouns, txt.getNumNouns(), this.numWords);
+        setResults(this.nAdj, txt.getNumAdj(), this.numWords);
+        setResults(this.nAdv, txt.getNumAdv(), this.numWords);
+        setResults(this.nVerbs, txt.getNumVerbs(), this.numWords);
+        setResults(this.nNumbers, txt.getNumNumbers(), this.numWords);
+        setResults(this.nPron, txt.getNumPron(), this.numWords);
+        setResults(this.nDet, txt.getNumDet(), this.numWords);
+        setResults(this.nWh, txt.getNumDet(), this.numWords);
+        setResults(this.nPrepConj, txt.getNumPrepConj(), this.numWords);
+        setResults(this.nOther, txt.getNumOther(), this.numWords);
+
     }
+
 
     public void getGrammarStatistics() {
         txt.grammarAnalyser();
-        comparativeAdj.setText(txt.comparativeAJ + " // " + String.format("%.2f", (double)txt.comparativeAJ/txt.getNumWords()*100) + " %");
-        superlativeAdj.setText(txt.superlativeAJ + " // " + String.format("%.2f", (double)txt.superlativeAJ/txt.getNumWords()*100) + " %");
-        comparativeADv.setText(txt.comparativeAD + " // " + String.format("%.2f", (double)txt.comparativeAD/txt.getNumWords()*100) + " %");
-        superlativeADv.setText(txt.superlativeAD + " // " + String.format("%.2f", (double)txt.superlativeAD/txt.getNumWords()*100) + " %");
-        modalVerbs.setText(txt.modals + " // " + String.format("%.2f", (double)txt.modals/txt.getNumWords()*100) + " %");
-        existentialThere.setText(txt.existential + " // " + String.format("%.2f", (double)txt.existential/txt.getNumWords()*100) + " %");
-        imperativeForms.setText(txt.imperative + " // " + String.format("%.2f",(double) txt.imperative/txt.getNumWords()*100) + " %");
-        presentSimple.setText(txt.presentSimpleActive + " // " + String.format("%.2f", (double)txt.presentSimpleActive/txt.getNumWords()*100) + " %");
-        presentContinuous.setText(txt.presentContinuousActive + " // " + String.format("%.2f", (double)txt.presentContinuousActive/(txt.getNumWords() - txt.presentContinuousActive)*100) + " %");
-        presentPerfectContinuousForms.setText(txt.presentContinuousActive + " // " + String.format("%.2f", (double)txt.presentPerfectContinuous/(txt.getNumWords() - 2*txt.presentPerfectContinuous)*100) + " %");
-        pastSimple.setText(txt.pastSimpleActive + " // " + String.format("%.2f", (double)txt.pastSimpleActive/txt.getNumWords()*100) + " %");
-        pastContinuous.setText(txt.pastContinuousActive + " // " + String.format("%.2f", (double)txt.pastContinuousActive/(txt.getNumWords() - txt.pastContinuousActive)*100) + " %");
-        presentPerfect.setText(txt.presentPerfect + " // " + String.format("%.2f",(double) txt.presentPerfect/(txt.getNumWords() - txt.presentPerfect)*100) + " %");
-        pastPerfect.setText(txt.pastPerfectActive + " // " + String.format("%.2f", (double)txt.pastPerfectActive/(txt.getNumWords() - txt.pastPerfectActive)*100) + " %");
-        futureSimple.setText(txt.futureSimpleActive + " // " + String.format("%.2f", (double)txt.futureSimpleActive/(txt.getNumWords() - txt.futureSimpleActive)*100) + " %");
-        futureContinuousForms.setText(txt.futureContinuous + " // " + String.format("%.2f", (double)txt.futureContinuous/(txt.getNumWords() - 2* txt.futureContinuous)*100) + " %");
-        futurePerfectForms.setText(txt.futurePerfect + " // " + String.format("%.2f", (double)txt.futurePerfect/(txt.getNumWords() - 2* txt.futurePerfect)*100) + " %");
+        setResults(this.comparativeAdj, txt.getNumComparativeAJ(), this.numWords);
+        setResults(this.superlativeAdj, txt.getNumSuperlativeAJ(), this.numWords);
+        setResults(this.comparativeAdv, txt.getNumComparativeAD(), this.numWords);
+        setResults(this.superlativeAdv, txt.getNumSuperlativeAD(), this.numWords);
+        setResults(this.modalVerbs, txt.getNumModals(), this.numWords);
+        setResults(this.existentialThere, txt.getNumExistential(), this.numWords);
+        setResults(this.imperativeForms, txt.getNumImperative(), this.numWords);
+
+        // The calculation is not completely accurate as the form can consist of one or two words, will be improved in the next release
+        setResults(this.presentSimple, txt.getNumPresentSimpleActive(), this.numWords);
+        // substract the number of Present Continuous forms from the total number of words in the text as the form always consists of two words
+        setResults(this.presentContinuous, txt.getNumPresentContinuousActive(), this.numWords-txt.getNumPresentContinuousActive());
+        // substract twice the number of Present Perfect Continuous forms from the total number of words in the text as the form always consists of three words
+        setResults(this.presentPerfectContinuousForms, txt.getNumPresentPerfectContinuous(), this.numWords- 2* txt.getNumPresentPerfectContinuous());
+        // The calculation is not completely accurate as the form can consist of one or two words, will be improved in the next release
+        setResults(this.pastSimple, txt.getNumPastSimpleActive(), this.numWords);
+        // substract the number of Past Continuous forms from the total number of words in the text as the form always consists of two words
+        setResults(this.pastContinuous, txt.getNumPastContinuousActive(), this.numWords-txt.getNumPastContinuousActive());
+        // substract the number of Present Perfect forms from the total number of words in the text as the form always consists of two words
+        setResults(this.presentPerfect, txt.getNumPresentPerfectActive(), this.numWords-txt.getNumPresentPerfectActive());
+        // substract the number of Past Perfect forms from the total number of words in the text as the form always consists of two words
+        setResults(this.pastPerfect, txt.getNumPastPerfectActive(), this.numWords-txt.getNumPastPerfectActive());
+        // substract the number of Future Simple forms from the total number of words in the text as the form always consists of two words
+        setResults(this.futureSimple, txt.getNumFutureSimpleActive(), this.numWords-txt.getNumFutureSimpleActive());
+        // substract twice the number of Future Continuous forms from the total number of words in the text as the form always consists of three words
+        setResults(this.futureContinuousForms, txt.getNumFutureContinuous(), this.numWords-2*txt.getNumFutureContinuous());
+        // substract twice the number of Future Perfect forms from the total number of words in the text as the form always consists of three words
+        setResults(this.futurePerfectForms, txt.getNumFuturePerfect(), this.numWords-2*txt.getNumFuturePerfect());
+
+
     }
 }

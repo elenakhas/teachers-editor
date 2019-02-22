@@ -6,16 +6,16 @@ import java.util.List;
 
 /**
  *  Class represents a text used for reading exercises
- *  Extends Document with an interpretation, does not evaluate spelling mistakes
+ *  Extends AbstractDocument with an interpretation, does not evaluate spelling mistakes
  *  of FleschKincaid score for a reading text.
  * @author Elena Khasanova
  * @version 1.2;
  *
  */
 
-public class ReadingText extends Document{
+public class ReadingMaterial extends AbstractDocument {
 
-    public ReadingText(String content) {
+    public ReadingMaterial(String content) {
         super(content);
     }
 
