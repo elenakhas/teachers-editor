@@ -15,9 +15,21 @@ import javafx.stage.Stage;
 
 import java.io.IOException;
 
-class TextEvalView {
+/**
+ *  The popup window containing the TextStatisticsController output
+ *
+ * @author Elena Khasanova
+ * @version 1.2;
+ */
 
-    private TextController ctrl;
+
+class TextStatisticsView {
+
+    private MainTextController ctrl;
+
+    // Text object fields to display output of the TextStatisticsController calls
+
+    // for VOCABULARY
     private Text numNouns;
     private Text numAdj;
     private Text numVerbs;
@@ -29,7 +41,7 @@ class TextEvalView {
     private Text numPrepConj;
     private Text numOther;
 
-
+    // for GRAMMAR
     private Text comparativeAdj;
     private Text superlativeAdj;
     private Text modalVerbs;
@@ -48,8 +60,12 @@ class TextEvalView {
     private Text futureContinuousForms;
     private Text futurePerfectForms;
 
-    public TextEvalView(TextController ctrl){
+    public TextStatisticsView(MainTextController ctrl){
+
+        // instantiate MainTextController
         this.ctrl = ctrl;
+
+        // Instantiate text objects
         this.numNouns = new Text();
         this.numAdj = new Text();
         this.numVerbs = new Text();
@@ -79,40 +95,37 @@ class TextEvalView {
         this.futurePerfectForms = new Text();
     }
 
+    /**Get the results of **/
 
+    public void getGrammarAndVocabCalculations() throws IOException {
+        TextStatisticsController textStatCtrl = new TextStatisticsController(ctrl, numNouns, numAdj, numVerbs, numAdv, numNumbers,
+                numPron, numDet, numWh, numPrepConj, numOther,  comparativeAdj, superlativeAdj,
+                modalVerbs, existentialThere, comparativeAdv, superlativeAdv, imperativeForms,
+                presentSimple, presentContinuous, pastSimple, pastContinuous, presentPerfectContinuousForms,
+                presentPerfect, pastPerfect, futureSimple, futureContinuousForms, futurePerfectForms);
 
+        textStatCtrl.getVocabularyStatistics();
+        textStatCtrl.getGrammarStatistics();
+    }
 
-    public void showNewWindow() throws IOException {
-        VBox vbox = new VBox();
-        Text title = new Text();
-        title.setFont(Font.font("Verdana", 14));
-        title.setUnderline(true);
-        title.setText("EXTENDED TEXT ANALYSIS");
-        title.setTextAlignment(TextAlignment.CENTER);
-        vbox.getChildren().add(title);
+    /**Set properties of the Vocabulary GridPane and display the results **/
 
+    public void vocabGridPane(GridPane vocab) {
 
-        HBox hbox = new HBox();
-        vbox.getChildren().add(hbox);
-        GridPane vocab = new GridPane();
-        GridPane grammar = new GridPane();
-        hbox.getChildren().addAll(vocab, grammar);
-
-        // vocabulary pane
-        //Setting size for the pane
+        // set properties
         vocab.setMinSize(100, 200);
-        //Setting the padding
         vocab.setPadding(new Insets(10, 10, 10, 10));
         vocab.setVgap(10);
         vocab.setHgap(10);
-        //Setting the Grid alignment
         vocab.setAlignment(Pos.TOP_LEFT);
 
+        // the title for the area
         Text subtitleColumn1 = new Text();
         subtitleColumn1.setFill(Color.DARKBLUE);
-        subtitleColumn1.setText("vocabulary: ");
+        subtitleColumn1.setText("Vocabulary: ");
 
 
+        // Set titles for vocabulary properties:
         Text nouns = new Text();
         nouns.setText("Nouns: ");
         Text verbs = new Text();
@@ -134,18 +147,9 @@ class TextEvalView {
         Text other = new Text();
         other.setText("Other: ");
 
-        TextEvalController tec = new TextEvalController(ctrl, numNouns, numAdj, numVerbs, numAdv, numNumbers,
-                numPron, numDet, numWh, numPrepConj, numOther,  comparativeAdj, superlativeAdj,
-                modalVerbs, existentialThere, comparativeAdv, superlativeAdv, imperativeForms,
-                presentSimple, presentContinuous, pastSimple, pastContinuous, presentPerfectContinuousForms,
-                presentPerfect, pastPerfect, futureSimple, futureContinuousForms, futurePerfectForms);
+       // vocab.addRow(0, );
 
-
-        tec.getVocabularyStatistics();
-        tec.getGrammarStatistics();
-
-        vocab.addRow(0,title);
-        //gridPane.add(flesch, 1,1);
+        // set the results of calculations on vocabulary properties to respective text area to display
         vocab.addRow(1, subtitleColumn1);
         vocab.addRow(2, nouns, numNouns);
         vocab.addRow(3, verbs, numVerbs);
@@ -158,21 +162,25 @@ class TextEvalView {
         vocab.addRow(10, wh, numWh);
         vocab.addRow(11, other, numOther);
 
+    }
 
-       // GRAMMAR GRID PANE
+
+    /**Set properties of the Grammar GridPane and display the results **/
+
+    public void grammarGridPane(GridPane grammar) {
+        // set properties
         grammar.setMinSize(100, 200);
-        //Setting the padding
         grammar.setPadding(new Insets(10, 10, 10, 10));
         grammar.setVgap(10);
         grammar.setHgap(10);
-        //Setting the Grid alignment
         grammar.setAlignment(Pos.TOP_LEFT);
 
+        // set title for the area
         Text subtitleColumn2 = new Text();
         subtitleColumn2.setFill(Color.DARKBLUE);
         subtitleColumn2.setText("Grammar: ");
 
-
+        // set titles for vocabulary properties
         Text compAdj = new Text();
         compAdj.setText("Comparative adjectives: ");
         Text supAdj = new Text();
@@ -208,7 +216,7 @@ class TextEvalView {
         Text futPerf = new Text();
         futPerf.setText("Future Perfect: ");
 
-
+        // set the results of calculations on vocabulary properties to respective text area to display
         grammar.addRow(2, subtitleColumn2);
         grammar.addRow(3, compAdj, comparativeAdj);
         grammar.addRow(4, supAdj, superlativeAdj);
@@ -228,20 +236,45 @@ class TextEvalView {
         grammar.addRow(18, futCont, futureContinuousForms);
         grammar.addRow(19, futPerf, futurePerfectForms);
 
+    }
 
-        //Setting the vertical and horizontal gaps between the columns
+    /**Add the elements to the window, display the window **/
+    public void showNewWindow() throws IOException {
+
+        // vbox layout for the window
+        VBox vbox = new VBox();
+        Text title = new Text();
+        title.setFont(Font.font("Verdana", 14));
+        title.setUnderline(true);
+        title.setText("EXTENDED TEXT ANALYSIS");
+        title.setTextAlignment(TextAlignment.CENTER);
+        vbox.getChildren().add(title);
+
+        // hbox with two GridPanes - for vocabulary and for grammar-related output
+        HBox hbox = new HBox();
+        vbox.getChildren().add(hbox);
+        GridPane vocab = new GridPane();
+        GridPane grammar = new GridPane();
+        hbox.getChildren().addAll(vocab, grammar);
+
+        // get results to further display in GridPanes
+        getGrammarAndVocabCalculations();
+
+        // add the vocabulary and grammar gridpane
+        vocabGridPane(vocab);
+        grammarGridPane(grammar);
+
+        //Create a scene object
         Scene scene = new Scene(vbox);
         Stage statsStage = new Stage();
-
-        //Creating a scene object
-
         final Dialog dlg = new Dialog();
         dlg.getDialogPane().setContent(vbox);
-        //Setting title to the Stage
+
+        //Set title to the Stage
         statsStage.setTitle("Text statistics");
-        //Adding scene to the stage
+        //Add  scene to the stage
         statsStage.setScene(scene);
-        //Displaying the contents of the stage
+        //Display the contents of the stage
         statsStage.setAlwaysOnTop(true);
         statsStage.sizeToScene();
         statsStage.showAndWait();

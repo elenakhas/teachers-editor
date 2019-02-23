@@ -6,8 +6,13 @@ import javafx.scene.text.Text;
 
 import java.io.IOException;
 
-class TextEvalController {
+class TextStatisticsController {
+
+    // Create instance of the text document
     private AbstractDocument txt;
+    // Create text object fields to store output of methods calls
+
+    // for VOCABULARY
     private Text nNouns;
     private Text nAdj;
     private Text nVerbs;
@@ -19,6 +24,7 @@ class TextEvalController {
     private Text nPrepConj;
     private Text nOther;
 
+    // for GRAMMAR
     private Text comparativeAdj;
     private Text superlativeAdj;
     private Text modalVerbs;
@@ -38,11 +44,12 @@ class TextEvalController {
     private Text futurePerfectForms;
     private int numWords;
 
-    public TextEvalController(TextController ctrl, Text nNouns, Text nAdj, Text nVerbs, Text nAdv, Text nNumbers,
-                              Text nPron, Text nDet, Text nWh, Text nPrepConj, Text nOther, Text comparativeAdj, Text superlativeAdj,
-                              Text modalVerbs, Text existentialThere, Text comparativeAdv, Text superlativeAdv, Text imperativeForms,
-                              Text presentSimple, Text presentContinuous, Text pastSimple, Text pastContinuous, Text presentPerfectContinuousForms,
-                              Text presentPerfect, Text pastPerfect, Text futureSimple, Text futureContinuousForms, Text futurePerfectForms){
+    // instantiate everything in the constructor
+    public TextStatisticsController(MainTextController ctrl, Text nNouns, Text nAdj, Text nVerbs, Text nAdv, Text nNumbers,
+                                    Text nPron, Text nDet, Text nWh, Text nPrepConj, Text nOther, Text comparativeAdj, Text superlativeAdj,
+                                    Text modalVerbs, Text existentialThere, Text comparativeAdv, Text superlativeAdv, Text imperativeForms,
+                                    Text presentSimple, Text presentContinuous, Text pastSimple, Text pastContinuous, Text presentPerfectContinuousForms,
+                                    Text presentPerfect, Text pastPerfect, Text futureSimple, Text futureContinuousForms, Text futurePerfectForms){
         this.nNouns = nNouns;
         this.nAdj = nAdj;
         this.nVerbs = nVerbs;
@@ -72,14 +79,17 @@ class TextEvalController {
         this.futurePerfectForms = futurePerfectForms;
         this.txt = ctrl.getDoc();
         this.numWords = this.txt.getNumWords();
-
     }
 
+    /**Helper method to set results to a respective text object in a specified format: "count / percentage"**/
     private static void setResults(Text text, int formCount, int numWords){
         text.setText(formCount + " / " + String.format("%.2f", (double) formCount/numWords*100) + " %");
     }
 
+    /** Sets the number of words of selected POS to the respective text object **/
+
     public void getVocabularyStatistics() throws IOException {
+
         txt.getPosTagging();
         txt.getPosStatistics();
 
@@ -93,41 +103,71 @@ class TextEvalController {
         setResults(this.nWh, txt.getNumWh(), this.numWords);
         setResults(this.nPrepConj, txt.getNumPrepConj(), this.numWords);
         setResults(this.nOther, txt.getNumOther(), this.numWords);
-
     }
 
+    /** Sets the number of occurrence of grammar forms to the respective text object **/
 
     public void getGrammarStatistics() {
+
         txt.getGrammarStatistics();
+
+        // lexicalized grammar features
         setResults(this.comparativeAdj, txt.getNumComparativeAJ(), this.numWords);
         setResults(this.superlativeAdj, txt.getNumSuperlativeAJ(), this.numWords);
         setResults(this.comparativeAdv, txt.getNumComparativeAD(), this.numWords);
         setResults(this.superlativeAdv, txt.getNumSuperlativeAD(), this.numWords);
         setResults(this.modalVerbs, txt.getNumModals(), this.numWords);
         setResults(this.existentialThere, txt.getNumExistential(), this.numWords);
+
         setResults(this.imperativeForms, txt.getNumImperative(), this.numWords);
 
-        // The calculation is not completely accurate as the form can consist of one or two words, will be improved in the next release
+        // The calculation is not completely accurate as the form can consist of one or two words,
+        // will be improved in the next release
         setResults(this.presentSimple, txt.getNumPresentSimpleActive(), this.numWords);
-        // substract the number of Present Continuous forms from the total number of words in the text as the form always consists of two words
-        setResults(this.presentContinuous, txt.getNumPresentContinuousActive(), this.numWords-txt.getNumPresentContinuousActive());
-        // substract twice the number of Present Perfect Continuous forms from the total number of words in the text as the form always consists of three words
-        setResults(this.presentPerfectContinuousForms, txt.getNumPresentPerfectContinuous(), this.numWords- 2* txt.getNumPresentPerfectContinuous());
-        // The calculation is not completely accurate as the form can consist of one or two words, will be improved in the next release
-        setResults(this.pastSimple, txt.getNumPastSimpleActive(), this.numWords);
-        // substract the number of Past Continuous forms from the total number of words in the text as the form always consists of two words
-        setResults(this.pastContinuous, txt.getNumPastContinuousActive(), this.numWords-txt.getNumPastContinuousActive());
-        // substract the number of Present Perfect forms from the total number of words in the text as the form always consists of two words
-        setResults(this.presentPerfect, txt.getNumPresentPerfectActive(), this.numWords-txt.getNumPresentPerfectActive());
-        // substract the number of Past Perfect forms from the total number of words in the text as the form always consists of two words
-        setResults(this.pastPerfect, txt.getNumPastPerfectActive(), this.numWords-txt.getNumPastPerfectActive());
-        // substract the number of Future Simple forms from the total number of words in the text as the form always consists of two words
-        setResults(this.futureSimple, txt.getNumFutureSimpleActive(), this.numWords-txt.getNumFutureSimpleActive());
-        // substract twice the number of Future Continuous forms from the total number of words in the text as the form always consists of three words
-        setResults(this.futureContinuousForms, txt.getNumFutureContinuous(), this.numWords-2*txt.getNumFutureContinuous());
-        // substract twice the number of Future Perfect forms from the total number of words in the text as the form always consists of three words
-        setResults(this.futurePerfectForms, txt.getNumFuturePerfect(), this.numWords-2*txt.getNumFuturePerfect());
 
+        // substract the number of Present Continuous forms from the total number of words in the text
+        // as the form always consists of two words
+        setResults(this.presentContinuous, txt.getNumPresentContinuousActive(),
+                this.numWords-txt.getNumPresentContinuousActive());
+
+        // substract twice the number of Present Perfect Continuous forms from the total number of words
+        // in the text as the form always consists of three words
+        setResults(this.presentPerfectContinuousForms, txt.getNumPresentPerfectContinuous(),
+                this.numWords- 2* txt.getNumPresentPerfectContinuous());
+
+        // The calculation is not completely accurate as the form can consist of one or two words,
+        // will be improved in the next release
+        setResults(this.pastSimple, txt.getNumPastSimpleActive(), this.numWords);
+
+        // substract the number of Past Continuous forms from the total number of words in the text
+        // as the form always consists of two words
+        setResults(this.pastContinuous, txt.getNumPastContinuousActive(),
+                this.numWords-txt.getNumPastContinuousActive());
+
+        // substract the number of Present Perfect forms from the total number of words in the text
+        // as the form always consists of two words
+        setResults(this.presentPerfect, txt.getNumPresentPerfectActive(),
+                this.numWords-txt.getNumPresentPerfectActive());
+
+        // substract the number of Past Perfect forms from the total number of words in the text
+        // as the form always consists of two words
+        setResults(this.pastPerfect, txt.getNumPastPerfectActive(),
+                this.numWords-txt.getNumPastPerfectActive());
+
+        // substract the number of Future Simple forms from the total number of words in the text
+        // as the form always consists of two words
+        setResults(this.futureSimple, txt.getNumFutureSimpleActive(),
+                this.numWords-txt.getNumFutureSimpleActive());
+
+        // substract twice the number of Future Continuous forms from the total number of words in the text
+        // as the form always consists of three words
+        setResults(this.futureContinuousForms, txt.getNumFutureContinuous(),
+                this.numWords-2*txt.getNumFutureContinuous());
+
+        // substract twice the number of Future Perfect forms from the total number of words in the text
+        // as the form always consists of three words
+        setResults(this.futurePerfectForms, txt.getNumFuturePerfect(),
+                this.numWords-2*txt.getNumFuturePerfect());
 
     }
 }

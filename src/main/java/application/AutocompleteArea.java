@@ -44,8 +44,8 @@ class AutocompleteArea extends StyledTextArea<Boolean> {
     private int startIndex;
     private int endIndex;
 
-    // current autocomplete options
-    private List<String> options;
+    // current autocomplete autocompleteOptions
+    private List<String> autocompleteOptions;
 
     static {
         try {
@@ -115,9 +115,9 @@ class AutocompleteArea extends StyledTextArea<Boolean> {
             }
         });
 
-        // keep track of text changes, update spell check if needed
+        // keep track of text changes, update spellcheck if needed
         this.plainTextChanges().subscribe(change -> {
-            // could make more efficient
+            // apply style to the text
             if (spellingOn && styleNeedUpdate) {
                 this.setStyleSpans(0, checkSpelling());
             }
@@ -125,16 +125,15 @@ class AutocompleteArea extends StyledTextArea<Boolean> {
 
         // AUTOCOMPLETE
 
-        // initialize list and options menu for autoComplete
-        options = new ArrayList<>();
+        // initialize list and autocompleteOptions menu for autoComplete
+        autocompleteOptions = new ArrayList<>();
         entriesPopup = new ContextMenu();
         setPopupWindow(entriesPopup);
         setPopupAlignment(PopupAlignment.CARET_BOTTOM);
 
-        // observe caretPosition property for auto complete functionality
+        // observe caretPosition property for autocomplete functionality
         this.caretPositionProperty().addListener((obs, oldPosition, newPosition) -> {
             if (autocompleteOn) {
-                // listen to textProperty to only
                 String prefix = getWordAtIndex(newPosition.intValue());
                 showCompletions(prefix);
             }
@@ -143,7 +142,7 @@ class AutocompleteArea extends StyledTextArea<Boolean> {
 
     /**
      * Gets white space delimited word which contains character at pos in text
-     * Also sets startIndex and endIndex instance variables.
+     * Sets startIndex and endIndex instance variables.
      *
      * @param pos - index in text area
      * @return word at index
@@ -168,7 +167,7 @@ class AutocompleteArea extends StyledTextArea<Boolean> {
         String suffix = this.getText().substring(pos, index);
         endIndex = index;
 
-        // replace regex wildcards (literal ".") with "\.".
+        // replace regex wildcards: literal "." with "\.".
         prefix = prefix.replaceAll("\\.", "\\.");
         suffix = suffix.replaceAll("\\.", "\\.");
 
@@ -180,21 +179,19 @@ class AutocompleteArea extends StyledTextArea<Boolean> {
     }
 
     /**
-     * Populate the entry set with the options passed in
-     *
-     * @param options - list of auto complete options
+     * Populate the set of options with the autocompleteOptions passed in
+     * @param options - list of autocompleteOptions
      */
     private List<CustomMenuItem> createOptions(List<String> options, boolean[] flags) {
         List<CustomMenuItem> menuItems = new LinkedList<>();
         // If you'd like more entries, modify this line.
         int count = Math.min(options.size(), NUM_SUGGESTIONS);
 
-        // add options to ContextMenu
+        // add autocompleteOptions to ContextMenu
         for (int i = 0; i < count; i++) {
             String str = options.get(i);
 
-            // check if need to match case (flags will always be null is
-            // matchCase is true)
+            // check if need to match case (flags will always be null if matchCase is true)
             // see showSuggestions/Completions
             if (flags != null) {
                 str = convertCaseUsingFlags(str, flags);
@@ -205,7 +202,7 @@ class AutocompleteArea extends StyledTextArea<Boolean> {
             Label entryLabel = new Label(result);
             CustomMenuItem item = new CustomMenuItem(entryLabel, true);
 
-            // register event where user chooses word (click)
+            // register users choice of word by click
             item.setOnAction(actionEvent -> {
                 styleNeedUpdate = false;
                 replaceText(startIndex, endIndex, result);
@@ -221,8 +218,7 @@ class AutocompleteArea extends StyledTextArea<Boolean> {
     }
 
     /**
-     * Checks spelling of text in text area builds style spans
-     *
+     * Checks spelling of text in text area, builds style spans for a piece of text
      * @return StyleSpans with misspelled words set to style false (!correct)
      */
     private StyleSpans<Boolean> checkSpelling() {
@@ -256,8 +252,7 @@ class AutocompleteArea extends StyledTextArea<Boolean> {
     }
 
     /**
-     * show suggestions for word in menu at click point
-     *
+     * Show suggestions for word in menu at a click
      * @param word  - word to get suggestions for
      * @param click - mouse click for displaying menu
      */
@@ -310,11 +305,11 @@ class AutocompleteArea extends StyledTextArea<Boolean> {
         // check if in middle of typing word
         if (!prefix.equals("")) {
 
-            // get completion options
-            options = (ac).predictCompletions(prefix, NUM_COMPLETIONS);
+            // get completion autocompleteOptions
+            autocompleteOptions = (ac).predictCompletions(prefix, NUM_COMPLETIONS);
 
-            // check if options found
-            if (options.size() > 0) {
+            // check if autocompleteOptions found
+            if (autocompleteOptions.size() > 0) {
 
                 // boolean array for matching case of use input
                 boolean[] caseFlags = null;
@@ -322,7 +317,7 @@ class AutocompleteArea extends StyledTextArea<Boolean> {
                     caseFlags = getCaseFlags(prefix);
                 }
 
-                List<CustomMenuItem> menuOptions = createOptions(options, caseFlags);
+                List<CustomMenuItem> menuOptions = createOptions(autocompleteOptions, caseFlags);
 
                 entriesPopup.getItems().clear();
                 entriesPopup.getItems().addAll(menuOptions);
@@ -331,7 +326,7 @@ class AutocompleteArea extends StyledTextArea<Boolean> {
                     entriesPopup.show(getScene().getWindow());
                 }
             }
-            // no options for complete
+            // no autocompleteOptions for complete
             else {
                 entriesPopup.hide();
             }
@@ -362,8 +357,7 @@ class AutocompleteArea extends StyledTextArea<Boolean> {
     }
 
     /**
-     * Returns a boolean array with true in position where word has an upper
-     * case letter
+     * Returns a boolean array with true in position where word has an uppercase letter
      *
      * @param word
      * @return boolean array for uppercase or null if none

@@ -8,7 +8,7 @@ package document;
  * @version 1.0;
  * **/
 
-interface ExtendedTextEvaluator {
+interface ExtendedTextStatistics {
 
     /** Calculates the number of occurrences of the words of major parts of speech**/
     void getPosStatistics();

@@ -12,7 +12,7 @@ import java.util.List;
  * @version 1.0;
  * **/
 
-public interface MainTextEvaluator {
+public interface MainTextStatistics {
 
     /** Returns the number of words in the text**/
     int getNumWords();

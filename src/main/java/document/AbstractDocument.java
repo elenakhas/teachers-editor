@@ -18,7 +18,7 @@ import static java.util.stream.Collectors.toMap;
  * @version 1.0;
  * **/
 @SuppressWarnings({"unchecked", "CanBeFinal"})
-public abstract class AbstractDocument implements MainTextEvaluator, ExtendedTextEvaluator {
+public abstract class AbstractDocument implements MainTextStatistics, ExtendedTextStatistics {
 
     // Store collections
     private final String content;

@@ -12,50 +12,61 @@ import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 
-class TextController {
+/**
+ * Functionality applied to MainView
+ * @author Elena Khasanova
+ * @version 1.0;
+ * */
 
+class MainTextController {
+
+    // the area containing the file content
     private AutocompleteArea text;
+    // instance of the text document
     private AbstractDocument txt;
+
+    // text objects to set output of method calls to be shown in MainTextView
     private Text score;
     private Text fKInterpretation;
     private Text levelPercentage;
-    private Text spellingMistakes;
+    private Text unknownWords;
     private Text wordcount;
     private Text sentenceNumber;
     private Text frequentWords;
     private Text uniqueWords;
-    private String name;
+
+    // name of the file opened
+    private String fileName;
 
 
-    public TextController(AutocompleteArea text, Text score, Text fKInterpretation, Text levelPercentage, Text spellingMistakes,
-                          Text wordcount, Text sentenceNumber, Text frequentWords, Text uniqueWords) {
+    public MainTextController(AutocompleteArea text, Text score, Text fKInterpretation, Text levelPercentage, Text unknownWords,
+                              Text wordcount, Text sentenceNumber, Text frequentWords, Text uniqueWords) {
         this.text = text;
         text.setEditable(true);
         this.score = score;
         this.fKInterpretation = fKInterpretation;
         this.levelPercentage = levelPercentage;
-        this.spellingMistakes = spellingMistakes;
+        this.unknownWords = unknownWords;
         this.wordcount = wordcount;
         this.sentenceNumber = sentenceNumber;
         this.frequentWords = frequentWords;
         this.uniqueWords = uniqueWords;
     }
-//
-//    public TextController(AutocompleteArea text){
-//        this.text = text;
-//    }
 
+/** Clears the text area and the MainStatisticsArea**/
     private void clearing(){
         text.clear();
         score.setText("");
         fKInterpretation.setText("");
         levelPercentage.setText("");
-        spellingMistakes.setText("");
+        unknownWords.setText("");
         wordcount.setText("");
         sentenceNumber.setText("");
         frequentWords.setText("");
         uniqueWords.setText("");
     }
+
+    /** Loads the ReadingMaterial text and assigns it to text area if the text is selected**/
 
     public void loadReadingText() throws IOException {
         FileChooser fc = new FileChooser();
@@ -64,7 +75,7 @@ class TextController {
         if (selected != null) {
             clearing();
             String filename = selected.getAbsolutePath();
-            name = selected.getPath();
+            fileName = selected.getPath();
             FileContent fcon = new FileContent(filename);
             txt = new ReadingMaterial(fcon.getContent());
             String content = txt.getContent();
@@ -72,50 +83,57 @@ class TextController {
         }
     }
 
+    /** Loads the Essay text and assigns it to text area if the text is selected**/
     public void loadEssay() throws IOException {
         FileChooser fc = new FileChooser();
         File selected = fc.showOpenDialog(null);
         fc.getExtensionFilters().add(new FileChooser.ExtensionFilter("TXT", "*.txt"));
         if (selected != null) {
             clearing();
-            name = selected.getPath();
+            fileName = selected.getPath();
             String filename = selected.getAbsolutePath();
             FileContent fcon = new FileContent(filename);
-            //String content = null;
             txt = new Essay(fcon.getContent());
             String content = txt.getContent();
             text.insertText(0, content);
         }
     }
+
+    /** Getter for the AbstractDocument object**/
     public AbstractDocument getDoc(){
         return txt;
     }
 
+    /** Sets Flesch score for the document and its interpretation to a respective text object**/
     public void getFlesch() {
-        double fscore = txt.calcFleschScore();
-        score.setText(String.format("%.2f", fscore));
+        float fscore = txt.calcFleschScore();
+        score.setText(String.format("%.2f", fscore) + " " + txt.interpretFlesch(fscore));
     }
 
+    /** Sets FleschKincaid score for the document and its interpretation to a respective text object**/
     public void fleschKincaid() {
         String fsk = txt.interpretFleshKincaid(txt.calcFleschKincaid());
         fKInterpretation.setText(fsk);
     }
 
-    private void SpellingMistakes() {
+    /** Sets the number of spelling mistakes to a respective text object**/
+    private void setUnknownWords() {
         Loader loader = new Loader();
         String spm = String.valueOf(txt.countUnknownWords(txt.getWords(), loader.getDictionary()));
-        spellingMistakes.setText(spm);
+        unknownWords.setText(spm);
     }
 
+    /** Gets the percentage of words of KET level for the document and its interpretation **/
     private String percentageKet() {
         Loader loader = new Loader();
         txt.wordsOfLevel(txt.getWords(), loader.getKetVocab());
         String percentage = (String.format("%.2f", txt.percentWordsOfLevel()));
         String levelPercentage = percentage + "% of KET words";
         String unique = String.format("%.2f", txt.uniqueWordsOfALevel());
-        return levelPercentage + ", unique words: " + unique;
+        return levelPercentage + ";  unique words: " + unique;
     }
 
+    /** Gets the percentage of words of PET level for the document and its interpretation **/
     private String percentagePet() {
         Loader loader = new Loader();
         txt.wordsOfLevel(txt.getWords(), loader.getPetVocab());
@@ -125,6 +143,7 @@ class TextController {
         return levelPercentage + ", unique words: " + unique;
     }
 
+    /** Gets the percentage of words of Starters level for the document and its interpretation **/
     private String percentageStarters() {
         Loader loader = new Loader();
         txt.wordsOfLevel(txt.getWords(), loader.getStartersVocab());
@@ -134,6 +153,7 @@ class TextController {
         return levelPercentage + ", unique words: " + unique;
     }
 
+    /** Gets the percentage of words of Movers level for the document and its interpretation **/
     private String percentageMovers() {
         Loader loader = new Loader();
         txt.wordsOfLevel(txt.getWords(), loader.getMoversVocab());
@@ -143,6 +163,7 @@ class TextController {
         return levelPercentage + ", unique words: " + unique;
     }
 
+    /** Gets the percentage of words of Flyers level for the document and its interpretation **/
     private String percentageFlyers() {
         Loader loader = new Loader();
         txt.wordsOfLevel(txt.getWords(), loader.getFlyersVocab());
@@ -151,6 +172,8 @@ class TextController {
         String unique = String.format("%.2f", txt.uniqueWordsOfALevel());
         return levelPercentage + ", unique words: " + unique;
     }
+
+    /** Gets the percentage of words of FCE level for the document and its interpretation **/
     private String percentageFCE() {
         Loader loader = new Loader();
         txt.wordsOfLevel(txt.getWords(), loader.getFCEVocab());
@@ -159,6 +182,8 @@ class TextController {
         String unique = String.format("%.2f", txt.uniqueWordsOfALevel());
         return levelPercentage + ", unique words: " + unique;
     }
+
+    /** Gets the percentage of words of TOEFL level for the document and its interpretation **/
     private String percentageTOEFL() {
         Loader loader = new Loader();
         txt.wordsOfLevel(txt.getWords(), loader.getTOEFLvocab());
@@ -168,17 +193,23 @@ class TextController {
         return levelPercentage + ", unique words: " + unique;
     }
 
-    public void getWordcount() {
+    /** Sets the number of words to the respective text object **/
+    public void setWordcount() {
         wordcount.setText(String.valueOf(txt.getNumWords()));
     }
 
-    public void getSentenceCount(){
+    /** Sets the number of sentences to the respective text object **/
+    public void setSentenceCount(){
         sentenceNumber.setText(String.valueOf(txt.getNumSentences()));
     }
-    public void getUniqueWords(){
+
+    /** Sets the number of unique words to the respective text object **/
+    public void setUniqueWords(){
         uniqueWords.setText(String.valueOf(txt.wordsVariety()));
     }
-    public void getTopTenWords(){
+
+    /** Sets the TopTenWords to the respective text object **/
+    public void setTopTenWords(){
 
         for (String key : txt.mostFrequentWords().keySet()){
             String message = key + " : " + txt.mostFrequentWords().get(key);
@@ -186,9 +217,12 @@ class TextController {
         }
     }
 
+    /** Sets the name of the file to the respective text object **/
     public String getFilename(){
-        return name;
+        return fileName;
     }
+
+    /** Event hadler for checkboxes **/
 
     public void handleCheckboxes(CheckBox cbKET, CheckBox cbPET, CheckBox cbStarters, CheckBox cbMovers, CheckBox cbFlyers, CheckBox cbFCE, CheckBox cbTOEFL) {
         ArrayList<String> messageLevel = new ArrayList<>();
@@ -224,6 +258,8 @@ class TextController {
         }
     }
 
+    /** Event handler for autocomplete **/
+
     public void handleAutoComplete(CheckBox autocompleteBox) {
 
         if(autocompleteBox.isSelected()) {
@@ -233,11 +269,13 @@ class TextController {
             text.setAutoComplete(false);
         }
     }
+
+    /** Event handler for spellchecker **/
     public void handleSpelling(CheckBox spellingBox) {
 
         if (spellingBox.isSelected()) {
             text.setSpelling(true);
-            SpellingMistakes();
+            setUnknownWords();
         } else {
             text.setSpelling(false);
         }

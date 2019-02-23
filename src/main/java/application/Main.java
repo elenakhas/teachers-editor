@@ -3,7 +3,7 @@ package application;
 import javafx.application.Application;
 import javafx.stage.Stage;
 /**
- * Main class
+ * Main gui class
  * @author Elena Khasanova
  * @version 1.1;
  */
@@ -11,7 +11,7 @@ import javafx.stage.Stage;
 public class Main extends Application {
 
     public void start(Stage primaryStage) {
-        MainView controller = new MainView();
+        MainTextView controller = new MainTextView();
         controller.start(primaryStage);
     }
 
