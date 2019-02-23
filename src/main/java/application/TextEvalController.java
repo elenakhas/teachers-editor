@@ -80,7 +80,7 @@ class TextEvalController {
     }
 
     public void getVocabularyStatistics() throws IOException {
-        txt.getPOStagging();
+        txt.getPosTagging();
         txt.getPosStatistics();
 
         setResults(this.nNouns, txt.getNumNouns(), this.numWords);

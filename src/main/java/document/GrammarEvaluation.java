@@ -235,33 +235,40 @@ class GrammarEvaluation {
     /** Extracts the dependencies corresponding to Past Simple form;
      * @param typedDependencies - Collection of typedDependencies (td), output of a UD parser for one sentence
      * @return ArrayList of respective typed dependencies
+     *
+     * #TODO: note: sometimes erroneously extracts passive forms
      * **/
     public ArrayList<TypedDependency> getPastSimple(Collection<TypedDependency> typedDependencies) {
         ArrayList<TypedDependency> pastSimple = new ArrayList<>();
-        Object[] list = typedDependencies.toArray();
-        TypedDependency typedDependency;
-        for (Object object : list) {
-            typedDependency = (TypedDependency) object;
-            // if the td is an auxiliary, a
-            if ((typedDependency.reln().getShortName().equals("aux") || typedDependency.reln().getShortName().equals("nsubj")
-                    || typedDependency.reln().getShortName().equals("cop") || typedDependency.reln().getShortName().equals("root")) && typedDependency.dep().tag().equals("VBD")) {
-                pastSimple.add(typedDependency);
-            }
+        for (TypedDependency typedDependency : typedDependencies) {
+            // if the td is an auxiliary, an nonimal subj, a copula, or a root
+            if (typedDependency.reln().getShortName().equals("aux") || typedDependency.reln().getShortName().equals("nsubj")
+                || typedDependency.reln().getShortName().equals("cop") || typedDependency.reln().getShortName().equals("root"))
+                // if the dependent is a verb in the past tense, add td to the list
+                if (typedDependency.dep().tag().equals("VBD")) {
+
+                    pastSimple.add(typedDependency);
+                }
         }
         return pastSimple;
     }
 
 
+    /** Extracts the dependencies corresponding to Past Perfect form;
+     * @param typedDependencies - Collection of typedDependencies (td), output of a UD parser for one sentence
+     * @return ArrayList of respective typed dependencies
+     * **/
 
     public ArrayList<TypedDependency> getPastPerfect(Collection<TypedDependency> typedDependencies) {
         ArrayList<TypedDependency> presentPerfect = new ArrayList<>();
 
         for (TypedDependency typedDependency : typedDependencies) {
-            //typedDependency = (TypedDependency) object;
-
-            if ((typedDependency.reln().getShortName().equals("aux") || (typedDependency.reln().getShortName().equals("cop")) && typedDependency.gov().tag().equals("VBN"))) {
+        // if td is a copula or aux, the governor is a past participle
+            if ((typedDependency.reln().getShortName().equals("aux") || (typedDependency.reln().getShortName().equals("cop"))
+                 && typedDependency.gov().tag().equals("VBN"))) {
+                // if the dependent is "had", add td to the list
                 if (typedDependency.dep().toString().toLowerCase().equals("had/vbd")) {
-                    // && typedDependency.dep().toString().toLowerCase().equals("been"))) {
+
                     presentPerfect.add(typedDependency);
                 }
             }
@@ -269,34 +276,58 @@ class GrammarEvaluation {
         return presentPerfect;
     }
 
+    /** Extracts the dependencies corresponding to Future Simple form;
+     * @param typedDependencies - Collection of typedDependencies (td), output of a UD parser for one sentence
+     * @return ArrayList of respective typed dependencies
+     * **/
+
     public ArrayList<TypedDependency> getFutureSimple(Collection<TypedDependency> typedDependencies) {
         ArrayList<TypedDependency> futureSimple = new ArrayList<>();
         for (TypedDependency typedDependency : typedDependencies) {
-            if ((typedDependency.reln().getShortName().equals("aux") && typedDependency.gov().tag().equals("VB")) && typedDependency.dep().toString().toLowerCase().equals("will/md")) {
-                // && typedDependency.dep().toString().toLowerCase().equals("been"))) {
+            // if td is an aux, the governor is a base form, and the dependent is "will", add the td
+            if ((typedDependency.reln().getShortName().equals("aux") && typedDependency.gov().tag().equals("VB"))
+               && typedDependency.dep().toString().toLowerCase().equals("will/md")) {
+
                 futureSimple.add(typedDependency);
             }
         }
         return futureSimple;
     }
 
+    /** Extracts the dependencies corresponding to Future Continuous form;
+     * @param typedDependencies - Collection of typedDependencies (td), output of a UD parser for one sentence
+     * @return ArrayList of respective typed dependencies
+     * **/
     public ArrayList<TypedDependency> getFutureContinuous(Collection<TypedDependency> typedDependencies) {
         ArrayList<TypedDependency> futureContinuous = new ArrayList<>();
         for (TypedDependency typedDependency : typedDependencies) {
-            if ((typedDependency.reln().getShortName().equals("aux") && typedDependency.gov().tag().equals("VBG")) && (typedDependency.dep().toString().toLowerCase().equals("will/md") || typedDependency.dep().toString().toLowerCase().equals("be/vb"))) {
-                // && typedDependency.dep().toString().toLowerCase().equals("been"))) {
+            // if td is an auxiliary, the governor is a gerund form, the dependent is "will" or "be"
+            if ((typedDependency.reln().getShortName().equals("aux") && typedDependency.gov().tag().equals("VBG"))
+                && (typedDependency.dep().toString().toLowerCase().equals("will/md")
+                || typedDependency.dep().toString().toLowerCase().equals("be/vb"))) {
+
                 futureContinuous.add(typedDependency);
             }
         }
         return futureContinuous;
     }
 
+    /** Extracts the dependencies corresponding to Future Perfect form;
+     * @param typedDependencies - Collection of typedDependencies (td), output of a UD parser for one sentence
+     * @return ArrayList of respective typed dependencies
+     * **/
+
     //confusion with passive voice e.g. I will be pushed; false positives;
     public ArrayList<TypedDependency> getFuturePerfect(Collection<TypedDependency> typedDependencies) {
         ArrayList<TypedDependency> futurePerfect = new ArrayList<>();
         for (TypedDependency typedDependency : typedDependencies) {
-            if (typedDependency.reln().getShortName().equals("aux") && typedDependency.gov().tag().equals("VBN") && (typedDependency.dep().toString().toLowerCase().equals("will/md") | typedDependency.dep().toString().toLowerCase().equals("have/vb") | typedDependency.dep().toString().toLowerCase().equals("have/vbp"))) {
-                // && typedDependency.dep().toString().toLowerCase().equals("been"))) {
+            // if td is an auxiliary, the governor is past participle and dependents are "will/md", "have"
+            // with a base verb tag or a present form, add it to the list
+            if (typedDependency.reln().getShortName().equals("aux") && typedDependency.gov().tag().equals("VBN")
+               && (typedDependency.dep().toString().toLowerCase().equals("will/md") |
+               typedDependency.dep().toString().toLowerCase().equals("have/vb") |
+               typedDependency.dep().toString().toLowerCase().equals("have/vbp"))) {
+
                 futurePerfect.add(typedDependency);
             }
         }

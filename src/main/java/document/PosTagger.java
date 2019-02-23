@@ -31,7 +31,7 @@ class PosTagger {
         System.out.println(sfp.simplifiedTags(taggedSentences));
     }
 
-    public static List<List<TaggedWord>> getsTaggedSentences(String input) {
+    public List<List<TaggedWord>> getsTaggedSentences(String input) {
         List<List<HasWord>> sentences = MaxentTagger.tokenizeText(new StringReader(input));
         return mxntg.process(sentences);
     }

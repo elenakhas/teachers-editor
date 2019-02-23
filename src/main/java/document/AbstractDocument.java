@@ -82,7 +82,7 @@ public abstract class AbstractDocument implements MainTextEvaluator, ExtendedTex
     public static void main(String[] args) throws IOException {
         AbstractDocument doc = new ReadingMaterial("a cat sat on a mat. Sit, cat, sit! He walks often. She calls mom. " +
                 "Will you please? Cat should sit.");
-        doc.getPOStagging();
+        doc.getPosTagging();
         doc.getPosStatistics();
         System.out.println(doc.numNouns);
         System.out.println(doc.numVerbs);
@@ -424,7 +424,7 @@ public abstract class AbstractDocument implements MainTextEvaluator, ExtendedTex
      * This implementation allows for calling the tagger and using the model only once per a document
      * **/
 
-    public void getPOStagging() {
+    public void getPosTagging() {
         this.taggedForParser = PosTagger.getsTaggedSentences(this.content);
         this.simplePOSTagged = PosTagger.simplifiedTags(this.taggedForParser);
     }
