@@ -11,10 +11,10 @@ package document;
 interface ExtendedTextEvaluator {
 
     /** Calculates the number of occurrences of the words of major parts of speech**/
-    void getPOSNumber();
+    void getPosStatistics();
 
     /** Calculates the number of occurrences of certain grammar forms**/
-    void grammarAnalyser();
+    void getGrammarStatistics();
 
 /// add the method that returns the level based on several wordlists;
 // add the method that decides on the level considering grammar

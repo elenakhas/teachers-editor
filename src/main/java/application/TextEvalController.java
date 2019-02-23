@@ -81,7 +81,7 @@ class TextEvalController {
 
     public void getVocabularyStatistics() throws IOException {
         txt.getPOStagging();
-        txt.getPOSNumber();
+        txt.getPosStatistics();
 
         setResults(this.nNouns, txt.getNumNouns(), this.numWords);
         setResults(this.nAdj, txt.getNumAdj(), this.numWords);
@@ -90,7 +90,7 @@ class TextEvalController {
         setResults(this.nNumbers, txt.getNumNumbers(), this.numWords);
         setResults(this.nPron, txt.getNumPron(), this.numWords);
         setResults(this.nDet, txt.getNumDet(), this.numWords);
-        setResults(this.nWh, txt.getNumDet(), this.numWords);
+        setResults(this.nWh, txt.getNumWh(), this.numWords);
         setResults(this.nPrepConj, txt.getNumPrepConj(), this.numWords);
         setResults(this.nOther, txt.getNumOther(), this.numWords);
 
@@ -98,7 +98,7 @@ class TextEvalController {
 
 
     public void getGrammarStatistics() {
-        txt.grammarAnalyser();
+        txt.getGrammarStatistics();
         setResults(this.comparativeAdj, txt.getNumComparativeAJ(), this.numWords);
         setResults(this.superlativeAdj, txt.getNumSuperlativeAJ(), this.numWords);
         setResults(this.comparativeAdv, txt.getNumComparativeAD(), this.numWords);

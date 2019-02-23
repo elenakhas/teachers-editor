@@ -7,7 +7,7 @@ import java.util.*;
 
 
 
-
+/** Class **/
 
 public class MarkovGenerator {
 

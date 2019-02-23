@@ -21,13 +21,13 @@ import static java.util.stream.Collectors.toMap;
 public abstract class AbstractDocument implements MainTextEvaluator, ExtendedTextEvaluator {
     // POS tagger
     final PosTagger sfp;
-    /* */
+    // Store collections
     private final String content;
     private List<String> words;
     private HashMap<String, Integer> wordsOfALevel;
     private HashMap <String, String> simplePOSTagged;
     private List<List<TaggedWord>> taggedForParser;
-    /* Store the document properties used for calculating the readability scores*/
+    // Store the document properties used for calculating the readability scores*/
     private int numWords;
     private int totalNumSyllables;
     private int numSentences;
@@ -61,6 +61,8 @@ public abstract class AbstractDocument implements MainTextEvaluator, ExtendedTex
     private int numFutureSimpleActive;
     private int numFutureContinuous;
     private int numFuturePerfect;
+    private int spellingMistakes;
+
 
 
 
@@ -81,12 +83,12 @@ public abstract class AbstractDocument implements MainTextEvaluator, ExtendedTex
         AbstractDocument doc = new ReadingMaterial("a cat sat on a mat. Sit, cat, sit! He walks often. She calls mom. " +
                 "Will you please? Cat should sit.");
         doc.getPOStagging();
-        doc.getPOSNumber();
+        doc.getPosStatistics();
         System.out.println(doc.numNouns);
         System.out.println(doc.numVerbs);
         System.out.println(doc.numAdj);
         System.out.println(doc.simplePOSTagged);
-        doc.grammarAnalyser();
+        doc.getGrammarStatistics();
         System.out.println(doc.numModals);
         System.out.println(doc.numImperative);
         System.out.println(doc.numPresentSimpleActive);
@@ -274,7 +276,7 @@ public abstract class AbstractDocument implements MainTextEvaluator, ExtendedTex
     }
 
     /** Gives explanation of Flesch-Kincaid score, differs for ReadingMaterial and Essay**/
-   public abstract String interpretFleshKincaid(double fleschKincaid);
+   public abstract String interpretFleshKincaid(float fleschKincaid);
 
     /**
      * @param text
@@ -399,7 +401,18 @@ public abstract class AbstractDocument implements MainTextEvaluator, ExtendedTex
 
     /**Returns the number of unknown / misspelled words, implemented in ReadingMaterial and Essay classes**/
 
-    public abstract int unknownWords(List<String> words, VocabularyBuilder vocab);
+    /** Calculates the number of spelling mistakes and words not contained in the reference dictionary of a spellcheker
+     * @param words - List of words in a document
+     * @return number of mistaken words
+     * **/
+    public int countUnknownWords(List<String> words, VocabularyBuilder vocab){
+        for (String word : words) {
+            if (vocab.isWord(word)) {
+                spellingMistakes++;
+            }
+        }
+        return spellingMistakes;
+    }
 
     // EXTENDED TEXT EVALUATOR METHODS TO BE DISPLAYED WHEN CALLED "SHOW STATISTICS" IN GUI
 
@@ -407,7 +420,7 @@ public abstract class AbstractDocument implements MainTextEvaluator, ExtendedTex
 
     /**Provides POS tags of the words:
      * updates the class variable taggedForParser (List<List<TaggedWord>>) further used by the syntax parser
-     * updates the class variable simplePOStagged (HashMap word:simplified POS tag) further used to compute vovcabulary properties of a text
+     * updates the class variable simplePOStagged (HashMap word:simplified POS tag) further used to compute vocabulary properties of a text
      * This implementation allows for calling the tagger and using the model only once per a document
      * **/
 
@@ -418,7 +431,8 @@ public abstract class AbstractDocument implements MainTextEvaluator, ExtendedTex
 
     // THE FOLLOWING METHODS EXTRACT GRAMMAR PROPERTIES OF THE DOCUMENT
 
-    public void getPOSNumber() {
+    /** Computes the number of occurrences of major parts of speech**/
+    public void getPosStatistics() {
         this.numNouns = sfp.getNouns(this.simplePOSTagged).size();
         this.numVerbs = sfp.getVerbs(this.simplePOSTagged).size();
         this.numAdj = sfp.getAdjectives(this.simplePOSTagged).size();
@@ -451,7 +465,7 @@ public abstract class AbstractDocument implements MainTextEvaluator, ExtendedTex
      *  - Future Continuous;
      * */
 
-    public void grammarAnalyser(){
+    public void getGrammarStatistics(){
         GrammarEvaluation ge = new GrammarEvaluation();
         ArrayList <String> imperatives = new ArrayList<>();
 
@@ -488,11 +502,11 @@ public abstract class AbstractDocument implements MainTextEvaluator, ExtendedTex
         this.numImperative = imperatives.size();
 
         // assign the output of a respective method of GrammarEvaluation to the AbstractDocument variables
-        this.numModals = ge.modals;
-        this.numComparativeAJ = ge.comparativeAJ;
-        this.numSuperlativeAJ = ge.superlativeAJ;
-        this.numExistential = ge.existential;
-        this.numComparativeAD = ge.comparativeAD;
-        this.numSuperlativeAD = ge.superlativeAD;
+        this.numModals = ge.getModals();
+        this.numComparativeAJ = ge.getComparativeAJ();
+        this.numSuperlativeAJ = ge.getSuperlativeAJ();
+        this.numExistential = ge.getExistential();
+        this.numComparativeAD = ge.getComparativeAD();
+        this.numSuperlativeAD = ge.getSuperlativeAD();
     }
 }

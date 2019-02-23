@@ -1,9 +1,5 @@
 package document;
 
-import vocabulary.VocabularyBuilder;
-
-import java.util.List;
-
 /**
  *  Class represents a text used for reading exercises
  *  Extends AbstractDocument with an interpretation, does not evaluate spelling mistakes
@@ -21,10 +17,10 @@ public class ReadingMaterial extends AbstractDocument {
 
     /**
      * Interprets the Flesch-Kincaid grade readability score for a text
-     * @param score
-     * @return
+     * @param score - readability score returned by getFleschKincaid method
+     * @return interpretation message
      */
-    public String interpretFleshKincaid(double score) {
+    public String interpretFleshKincaid(float score) {
         String complexity = null;
         String explanation = null;
 
@@ -61,9 +57,5 @@ public class ReadingMaterial extends AbstractDocument {
         return fleschKincaidEvaluation;
     }
 
-    @Override
-    public int unknownWords(List<String> words, VocabularyBuilder vocab) {
-        return 0;
-    }
 
 }

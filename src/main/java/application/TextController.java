@@ -103,7 +103,7 @@ class TextController {
 
     private void SpellingMistakes() {
         Loader loader = new Loader();
-        String spm = String.valueOf(txt.unknownWords(txt.getWords(), loader.getDictionary()));
+        String spm = String.valueOf(txt.countUnknownWords(txt.getWords(), loader.getDictionary()));
         spellingMistakes.setText(spm);
     }
 

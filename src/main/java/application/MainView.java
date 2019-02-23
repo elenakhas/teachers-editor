@@ -289,7 +289,7 @@ class MainView {
 //        gridPane.add(fKInterpretation, 1,3);
 //        gridPane.add(level, 0, 5);
         //gridPane.add(levelPercentage, 1,5);
-        //gridPane.add(unknownWords, 1,5);
+        //gridPane.add(countUnknownWords, 1,5);
 
 
 

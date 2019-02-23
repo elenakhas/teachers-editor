@@ -13,6 +13,11 @@ import java.util.List;
 @SuppressWarnings("ALL")
 class PosTagger {
 
+    MaxentTagger mxntg;
+
+     PosTagger(){
+        this.mxntg = new MaxentTagger("models/english-left3words-distsim.tagger");
+    }
 
 
 /** **/
@@ -27,9 +32,7 @@ class PosTagger {
     }
 
     public static List<List<TaggedWord>> getsTaggedSentences(String input) {
-        MaxentTagger mxntg = new MaxentTagger("models/english-left3words-distsim.tagger");
         List<List<HasWord>> sentences = MaxentTagger.tokenizeText(new StringReader(input));
-
         return mxntg.process(sentences);
     }
 
