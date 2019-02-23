@@ -66,6 +66,3 @@ JUnit 4.12
 HamcrestCore 1.3. https://mvnrepository.com/artifact/org.hamcrest/hamcrest-core/1.3
 Slf4j nop binding https://mvnrepository.com/artifact/org.slf4j/slf4j-nop
 
-
-
-##
