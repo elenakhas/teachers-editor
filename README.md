@@ -28,7 +28,7 @@ English Teacher's Editor is a Computer-Aided Language Learning Tool, a text proc
 * See extended statistics on the text:
 	* Vocabulary features: percentage of the words of major parts of speech;
 	* Grammar features: percentage of the words with particular grammar properties:
-     		*  comparative and superlative adjectives;
+		*  comparative and superlative adjectives;
      		*  modal verbs;
     		*  numImperative forms;
      		*  numExistential;
@@ -54,15 +54,18 @@ English Teacher's Editor is a Computer-Aided Language Learning Tool, a text proc
 * PET
 * FCE
 
+### User Interface
+
+
 ## Usage
 * Download the repository
 * Install dependencies:
 
-Richtext FX: https://mvnrepository.com/artifact/org.fxmisc.richtext/richtextfx/0.6.10
-Stanford Core NLP: https://stanfordnlp.github.io/CoreNLP/download.html
+	* Richtext FX: https://mvnrepository.com/artifact/org.fxmisc.richtext/richtextfx/0.6.10
+	* Stanford Core NLP: https://stanfordnlp.github.io/CoreNLP/download.html
 
 For testing:
-JUnit 4.12
-HamcrestCore 1.3. https://mvnrepository.com/artifact/org.hamcrest/hamcrest-core/1.3
-Slf4j nop binding https://mvnrepository.com/artifact/org.slf4j/slf4j-nop
+	* JUnit 4.12
+	* HamcrestCore 1.3. https://mvnrepository.com/artifact/org.hamcrest/hamcrest-core/1.3
+	* Slf4j nop binding https://mvnrepository.com/artifact/org.slf4j/slf4j-nop
 
