@@ -21,6 +21,13 @@ import java.util.HashSet;
 class Loader {
 
     private final String dictFile = "data/dict.txt";
+    private final String ketWordlist = "data/KETwordlist.txt";
+    private final String petWordlist = "data/PETwordlist.txt";
+    private final String startersWordlist = "data/STARTERSwordlist.txt";
+    private final String moversWordlist = "data/MOVERSwordlist.txt";
+    private final String flyersWordlist = "data/FLYERSwordlist.txt";
+    private final String FCEwordlist = "data/FCEwordlist.txt";
+    private final String TOEFLwordlist = "data/TOEFLwordlist.txt";
 
     /** Creates autocomplete instance with a trie structure and loaded reference dictionary
      * @return trie to populate with completions
@@ -56,7 +63,6 @@ class Loader {
 
     public HashSet<String> getKetVocab(){
         Vocabulary vb = new Vocabulary();
-        String ketWordlist = "data/KETwordlist.txt";
         VocabularyLoader.loadVocabulary(vb, ketWordlist);
         return vb.getVocab();
     }
@@ -65,7 +71,6 @@ class Loader {
      * **/
     public HashSet<String> getPetVocab(){
         Vocabulary vb = new Vocabulary();
-        String petWordlist = "data/PETwordlist.txt";
         VocabularyLoader.loadVocabulary(vb, petWordlist);
         return vb.getVocab();
     }
@@ -74,7 +79,6 @@ class Loader {
      * **/
     public HashSet<String> getStartersVocab(){
         Vocabulary vb = new Vocabulary();
-        String startersWordlist = "data/STARTERSwordlist.txt";
         VocabularyLoader.loadVocabulary(vb, startersWordlist);
         return vb.getVocab();
     }
@@ -84,7 +88,6 @@ class Loader {
      * **/
     public HashSet<String> getMoversVocab(){
         Vocabulary vb = new Vocabulary();
-        String moversWordlist = "data/MOVERSwordlist.txt";
         VocabularyLoader.loadVocabulary(vb, moversWordlist);
         return vb.getVocab();
     }
@@ -94,7 +97,6 @@ class Loader {
      * **/
     public HashSet<String> getFlyersVocab(){
         Vocabulary vb = new Vocabulary();
-        String flyersWordlist = "data/FLYERSwordlist.txt";
         VocabularyLoader.loadVocabulary(vb, flyersWordlist);
         return vb.getVocab();
     }
@@ -104,7 +106,6 @@ class Loader {
      * **/
     public HashSet<String> getFCEVocab(){
         Vocabulary vb = new Vocabulary();
-        String FCEwordlist = "data/FCEwordlist.txt";
         VocabularyLoader.loadVocabulary(vb, FCEwordlist);
         return vb.getVocab();
     }
@@ -114,7 +115,6 @@ class Loader {
      * **/
     public HashSet<String> getTOEFLvocab(){
         Vocabulary vb = new Vocabulary();
-        String TOEFLwordlist = "data/TOEFLwordlist.txt";
         VocabularyLoader.loadVocabulary(vb, TOEFLwordlist);
         return vb.getVocab();
     }
