@@ -17,7 +17,7 @@ import java.util.List;
 
 class GrammarEvaluation {
 
-    protected DependencyParser model;
+    protected static DependencyParser model;
     // counters for lexicalized grammar forms
     private int comparativeAJ;
     private int superlativeAJ;
@@ -26,8 +26,12 @@ class GrammarEvaluation {
     private int comparativeAD;
     private int superlativeAD;
 
-    GrammarEvaluation() {
-        this.model = DependencyParser.loadFromModelFile("edu/stanford/nlp/models/parser/nndep/english_UD.gz");
+    protected static DependencyParser getParser(){
+        if (model == null){
+            model = DependencyParser.loadFromModelFile("edu/stanford/nlp/models/parser/nndep/english_UD.gz");
+            System.out.println("Loaded the model");
+        }
+        return model;
     }
 
     public int getComparativeAJ() {return this.comparativeAJ;}
@@ -64,7 +68,7 @@ class GrammarEvaluation {
      * **/
 
     public Collection<TypedDependency> parsingSentence(List<TaggedWord> taggedWords) {
-        GrammaticalStructure gs = this.model.predict(taggedWords);
+        GrammaticalStructure gs = getParser().predict(taggedWords);
         return gs.typedDependencies();
     }
 
@@ -75,8 +79,8 @@ class GrammarEvaluation {
      *  **/
     public ArrayList<String> imperatives(List<TaggedWord> taggedWords) {
         ArrayList<String> imp = new ArrayList<>();
-        //check the first word: if it is not a question, and the tagged word is a VB (base form)
-        // or VBP (non 3rd person present) according to Penn Treebank POS labeling,
+        //check the first word: if it is not a question, and the tagged word is a base form
+        // or non 3rd person present according to Penn Treebank POS labeling,
         //add the TaggedWord to the list of imperatives
         if (!taggedWords.get(taggedWords.size() - 1).toString().equals("?/.") && (taggedWords.get(0).tag().equals("VB") || taggedWords.get(0).tag().equals("VBP"))) {
             imp.add(taggedWords.get(0).toString());
@@ -85,7 +89,7 @@ class GrammarEvaluation {
         //for each word in the sentence
         for (int j = 1; j < taggedWords.size(); j++) {
             //if the sentence is not a question, the tagged word is a VB or VBP, and the previous word is not "TO"
-            // or "MD" (modal verb), add the tagged word to the list of imperatives
+            // or a modal verb, add the tagged word to the list of imperatives
             if (!taggedWords.get(taggedWords.size() - 1).toString().equals("?/.") &&
                     (taggedWords.get(j).tag().equals("VB") || taggedWords.get(j).tag().equals("VBP")) &&
                     !taggedWords.get(j - 1).tag().equals("TO") && !taggedWords.get(j - 1).tag().equals("MD")) {
@@ -317,11 +321,11 @@ class GrammarEvaluation {
      * @return ArrayList of respective typed dependencies
      * **/
 
-    //confusion with passive voice e.g. I will be pushed; false positives;
+    // sometimes confusion with passive voice e.g. I will be pushed; returns false positives;
     public ArrayList<TypedDependency> getFuturePerfect(Collection<TypedDependency> typedDependencies) {
         ArrayList<TypedDependency> futurePerfect = new ArrayList<>();
         for (TypedDependency typedDependency : typedDependencies) {
-            // if td is an auxiliary, the governor is past participle and dependents are "will/md", "have"
+            // if td is an auxiliary, the governor is past participle and dependents are the modal "will", "have"
             // with a base verb tag or a present form, add it to the list
             if (typedDependency.reln().getShortName().equals("aux") && typedDependency.gov().tag().equals("VBN")
                && (typedDependency.dep().toString().toLowerCase().equals("will/md") |

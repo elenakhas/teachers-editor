@@ -5,13 +5,20 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 /**
- * This class is used for tokenization of text files
+ * A helper class used for tokenization of text files
  * @author Elena Khasanova
  * @version 1.1;
  */
 @SuppressWarnings("unchecked")
+
 public class Tokenizer {
 
+    /**
+     * Tokenizes the string content of the document
+     * @param pattern - a regular expression to match the token
+     * @param content - String content of the file
+     * @return lis of matched tokens
+     */
     public ArrayList<String> tokenize(String pattern, String content) {
         ArrayList tokens = new ArrayList();
         Pattern tokenSplitter = Pattern.compile(pattern);

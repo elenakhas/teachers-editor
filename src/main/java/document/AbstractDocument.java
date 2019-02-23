@@ -19,8 +19,7 @@ import static java.util.stream.Collectors.toMap;
  * **/
 @SuppressWarnings({"unchecked", "CanBeFinal"})
 public abstract class AbstractDocument implements MainTextEvaluator, ExtendedTextEvaluator {
-    // POS tagger
-    final PosTagger sfp;
+
     // Store collections
     private final String content;
     private List<String> words;
@@ -64,8 +63,6 @@ public abstract class AbstractDocument implements MainTextEvaluator, ExtendedTex
     private int spellingMistakes;
 
 
-
-
     /**
      * The constructor creates a new instance of AbstractDocument from the given string content, loads the document properties:
      * number of sentences;
@@ -75,8 +72,7 @@ public abstract class AbstractDocument implements MainTextEvaluator, ExtendedTex
      */
     AbstractDocument(String content) {
         this.content = content;
-        getProperties(content);
-        sfp = new PosTagger();
+        calcTextProperties(content);
     }
 
     public static void main(String[] args) throws IOException {
@@ -198,7 +194,7 @@ public abstract class AbstractDocument implements MainTextEvaluator, ExtendedTex
      * words as a list, number of words, number of sentences, number of syllables;
      * @param content - string content of the file
      */
-    private void getProperties(String content) {
+    private void calcTextProperties(String content) {
         Tokenizer tkn = new Tokenizer();
         List<String> tokens = tkn.tokenize("[!?.]+|[a-zA-Z]+", content);
         this.words = new ArrayList<>();
@@ -228,7 +224,7 @@ public abstract class AbstractDocument implements MainTextEvaluator, ExtendedTex
      * ASW is an average number of syllables per word.
      * @return float - Flesch score; the
      */
-    public float getFleschScore() { //
+    public float calcFleschScore() { //
         return (float) (206.835 - 1.015 * ((float) getNumWords() / (float) getNumSentences())
                 - 84.6 * ((float) getTotalNumSyllables() / (float) getNumWords()));
     }
@@ -239,22 +235,22 @@ public abstract class AbstractDocument implements MainTextEvaluator, ExtendedTex
         if (score < 30) {
             explanation = "Very difficult, college graduate level.";
         }
-        if (score >= 30 && score < 50) {
+        else if (score >= 30 && score < 50) {
             explanation = "Difficult, college student level";
         }
-        if (score >= 50 && score < 60) {
+        else if (score >= 50 && score < 60) {
             explanation = "Fairly difficult, 10th to 12th grade";
         }
-        if (score >= 60 && score < 70) {
+        else if (score >= 60 && score < 70) {
             explanation = "Standard, 8th - 9th grade";
         }
-        if (score >= 70 && score < 80) {
+        else if (score >= 70 && score < 80) {
             explanation = "Fairly easy, 7th grade";
         }
-        if (score >= 80 && score < 90) {
+        else if (score >= 80 && score < 90) {
             explanation = "Easy, 6th grade";
         }
-        if (score >= 90) {
+        else if (score >= 90) {
             explanation = "Very easy, 5th grade";
         }
 
@@ -269,7 +265,7 @@ public abstract class AbstractDocument implements MainTextEvaluator, ExtendedTex
      * @return float - score
      */
 
-    public float getFleschKincaid() {
+    public float calcFleschKincaid() {
 
         return (float) ((0.39 * ((float) getNumWords() / (float) getNumSentences()))
                 + (11.8 * ((float) getTotalNumSyllables() / (float) getNumWords())) - 15.59);
@@ -425,24 +421,25 @@ public abstract class AbstractDocument implements MainTextEvaluator, ExtendedTex
      * **/
 
     public void getPosTagging() {
-        this.taggedForParser = PosTagger.getsTaggedSentences(this.content);
-        this.simplePOSTagged = PosTagger.simplifiedTags(this.taggedForParser);
+
+        this.taggedForParser = PosTagger.getInstance().getsTaggedSentences(this.content);
+        this.simplePOSTagged = PosTagger.getInstance().simplifiedTags(this.taggedForParser);
     }
 
     // THE FOLLOWING METHODS EXTRACT GRAMMAR PROPERTIES OF THE DOCUMENT
 
     /** Computes the number of occurrences of major parts of speech**/
     public void getPosStatistics() {
-        this.numNouns = sfp.getNouns(this.simplePOSTagged).size();
-        this.numVerbs = sfp.getVerbs(this.simplePOSTagged).size();
-        this.numAdj = sfp.getAdjectives(this.simplePOSTagged).size();
-        this.numNumbers = sfp.getNumbers(this.simplePOSTagged).size();
-        this.numAdv = sfp.getAdverbs(this.simplePOSTagged).size();
-        this.numPron = sfp.getPronouns(this.simplePOSTagged).size();
-        this.numWh = sfp.getWh(this.simplePOSTagged).size();
-        this.numDet = sfp.getDeterminers(this.simplePOSTagged).size();
-        this.numPrepConj = sfp.getPrepConj(this.simplePOSTagged).size();
-        this.numOther = sfp.getOther(this.simplePOSTagged).size();
+        this.numNouns = PosTagger.getInstance().getNouns(this.simplePOSTagged).size();
+        this.numVerbs = PosTagger.getInstance().getVerbs(this.simplePOSTagged).size();
+        this.numAdj = PosTagger.getInstance().getAdjectives(this.simplePOSTagged).size();
+        this.numNumbers = PosTagger.getInstance().getNumbers(this.simplePOSTagged).size();
+        this.numAdv = PosTagger.getInstance().getAdverbs(this.simplePOSTagged).size();
+        this.numPron = PosTagger.getInstance().getPronouns(this.simplePOSTagged).size();
+        this.numWh = PosTagger.getInstance().getWh(this.simplePOSTagged).size();
+        this.numDet = PosTagger.getInstance().getDeterminers(this.simplePOSTagged).size();
+        this.numPrepConj = PosTagger.getInstance().getPrepConj(this.simplePOSTagged).size();
+        this.numOther = PosTagger.getInstance().getOther(this.simplePOSTagged).size();
     }
 
     /** Calculates the number of occurrences of various grammar features in a document by incrementing

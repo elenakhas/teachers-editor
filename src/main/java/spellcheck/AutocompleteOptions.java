@@ -5,23 +5,27 @@ import vocabulary.VocabularyBuilder;
 import java.util.LinkedList;
 import java.util.List;
 
+/**
+ *  An implementation of autocomplete using a trie structure
+ * @author Elena Khasanova
+ * @version 1.0;
+ * */
+
 @SuppressWarnings({"unchecked", "ForLoopReplaceableByForEach"})
 public class AutocompleteOptions implements Autocompleter, VocabularyBuilder {
 
     /**
-     * A trie data structure that implements the Dictionary and the AutoComplete
+     * A trie data structure to store suggestions for autocomplete
      */
-
     private final TrieNode root;
-    //private int numNodes;
 
     public AutocompleteOptions() {
         root = new TrieNode();
     }
 
     /**
-     * Insert a word into the trie.*
-     *
+     * Insert a word into the trie to update the dictionary
+     * @param word A word to be added
      * @return true if the word was successfully added or false if it already exists
      * in the dictionary.
      */
@@ -30,13 +34,12 @@ public class AutocompleteOptions implements Autocompleter, VocabularyBuilder {
         // create a char array for the word
         char[] word_array = word.toCharArray();
         // find the stem - iterate over the characters in the word and check if they are in the trie
-        // if ch is not in the trie, add it, link to the previous one, increment the size
+        // if ch is not in the trie, add it, link to the previous one
         TrieNode curr = root;
         for (char c : word_array) {
             TrieNode child = curr.getChild(c);
             if (child == null) {
                 curr.insert(c);
-                //   numNodes++;
             }
             curr = curr.getChild(c);
         }
@@ -44,7 +47,8 @@ public class AutocompleteOptions implements Autocompleter, VocabularyBuilder {
         if (curr.endsWord()) {
             return false;
         }
-        curr.setEndsWord(true); //set the last added node to be the end of the word
+        //set the last added node to be the end of the word
+        curr.setEndsWord(true);
         return true;
     }
 
@@ -75,6 +79,8 @@ public class AutocompleteOptions implements Autocompleter, VocabularyBuilder {
 
     /**
      * Returns whether the string is a word in the trie
+     * @param s An input string
+     * @return true if the string is a word
      */
     public boolean isWord(String s) {
         if (s.equals("")) {
@@ -83,9 +89,9 @@ public class AutocompleteOptions implements Autocompleter, VocabularyBuilder {
         s = s.toLowerCase();
         // create a char array for the string
         char[] s_array = s.toCharArray();
-        // find the stem - iterate over the characters in the word and check if they are in the trie
+        // find the prefix - iterate over the characters in the word and check if they are in the trie
         // if ch is in the trie, get the next one
-        //if ch is not in the trie, return false
+        // if ch is not in the trie, return false
         TrieNode curr = root;
         for (char c : s_array) {
             if (curr.getChild(c) == null) {
@@ -97,21 +103,19 @@ public class AutocompleteOptions implements Autocompleter, VocabularyBuilder {
     }
 
     /**
-     * Return a list, in order of increasing word length,
-     * containing the numCompletions - shortest legal completions
-     * of the stem string. All legal completions are  valid words in the
-     * dictionary. If the stem itself is a valid word, it is included
-     * in the list of returned words.
-     * If this stem is not in the trie, it returns an empty list.
+     * Return a list, in order of increasing word length, containing the numCompletions - shortest legal completions
+     * of the prefix string. All legal completions are  valid words in the dictionary.
+     * If the prefix is itself a valid word , it is included in the list of returned words.
+     * If this prefix is not in the trie, it returns an empty list.
      *
-     * @param prefix         The text to use at the word stem
-     * @param numCompletions The maximum number of predictions desired.
+     * @param prefix  - the text to use as the prefix
+     * @param numCompletions - the maximum number of predictions desired
      * @return A list containing the up to numCompletions best predictions
      */
     public List<String> predictCompletions(String prefix, int numCompletions) {
-        // I. Find the stem in the trie.  If the stem does not appear in the trie, return an empty list
+        // Find the prefix in the trie.  If the prefix does not appear in the trie, return an empty list
         LinkedList<TrieNode> queue = new LinkedList();
-        //    Create a list of completions to return (initially empty)
+        // Create a list of completions to return (initially empty)
         List<String> completions = new LinkedList();
         List<String> emptyList = new LinkedList();
         TrieNode curr = root;
@@ -123,19 +127,18 @@ public class AutocompleteOptions implements Autocompleter, VocabularyBuilder {
             curr = curr.getChild(ch);
         }
 
-        // II. Once the stem is found, perform a breadth first search to generate completions:
-        //    Create a queue (LinkedList) and add the node that completes the stem to the back
-        //       of the list.
+        // Once the stem is found, perform a breadth first search to generate completions:
+        // Create a queue (LinkedList) and add the node that completes the stem to the back of the list.
         queue.add(curr);
         //    While the queue is not empty and you don't have enough completions:
         while (!queue.isEmpty() && completions.size() < numCompletions) {
-//           remove the first Node from the queue
+            // remove the first Node from the queue
             TrieNode toRemove = queue.remove();
-            //       If it is a word, add it to the completions list
+            // If it is a word, add it to the completions list
             if (toRemove.endsWord()) {
                 completions.add(toRemove.getText());
             }
-            //       Add all of its child nodes to the back of the queue
+            // Add all of its child nodes to the back of the queue
             for (Character c : toRemove.getValidNextCharacters()) {
                 queue.add(toRemove.getChild(c));
             }
@@ -143,31 +146,5 @@ public class AutocompleteOptions implements Autocompleter, VocabularyBuilder {
         }
         return completions;
     }
-
-    // For debugging
-    public void printTree() {
-        printNode(root);
-    }
-
-    /**
-     * Do a pre-order traversal from this node down
-     */
-    private void printNode(TrieNode curr) {
-        if (curr == null)
-            return;
-
-        System.out.println(curr.getText());
-
-        TrieNode next = null;
-        for (Character c : curr.getValidNextCharacters()) {
-            next = curr.getChild(c);
-            printNode(next);
-        }
-    }
-
-//    // Return the list of completions
-//    public List<String> predictedCompletions(String stem, int numCompletions) {
-//        return null;
-//    }
 }
 

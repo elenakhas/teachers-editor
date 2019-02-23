@@ -92,12 +92,12 @@ class TextController {
     }
 
     public void getFlesch() {
-        double fscore = txt.getFleschScore();
+        double fscore = txt.calcFleschScore();
         score.setText(String.format("%.2f", fscore));
     }
 
     public void fleschKincaid() {
-        String fsk = txt.interpretFleshKincaid(txt.getFleschKincaid());
+        String fsk = txt.interpretFleshKincaid(txt.calcFleschKincaid());
         fKInterpretation.setText(fsk);
     }
 

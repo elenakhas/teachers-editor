@@ -11,16 +11,30 @@ import java.util.HashMap;
 import java.util.List;
 
 @SuppressWarnings("ALL")
+
+/**
+ * The class implements Stanford MAximum Entropy POStagger and represents lexical properties of the document
+ * @author Elena Khasanova
+ * @version 1.0;
+ * **/
 class PosTagger {
 
     MaxentTagger mxntg;
+    // Singleton instance of the postagger
+    private static PosTagger instance = null;
 
-     PosTagger(){
-        this.mxntg = new MaxentTagger("models/english-left3words-distsim.tagger");
+     private PosTagger(){
+         this.mxntg = new MaxentTagger("models/english-left3words-distsim.tagger");
     }
 
+    // The PosTagger is instantiated only once per run of the program; if it is already loaded, the new instance is not created
+    public static PosTagger getInstance(){
+         if (instance == null){
+             instance = new PosTagger();
+         }
+         return instance;
+    }
 
-/** **/
 
     public static void main(String[] args) throws IOException {
         FileContent fcon = new FileContent("src/test/test_data/textKET");
@@ -31,11 +45,10 @@ class PosTagger {
         System.out.println(sfp.simplifiedTags(taggedSentences));
     }
 
-    public List<List<TaggedWord>> getsTaggedSentences(String input) {
-        List<List<HasWord>> sentences = MaxentTagger.tokenizeText(new StringReader(input));
-        return mxntg.process(sentences);
-    }
-
+    /** Replaces the Penn Treebank POS tags with simplified basic POS tags, stores them in a HashMap
+     * @param taggedList - output of Stanford Maxent Tagger for the sentences in a text
+     * @return
+     * **/
     public static HashMap<String, String> simplifiedTags(List<List<TaggedWord>> taggedList) {
         HashMap<String, String> simplePOSTagged = new HashMap<>();
         for (List<TaggedWord> tags : taggedList) { // iterate over list
@@ -74,10 +87,20 @@ class PosTagger {
         return simplePOSTagged;
     }
 
+    /**Annotates sentences with part-of-speech tags using Stanford Maximum Entropy POS Tagger
+     * @param input - String content of the file
+     * @return list of lists of tagged words; the outer list is for the whole text, the inner is for one sentence
+     * **/
+    public List<List<TaggedWord>> getsTaggedSentences(String input) {
+        List<List<HasWord>> sentences = MaxentTagger.tokenizeText(new StringReader(input));
+        return mxntg.process(sentences);
+    }
+
     // THE FOLLOWING METHODS EXTRACT WORDS WITH A SPECIFIC POStag AND STORE THEM IN AN ArrayList.
     // In the next release, the ArrayList structure will be used to highlight the words of a certain POS in the GUI
 
     /** Extracts strings labeled as nouns from the HashMap simplePOSTagged.
+     * @param simplePOSTagged - output of simplifiedTags method; words in the document mapped to their simplified postaggs
      * @return an ArrayList of nouns in the text
      *
      * **/
@@ -92,6 +115,7 @@ class PosTagger {
         return nouns;
     }
     /** Extracts strings labeled as verbs from the HashMap simplePOSTagged.
+     * @param simplePOSTagged - output of simplifiedTags method; words in the document mapped to their simplified postaggs
      * @return an ArrayList of verbs in the text
      * **/
 
@@ -105,6 +129,7 @@ class PosTagger {
         return verbs;
     }
     /** Extracts strings labeled as adjectives from the HashMap simplePOSTagged.
+     * @param simplePOSTagged - output of simplifiedTags method; words in the document mapped to their simplified postaggs
      * @return an ArrayList of adjectives in the text
      * **/
     public ArrayList<String> getAdjectives(HashMap<String, String> simplePOSTagged) {
@@ -117,6 +142,7 @@ class PosTagger {
         return adj;
     }
     /** Extracts strings labeled as pronouns from the HashMap simplePOSTagged.
+     * @param simplePOSTagged - output of simplifiedTags method; words in the document mapped to their simplified postaggs
      * @return an ArrayList of pronouns in the text
      * **/
     public ArrayList<String> getPronouns(HashMap<String, String> simplePOSTagged) {
@@ -129,6 +155,7 @@ class PosTagger {
         return pron;
     }
     /** Extracts strings labeled as adverbs from the HashMap simplePOSTagged.
+     * @param simplePOSTagged - output of simplifiedTags method; words in the document mapped to their simplified postaggs
      * @return an ArrayList of nouns in the text
      * **/
     public ArrayList<String> getAdverbs(HashMap<String, String> simplePOSTagged) {
@@ -141,6 +168,7 @@ class PosTagger {
         return adv;
     }
     /** Extracts strings labeled as wh-words from the HashMap simplePOSTagged.
+     * @param simplePOSTagged - output of simplifiedTags method; words in the document mapped to their simplified postaggs
      * @return an ArrayList of wh-words in the text
      * **/
     public ArrayList<String> getWh(HashMap<String, String> simplePOSTagged) {
@@ -153,6 +181,7 @@ class PosTagger {
         return whWords;
     }
     /** Extracts strings labeled as numerals from the HashMap simplePOSTagged.
+     * @param simplePOSTagged - output of simplifiedTags method; words in the document mapped to their simplified postaggs
      * @return an ArrayList of numerals in the text
      * **/
     public ArrayList<String> getNumbers(HashMap<String, String> simplePOSTagged) {
@@ -165,6 +194,7 @@ class PosTagger {
         return nums;
     }
     /** Extracts strings labeled as determiners from the HashMap simplePOSTagged.
+     * @param simplePOSTagged - output of simplifiedTags method; words in the document mapped to their simplified postaggs
      * @return an ArrayList of determiners in the text
      * **/
     public ArrayList<String> getDeterminers(HashMap<String, String> simplePOSTagged) {
@@ -189,6 +219,7 @@ class PosTagger {
         return prepconj;
     }
     /** Extracts strings labeled as "other" from the HashMap simplePOSTagged.
+     * @param simplePOSTagged - output of simplifiedTags method; words in the document mapped to their simplified postaggs
      * @return an ArrayList of words that don't fall into any of the above mentioned categories in the text
      * **/
     public ArrayList<String> getOther(HashMap<String, String> simplePOSTagged) {

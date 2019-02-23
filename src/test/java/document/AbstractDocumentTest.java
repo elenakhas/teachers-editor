@@ -103,20 +103,20 @@ public class AbstractDocumentTest {
     @Test
     public void testGetFleschScore() {
         // check the document from file
-        assertEquals("Check the Flesch Score", (float)97.605, docOne.getFleschScore(), 0.02);
+        assertEquals("Check the Flesch Score", (float)97.605, docOne.calcFleschScore(), 0.02);
         // check the empty document
-        assertTrue("Check the Flesch Score", isNaN(emptyDoc.getFleschScore()));
+        assertTrue("Check the Flesch Score", isNaN(emptyDoc.calcFleschScore()));
         // check the document with one word, negative value
         AbstractDocument oneWord = new ReadingMaterial("Oneworddocument"); //
-        assertEquals("Check the Flesch Score", -301.78, oneWord.getFleschScore(), 0.02);
+        assertEquals("Check the Flesch Score", -301.78, oneWord.calcFleschScore(), 0.02);
     }
 
     @Test
     public void testFleschKincaid() {
         // check the document from file
-        assertEquals("Check the Flesch-Kincaid Score", (float)0.49, docOne.getFleschKincaid(), 0.02);
+        assertEquals("Check the Flesch-Kincaid Score", (float)0.49, docOne.calcFleschKincaid(), 0.02);
         // check the empty document
-        assertTrue("Check the Flesch-Kincaid Score", isNaN(emptyDoc.getFleschScore()));
+        assertTrue("Check the Flesch-Kincaid Score", isNaN(emptyDoc.calcFleschScore()));
     }
 
     @Test

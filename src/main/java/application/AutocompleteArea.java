@@ -23,20 +23,22 @@ import java.util.OptionalInt;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+/** Implementation of a StyledTextArea with autocompletion functionality.
+ * @author Elena Khasanova
+ * @version 1.2
+ * **/
+
 class AutocompleteArea extends StyledTextArea<Boolean> {
 
+    // desired number of completions and suggestions returned by autocomplete and spellchecker
     private static final int NUM_COMPLETIONS = 6;
     private static final int NUM_SUGGESTIONS = 6;
-
-    // track auto complete and spelling suggestion states
-    private boolean autoCompleteOn = false;
-    private boolean spellingOn = false;
-
-    // boolean to see if style needs update on plain text change
-    private boolean needUpdate = true;
-
     // set up reflection for spelling suggest
-    private static final Method mHit;
+    private static final Method hitWord;
+    private boolean spellingOn = false;
+    private static final Method getCharacterIndex;
+    // the StyledAreaView object
+    private static Object styledView;
 
     // indices which contain word, set by getWordAtIndex
     private int startIndex;
@@ -45,45 +47,44 @@ class AutocompleteArea extends StyledTextArea<Boolean> {
     // current autocomplete options
     private List<String> options;
 
-    // popup to display/select entry
-    private ContextMenu entriesPopup;
-
-    private Autocompleter ac;
-    private VocabularyBuilder dictionary;
-    private Spellcheker ss;
-    private static final Method mGetCharacterIndex;
-    // matches case of user typing for auto complete and ss
-    // turn off if handling caps
-    private final boolean matchCase = true;
-    private static Object styledView;
-
     static {
         try {
-            mHit = Class.forName("org.fxmisc.richtext.skin.StyledTextAreaView").getDeclaredMethod("hit", double.class,
+            hitWord = Class.forName("org.fxmisc.richtext.skin.StyledTextAreaView").getDeclaredMethod("hit", double.class,
                     double.class);
-            mGetCharacterIndex = Class.forName("org.fxmisc.richtext.skin.CharacterHit")
+            getCharacterIndex = Class.forName("org.fxmisc.richtext.skin.CharacterHit")
                     .getDeclaredMethod("getCharacterIndex");
 
         } catch (ClassNotFoundException | NoSuchMethodException ex) {
             throw new RuntimeException(ex);
         }
 
-        mHit.setAccessible(true);
-        mGetCharacterIndex.setAccessible(true);
+        hitWord.setAccessible(true);
+        getCharacterIndex.setAccessible(true);
     }
 
-    // end set up reflection
+    private Autocompleter ac;
+    private VocabularyBuilder dictionary;
+    private Spellcheker ss;
+
+    // matches case of user typing for autocomplete and spellchecker
+    private final boolean matchCase = true;
+    // track autocomplete and spelling suggestion states
+    private boolean autocompleteOn = false;
+    // track if style needs update on plain text change
+    private boolean styleNeedUpdate = true;
+    // PopUp context menu to display and select entry
+    private ContextMenu entriesPopup;
 
     public AutocompleteArea(Autocompleter ac, Spellcheker ss, VocabularyBuilder dictionary) {
         super(true, (textNode, correct) -> {
-            // define boolean Text node style
+            // define boolean Text node style; apply style when the word is incorrect
             if (!correct) {
                 textNode.setUnderline(true);
                 textNode.setBackgroundFill(Color.LIGHTGREEN);
             }
         });
 
-        // save objects passed in
+        // save objects passed in the autocompleter and spellchecker
         this.ac = ac;
         this.ss = ss;
         // dictionary used in spelling suggestions
@@ -97,9 +98,9 @@ class AutocompleteArea extends StyledTextArea<Boolean> {
                 // get StyledTextAreaView object
                 styledView = getChildrenUnmodifiable().get(0);
 
-                // get character hit on click and index
-                Object chHit = invoke(mHit, styledView, e.getX(), e.getY());
-                OptionalInt opInt = (OptionalInt) invoke(mGetCharacterIndex, chHit);
+                // get character hit on click and its index
+                Object chHit = invoke(hitWord, styledView, e.getX(), e.getY());
+                OptionalInt opInt = (OptionalInt) invoke(getCharacterIndex, chHit);
 
                 // valid index clicked
                 if (opInt.isPresent()) {
@@ -117,7 +118,7 @@ class AutocompleteArea extends StyledTextArea<Boolean> {
         // keep track of text changes, update spell check if needed
         this.plainTextChanges().subscribe(change -> {
             // could make more efficient
-            if (spellingOn && needUpdate) {
+            if (spellingOn && styleNeedUpdate) {
                 this.setStyleSpans(0, checkSpelling());
             }
         });
@@ -132,7 +133,7 @@ class AutocompleteArea extends StyledTextArea<Boolean> {
 
         // observe caretPosition property for auto complete functionality
         this.caretPositionProperty().addListener((obs, oldPosition, newPosition) -> {
-            if (autoCompleteOn) {
+            if (autocompleteOn) {
                 // listen to textProperty to only
                 String prefix = getWordAtIndex(newPosition.intValue());
                 showCompletions(prefix);
@@ -206,11 +207,11 @@ class AutocompleteArea extends StyledTextArea<Boolean> {
 
             // register event where user chooses word (click)
             item.setOnAction(actionEvent -> {
-                needUpdate = false;
+                styleNeedUpdate = false;
                 replaceText(startIndex, endIndex, result);
                 getWordAtIndex(startIndex);
                 setStyle(startIndex, endIndex, true);
-                needUpdate = true;
+                styleNeedUpdate = true;
             });
 
             menuItems.add(item);
@@ -357,7 +358,7 @@ class AutocompleteArea extends StyledTextArea<Boolean> {
 
 
     public void setAutoComplete(boolean state) {
-        autoCompleteOn = state;
+        autocompleteOn = state;
     }
 
     /**

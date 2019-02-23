@@ -1,13 +1,11 @@
 package document;
 
 /**
- *  Class represents a text used for reading exercises
- *  Extends AbstractDocument with an interpretation, does not evaluate spelling mistakes
- *  of FleschKincaid score for a reading text.
+ *  Class represents a text used for reading exercises as opposed to students' written work
+ *  Extends AbstractDocument.
  * @author Elena Khasanova
  * @version 1.2;
- *
- */
+ * */
 
 public class ReadingMaterial extends AbstractDocument {
 
@@ -17,7 +15,7 @@ public class ReadingMaterial extends AbstractDocument {
 
     /**
      * Interprets the Flesch-Kincaid grade readability score for a text
-     * @param score - readability score returned by getFleschKincaid method
+     * @param score - readability score returned by calcFleschKincaid method
      * @return interpretation message
      */
     public String interpretFleshKincaid(float score) {
@@ -28,33 +26,61 @@ public class ReadingMaterial extends AbstractDocument {
             complexity = "NO CATEGORY";
             explanation = "This is not really a reading material";
         }
-        if (score >= 0 && score <= 3) {
+        else if (score <= 3) {
             complexity = "BASIC";
             explanation = "Learning to read books";
         }
-        if (score >= 3 && score <= 6) {
+        else if (score <= 6) {
             complexity = "BASIC";
             explanation = "New to reading, can read something simple like 'The Gruffalo'";
         }
-        if (score >= 6 && score <= 9) {
+        else if (score <= 9) {
             complexity = "AVERAGE";
             explanation = "Moderate reader, the majority. Can read something like 'Harry Potter', short blogs, social media, email";
         }
-        if (score >= 9 && score <= 12) {
+        else if (score <= 12) {
             complexity = "AVERAGE";
             explanation = "Confident reader. Can read something like 'Jurassic Park', in-depth blogs, ebooks";
         }
-        if (score >= 12 && score <= 15) {
+        else if (score <= 15) {
             complexity = "SKILLED";
             explanation = "Advanced reader. Can read something like 'A brief history of time', whitepaper books";
         }
-        if (score >= 15) {
+        else{
             complexity = "SKILLED";
             explanation = "Proficient reader. Can read everything, including academic papers";
         }
 
         String fleschKincaidEvaluation = complexity + ": " + explanation;
         return fleschKincaidEvaluation;
+    }
+
+    /**
+     * Interprets the Flesch Readability Ease score for a text
+     * @param score - readability score returned by calcFlesch method
+     * @return interpretation message
+     */
+    public  String interpretFlesch(float score){
+        String explanation;
+
+
+        if (score <= 0) {
+            explanation = "Can not evaluate using Flesch score; not suitable for reading";
+        } else if (score < 50) {
+            explanation = "Very difficult, C2 Mastery level.";
+        } else if (score < 60) {
+            explanation = "Fairly difficult, C1 Advanced level";
+        } else if (score < 70) {
+            explanation = "Plain English, B2 Upper-Intermediate level";
+        } else if (score < 80) {
+            explanation = "Fairly easy, B1 Intermediate level";
+        } else if (score < 90) {
+            explanation = "Easy, A2 Elementary level";
+        } else {
+            explanation = "Very easy, A1 Beginners level";
+        }
+
+        return explanation;
     }
 
 

@@ -9,7 +9,6 @@ public interface VocabularyBuilder {
 
     /**
      * Add this word to the vocabulary.
-     *
      * @param word The word to add
      * @return true if the word was added to the dictionary(it wasn't already there).
      */
@@ -17,7 +16,9 @@ public interface VocabularyBuilder {
     boolean addWord(String word);
 
     /**
-     * Is this a word according to this vocabulary?
+     * Checks if the string is a word according to this dictionary
+     * @param s - string to check
+     * @retun True if it is contained in the dictionary
      */
     boolean isWord(String s);
 

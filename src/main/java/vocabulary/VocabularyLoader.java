@@ -12,8 +12,13 @@ import java.io.IOException;
 
 public class VocabularyLoader {
 
+    /**
+     * Writes a wordlist file (one word per line) in a VocabularyBuilder structure
+     * @param filename - file to read words from
+     * @param vocab - a VocabularyBuilder object
+     * @retun
+     */
         public static void loadVocabulary(VocabularyBuilder vocab, String filename) {
-        // Dictionary files have 1 word per line
         try {
             String nextWord;
             BufferedReader reader = new BufferedReader(new FileReader(filename));

@@ -9,39 +9,35 @@ import java.util.HashSet;
 
 public class Vocabulary implements VocabularyBuilder {
 
-    private final HashSet<String> vocab;  // all words from a given wordlist / dictionary
-    //public String filename; // wordlist / dictionary file
-    //private String s;
+    // stores words from a given wordlist / dictionary
+    private final HashSet<String> vocab;
 
     /**
      * load vocabulary once the object is constructed
      */
     public Vocabulary() {
-        //this.filename = filename;
         this.vocab = new HashSet<>();
     }
 
-
-
-
+    /** Getter method for Vocabulary **/
     public HashSet<String> getVocab() {
- //       loadVocabulary();
         return this.vocab;
     }
 
     /**
-     * convert to lowercase for search purposes
-     *
-     * @param word The word to add
-     * @return true if the word was added to the dictionary
-     * (it wasn't already there).
+     * Adds word to the dictionary
+     * Convert wprd to lowercase for search purposes
+     * @param word - the word to add
+     * @return true if the word was added to the dictionary (it wasn't already there)
      */
     public boolean addWord(String word) {
         return vocab.add(word.toLowerCase());
     }
 
     /**
-     * Is this a word according to this dictionary?
+     * Checks if the string is a word according to this dictionary
+     * @param s - string to check
+     * @retun True if it is contained in the dictionary
      */
     public boolean isWord(String s) {
         return vocab.contains(s.toLowerCase());
@@ -54,9 +50,5 @@ public class Vocabulary implements VocabularyBuilder {
         return vocab.size();
     }
 
-//    public static void main(String[] args) {
-//        vocabulary v = new vocabulary("data/pet.txt");
-//        //LoadFile.loadDictionary(d, filename);
-//        System.out.println(v.size());
-//    }
+
 }

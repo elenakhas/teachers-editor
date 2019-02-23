@@ -3,6 +3,7 @@ package spellcheck;
 import java.util.HashMap;
 import java.util.Set;
 
+/** A helper class to create a Trie structure used in Autocompleter **/
 public class TrieNode {
 
     private HashMap<Character, TrieNode> children;

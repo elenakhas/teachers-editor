@@ -13,10 +13,12 @@ public class Essay extends AbstractDocument {
         super(content);
     }
 
-    /** Gives explanation of Flesch-Kincaid score for an essay
-     * @param score - double value computed by getFleschKincaid method
+    /**
+     * Gives explanation of Flesch-Kincaid score for an essay
+     *
+     * @param score - double value computed by calcFleschKincaid method
      * @return fleschKincaidEvaluation - string containing interpretation of a score
-     * **/
+     **/
 
     @Override
     public String interpretFleshKincaid(float score) {
@@ -26,24 +28,19 @@ public class Essay extends AbstractDocument {
         if (score <= 3) {
             complexity = "NO CATEGORY";
             explanation = "This is not an essay. Please, resubmit your work.";
-        }
-        if (score >= 3 && score <= 6) {
+        } else if (score <= 6) {
             complexity = "BASIC";
             explanation = "Elementary writing";
-        }
-        if (score >= 6 && score <= 9) {
+        } else if (score <= 9) {
             complexity = "AVERAGE";
             explanation = "Pre-Intermediate writing";
-        }
-        if (score >= 9 && score <= 12) {
+        } else if (score <= 12) {
             complexity = "AVERAGE";
             explanation = "Intermediate writing";
-        }
-        if (score >= 12 && score <= 15) {
+        } else if (score <= 15) {
             complexity = "SKILLED";
             explanation = "Advanced writing";
-        }
-        if (score >= 15) {
+        } else {
             complexity = "SKILLED";
             explanation = "High-level writing";
         }
@@ -52,5 +49,25 @@ public class Essay extends AbstractDocument {
         return fleschKincaidEvaluation;
     }
 
+    public String interpretFlesch(float score) {
+        String explanation;
 
+        if (score <= 0) {
+            explanation = "Can not evaluate using Flesch score";
+        }else if (score < 50) {
+            explanation = "Very complex advanced writing, C2 Mastery level.";
+        } else if (score < 60) {
+            explanation = "Fairly complex writing, C1 Advanced level";
+        } else if (score < 70) {
+            explanation = "Plain English, B2 Upper-Intermediate level";
+        } else if (score < 80) {
+            explanation = "Intermediate writing, B1 Intermediate level";
+        } else if (score < 90) {
+            explanation = "Simple writing, A2 Elementary level";
+        } else {
+            explanation = "Very simple, A1 Beginners level";
+        }
+
+            return explanation;
+    }
 }

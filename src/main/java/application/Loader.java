@@ -4,7 +4,7 @@ import spellcheck.AutocompleteOptions;
 import spellcheck.Autocompleter;
 import spellcheck.Spellcheker;
 import spellcheck.SuggestionsSpelling;
-import vocabulary.DictionaryBST;
+import vocabulary.DictionaryTree;
 import vocabulary.Vocabulary;
 import vocabulary.VocabularyBuilder;
 import vocabulary.VocabularyLoader;
@@ -19,14 +19,14 @@ class Loader {
     public Autocompleter getAutoComplete() {
         AutocompleteOptions tr = new AutocompleteOptions();
         VocabularyLoader.loadVocabulary(tr, dictFile);
-        //VocabularyBuilder dict = new DictionaryBST(dictFile);
+        //VocabularyBuilder dict = new DictionaryTree(dictFile);
         //dict.loadVocabulary();
         return tr;
 
     }
 
     public VocabularyBuilder getDictionary() {
-        VocabularyBuilder d = new DictionaryBST(dictFile);
+        VocabularyBuilder d = new DictionaryTree(dictFile);
         VocabularyLoader.loadVocabulary(d, dictFile);
         return d;
     }
