@@ -210,11 +210,12 @@ class MainTextController {
 
     /** Sets the TopTenWords to the respective text object **/
     public void setTopTenWords(){
-
+        String output = null;
         for (String key : txt.mostFrequentWords().keySet()){
-            String message = key + " : " + txt.mostFrequentWords().get(key);
-            frequentWords.setText(frequentWords.getText() + "\n" + message);
+            String message = key + " : " + txt.mostFrequentWords().get(key) + "\n";
+            output = output + message;
         }
+        frequentWords.setText(output);
     }
 
     /** Sets the name of the file to the respective text object **/

@@ -8,10 +8,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.Separator;
 import javafx.scene.control.ToolBar;
-import javafx.scene.layout.BorderPane;
-import javafx.scene.layout.GridPane;
-import javafx.scene.layout.Priority;
-import javafx.scene.layout.VBox;
+import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
@@ -36,8 +33,9 @@ class MainTextView {
     // BorderPane layout for main view
     private BorderPane root;
 
-    // GridPane for output of the functions called from the main view
-    private GridPane gridPane;
+    // GridPanea for output of the functions called from the main view
+    private GridPane gridPaneLeft;
+    private GridPane gridPaneRight;
 
     // setToolbar with buttons and ckeckboxes
     private ToolBar toolBar;
@@ -54,13 +52,17 @@ class MainTextView {
     // Text Area
     private AutocompleteArea text;
 
+    // Name of the opened file
+    private Text filename;
+
     // Text displayed on the GridPane upon the method called by clicking on the buttons
+    // Left
     private Text fscore;
     private Text fKInterpretation;
     private Text levelPercentage;
     private Text unknownWords;
+    //Right
     private Text wordcount;
-    private Text filename;
     private Text sentenceNumber;
     private Text frequentWords;
     private Text uniqueWords;
@@ -249,23 +251,38 @@ class MainTextView {
         text.setPrefSize(570, 492);
         text.setStyle("-fx-font-size: 13px");
         VBox.setVgrow(text, Priority.ALWAYS);
-        gridPane = new GridPane();
-        root.setBottom(gridPane);
+        gridPaneLeft = new GridPane();
+        gridPaneRight = new GridPane();
+
+        VBox vbox = new VBox();
+        Text title = new Text();
+        title.setFont(Font.font("Verdana", 14));
+        title.setUnderline(true);
+        title.setText("BASIC TEXT ANALYSIS");
+        vbox.getChildren().add(title);
+
+        HBox gridarea = new HBox();
+        vbox.getChildren().add(gridarea);
+        gridarea.getChildren().addAll(gridPaneLeft, gridPaneRight);
+        root.setBottom(vbox);
         text.setWrapText(true);
     }
 
     /** Sets the properties of the area to display results of the main text statistics ("Get Properties" call) **/
     private void mainStatisticsArea() {
 
-        gridPane.setPadding(new Insets(10, 10, 10, 10));
-        gridPane.setVgap(10);
-        gridPane.setHgap(10);
-        gridPane.setAlignment(Pos.TOP_LEFT);
+        gridPaneLeft.setPadding(new Insets(10, 10, 10, 10));
+        gridPaneLeft.setVgap(10);
+        gridPaneLeft.setHgap(10);
+        gridPaneLeft.setAlignment(Pos.TOP_LEFT);
 
-        Text title = new Text();
-        title.setFont(Font.font("Verdana", 14));
-        title.setUnderline(true);
-        title.setText("BASIC TEXT ANALYSIS");
+        gridPaneRight.setPadding(new Insets(10, 10, 10, 10));
+        gridPaneRight.setVgap(10);
+        gridPaneRight.setHgap(10);
+        gridPaneRight.setAlignment(Pos.TOP_LEFT);
+
+
+
         Text flesch = new Text();
         flesch.setText("Flesch readability score: ");
         Text fkinkaid = new Text();
@@ -283,15 +300,16 @@ class MainTextView {
         Text frequentwords = new Text();
         frequentwords.setText("Most frequent words: ");
 
-        gridPane.addRow(0,title);
-        gridPane.addRow(1, words, wordcount);
-        gridPane.addRow(2, flesch, fscore);
-        gridPane.addRow(3, fkinkaid, fKInterpretation);
-        gridPane.addRow(4, level, levelPercentage);
-        gridPane.addRow(5, spelling, unknownWords);
-        gridPane.addRow(6, unique, uniqueWords);
-        gridPane.addRow(7, sentences, sentenceNumber);
-        gridPane.addRow(8, frequentwords, frequentWords);
+
+        gridPaneLeft.addRow(1, words, wordcount);
+        gridPaneLeft.addRow(2, flesch, fscore);
+        gridPaneLeft.addRow(3, fkinkaid, fKInterpretation);
+        gridPaneLeft.addRow(4, level, levelPercentage);
+
+        gridPaneRight.addRow(1, spelling, unknownWords);
+        gridPaneRight.addRow(2, unique, uniqueWords);
+        gridPaneRight.addRow(3, sentences, sentenceNumber);
+        gridPaneRight.addRow(4, frequentwords, frequentWords);
 
         // set actions for buttons related to the main area
         fleschButton.setOnAction(event -> ctrl.getFlesch());
