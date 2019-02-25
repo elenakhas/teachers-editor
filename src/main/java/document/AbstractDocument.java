@@ -23,7 +23,6 @@ public abstract class AbstractDocument implements MainTextStatistics, ExtendedTe
     // Store collections
     private final String content;
     private List<String> words;
-    private HashMap<String, Integer> wordsOfALevel;
     private HashMap <String, String> simplePOSTagged;
     private List<List<TaggedWord>> taggedForParser;
     // Store the document properties used for calculating the readability scores*/
@@ -196,7 +195,7 @@ public abstract class AbstractDocument implements MainTextStatistics, ExtendedTe
      */
     private void calcTextProperties(String content) {
         Tokenizer tkn = new Tokenizer();
-        List<String> tokens = tkn.tokenize("[!?.]+|[a-zA-Z]+", content);
+        List<String> tokens = tkn.tokenize("[!?.]+|(\\w+(-\\w+)*)", content);
         this.words = new ArrayList<>();
         for (int i = 0; i < tokens.size(); i++) {
             if (isWord(tokens.get(i))) {
@@ -290,18 +289,18 @@ public abstract class AbstractDocument implements MainTextStatistics, ExtendedTe
      * @return HashMap - word contained in both text and vocab:frequency
      * **/
     public HashMap<String, Integer> wordsOfLevel(List<String> text, HashSet<String> vocab) {
-        this.wordsOfALevel = new HashMap();
+        HashMap<String, Integer> wordsOfALevel = new HashMap();
         // lemmatize the words of a document
         Morphology morph = new Morphology();
         for (String word : text) {
             word = morph.stem(word);
             word = word.toLowerCase();
             if (vocab.contains(word) && !word.equals("a") && !word.equals("the")) {
-                Integer occurences = this.wordsOfALevel.get(word);
-                this.wordsOfALevel.put(word, (occurences == null) ? 1 : occurences + 1);
+                Integer occurences = wordsOfALevel.get(word);
+                wordsOfALevel.put(word, (occurences == null) ? 1 : occurences + 1);
             }
         }
-        return this.wordsOfALevel;
+        return wordsOfALevel;
     }
 
     /**
@@ -309,9 +308,9 @@ public abstract class AbstractDocument implements MainTextStatistics, ExtendedTe
      * @return float
      */
 
-    public float percentWordsOfLevel() {
+    public float percentWordsOfLevel(HashMap<String, Integer> wordsOfALevel) {
         int sum = 0;
-        for (int value : this.wordsOfALevel.values()) {
+        for (int value : wordsOfALevel.values()) {
             sum += value;
         }
         return (float) sum / getNumWords() * 100;
@@ -321,8 +320,8 @@ public abstract class AbstractDocument implements MainTextStatistics, ExtendedTe
      * Computes the percentage of unique words of a certain level in a text
      *  @return float - percentage of words
      */
-    public float uniqueWordsOfALevel() {
-        return (float) this.wordsOfALevel.size() / getNumWords() * 100;
+    public float uniqueWordsOfALevel(HashMap<String, Integer> wordsOfALevel) {
+        return (float) wordsOfALevel.size() / getNumWords() * 100;
     }
 
     /** A helper method that computes the frequency of all words in the text
@@ -403,7 +402,7 @@ public abstract class AbstractDocument implements MainTextStatistics, ExtendedTe
      * **/
     public int countUnknownWords(List<String> words, VocabularyBuilder vocab){
         for (String word : words) {
-            if (vocab.isWord(word)) {
+            if (!vocab.isWord(word)) {
                 spellingMistakes++;
             }
         }
@@ -506,4 +505,15 @@ public abstract class AbstractDocument implements MainTextStatistics, ExtendedTe
         this.numComparativeAD = ge.getComparativeAD();
         this.numSuperlativeAD = ge.getSuperlativeAD();
     }
+
+    /** Gets the percentage of words of the requested level for the document and its interpretation **/
+
+    public String levelMessage(String level, HashSet<String> vocab){
+        HashMap <String, Integer> levelWords = wordsOfLevel(this.words, vocab);
+        String percentage = (String.format("%.2f", this.percentWordsOfLevel(levelWords)));
+        String levelPercentage = percentage + "% of " + level + " words";
+        String unique = String.format("%.2f", this.uniqueWordsOfALevel(levelWords));
+        return levelPercentage + ";  unique words: " + unique + "%";
+    }
+
 }

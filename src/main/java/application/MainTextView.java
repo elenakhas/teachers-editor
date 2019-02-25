@@ -21,7 +21,6 @@ import java.io.IOException;
  *  Main view of the graphic user interface containing the Autospelling Text Area
  *
  * @author Elena Khasanova
- * @version 1.2;
  */
 
 
@@ -50,22 +49,22 @@ class MainTextView {
     private Button showProperties;
 
     // Text Area
-    private AutocompleteArea text;
+    protected AutocompleteArea text;
 
     // Name of the opened file
     private Text filename;
 
     // Text displayed on the GridPane upon the method called by clicking on the buttons
     // Left
-    private Text fscore;
-    private Text fKInterpretation;
-    private Text levelPercentage;
-    private Text unknownWords;
+    protected Text fscore;
+    protected Text fKInterpretation;
+    protected Text levelPercentage;
+    protected Text unknownWords;
     //Right
-    private Text wordcount;
-    private Text sentenceNumber;
-    private Text frequentWords;
-    private Text uniqueWords;
+    protected Text wordcount;
+    protected Text sentenceNumber;
+    protected Text frequentWords;
+    protected Text uniqueWords;
 
 
     MainTextView() {
@@ -102,9 +101,8 @@ class MainTextView {
         rightBorder.setPrefWidth(20);
         root.setRight(rightBorder);
 
-        // instantiate the MainTextController and its fields containing properties of the text to be displayed
-        ctrl = new MainTextController(text, fscore, fKInterpretation, levelPercentage, unknownWords, wordcount,
-                sentenceNumber,frequentWords, uniqueWords);
+        // instantiate the MainTextController
+        ctrl = new MainTextController(this);
 
         // create a text object to display the filename
         filename = new Text();
@@ -214,7 +212,8 @@ class MainTextView {
         spellingBox.setOnAction(event -> ctrl.handleSpelling(spellingBox));
 
         // set actions for checkLevel button:
-        checkLevel.setOnAction(event -> ctrl.handleCheckboxes(cbKET, cbPET, cbStarters, cbMovers, cbFlyers, cbFCE, cbTOEFL));
+        checkLevel.setOnAction(event -> ctrl.handleCheckboxes(cbKET, cbPET, cbStarters, cbMovers,
+                cbFlyers, cbFCE, cbTOEFL, cbIELTS));
     }
 
     /** Sets events for the reading text file chooser**/
@@ -320,9 +319,12 @@ class MainTextView {
             ctrl.setUniqueWords();
             ctrl.setTopTenWords();
             ctrl.setSentenceCount();
+            ctrl.setUnknownWords();
+
         });
 
-        // set actions for "Show statistics" button: it opens a new window - TextStatisticsView and calls TextStatisticsController
+        // set actions for "Show statistics" button: it opens a new window - TextStatisticsView
+        // and calls TextStatisticsController
         showStatistics.setOnAction(event -> {
             TextStatisticsView tv = new TextStatisticsView(ctrl);
             try {

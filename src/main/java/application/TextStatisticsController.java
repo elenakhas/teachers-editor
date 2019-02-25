@@ -1,84 +1,32 @@
 package application;
-//
 
 import document.AbstractDocument;
 import javafx.scene.text.Text;
 
 import java.io.IOException;
+/**
+ * The class provides a link between the ExtendedTextStatistics interface methods implemented in AbstractDocument.
+ * Contains the AbstractDocument object
+ * @see document.AbstractDocument
+ * @author Elena Khasanova
+ */
 
 class TextStatisticsController {
 
+
     // Create instance of the text document
     private AbstractDocument txt;
-    // Create text object fields to store output of methods calls
-
-    // for VOCABULARY
-    private Text nNouns;
-    private Text nAdj;
-    private Text nVerbs;
-    private Text nAdv;
-    private Text nNumbers;
-    private Text nPron;
-    private Text nDet;
-    private Text nWh;
-    private Text nPrepConj;
-    private Text nOther;
-
-    // for GRAMMAR
-    private Text comparativeAdj;
-    private Text superlativeAdj;
-    private Text modalVerbs;
-    private Text existentialThere;
-    private Text comparativeAdv;
-    private Text superlativeAdv;
-    private Text imperativeForms;
-    private Text presentSimple;
-    private Text presentContinuous;
-    private Text pastSimple;
-    private Text pastContinuous;
-    private Text presentPerfectContinuousForms;
-    private Text presentPerfect;
-    private Text pastPerfect;
-    private Text futureSimple;
-    private Text futureContinuousForms;
-    private Text futurePerfectForms;
     private int numWords;
 
+    // Create a view object
+    TextStatisticsView view;
+
+
     // instantiate everything in the constructor
-    public TextStatisticsController(MainTextController ctrl, Text nNouns, Text nAdj, Text nVerbs, Text nAdv, Text nNumbers,
-                                    Text nPron, Text nDet, Text nWh, Text nPrepConj, Text nOther, Text comparativeAdj, Text superlativeAdj,
-                                    Text modalVerbs, Text existentialThere, Text comparativeAdv, Text superlativeAdv, Text imperativeForms,
-                                    Text presentSimple, Text presentContinuous, Text pastSimple, Text pastContinuous, Text presentPerfectContinuousForms,
-                                    Text presentPerfect, Text pastPerfect, Text futureSimple, Text futureContinuousForms, Text futurePerfectForms){
-        this.nNouns = nNouns;
-        this.nAdj = nAdj;
-        this.nVerbs = nVerbs;
-        this.nAdv = nAdv;
-        this.nNumbers = nNumbers;
-        this.nPron = nPron;
-        this.nDet = nDet;
-        this.nWh = nWh;
-        this.nPrepConj = nPrepConj;
-        this.nOther = nOther;
-        this.comparativeAdj = comparativeAdj;
-        this.superlativeAdj = superlativeAdj;
-        this.modalVerbs = modalVerbs;
-        this.existentialThere = existentialThere;
-        this.comparativeAdv = comparativeAdv;
-        this.superlativeAdv = superlativeAdv;
-        this.imperativeForms = imperativeForms;
-        this.presentSimple = presentSimple;
-        this.presentContinuous = presentContinuous;
-        this.pastSimple = pastSimple;
-        this.pastContinuous = pastContinuous;
-        this.presentPerfectContinuousForms = presentPerfectContinuousForms;
-        this.presentPerfect = presentPerfect;
-        this.pastPerfect = pastPerfect;
-        this.futureSimple = futureSimple;
-        this.futureContinuousForms = futureContinuousForms;
-        this.futurePerfectForms = futurePerfectForms;
+    public TextStatisticsController(MainTextController ctrl, TextStatisticsView view){
         this.txt = ctrl.getDoc();
         this.numWords = this.txt.getNumWords();
+        this.view = view;
     }
 
     /**Helper method to set results to a respective text object in a specified format: "count / percentage"**/
@@ -93,16 +41,16 @@ class TextStatisticsController {
         txt.getPosTagging();
         txt.getPosStatistics();
 
-        setResults(this.nNouns, txt.getNumNouns(), this.numWords);
-        setResults(this.nAdj, txt.getNumAdj(), this.numWords);
-        setResults(this.nAdv, txt.getNumAdv(), this.numWords);
-        setResults(this.nVerbs, txt.getNumVerbs(), this.numWords);
-        setResults(this.nNumbers, txt.getNumNumbers(), this.numWords);
-        setResults(this.nPron, txt.getNumPron(), this.numWords);
-        setResults(this.nDet, txt.getNumDet(), this.numWords);
-        setResults(this.nWh, txt.getNumWh(), this.numWords);
-        setResults(this.nPrepConj, txt.getNumPrepConj(), this.numWords);
-        setResults(this.nOther, txt.getNumOther(), this.numWords);
+        setResults(this.view.numNouns, txt.getNumNouns(), this.numWords);
+        setResults(this.view.numAdj, txt.getNumAdj(), this.numWords);
+        setResults(this.view.numAdv, txt.getNumAdv(), this.numWords);
+        setResults(this.view.numVerbs, txt.getNumVerbs(), this.numWords);
+        setResults(this.view.numNumbers, txt.getNumNumbers(), this.numWords);
+        setResults(this.view.numPron, txt.getNumPron(), this.numWords);
+        setResults(this.view.numDet, txt.getNumDet(), this.numWords);
+        setResults(this.view.numWh, txt.getNumWh(), this.numWords);
+        setResults(this.view.numPrepConj, txt.getNumPrepConj(), this.numWords);
+        setResults(this.view.numOther, txt.getNumOther(), this.numWords);
     }
 
     /** Sets the number of occurrence of grammar forms to the respective text object **/
@@ -112,61 +60,61 @@ class TextStatisticsController {
         txt.getGrammarStatistics();
 
         // lexicalized grammar features
-        setResults(this.comparativeAdj, txt.getNumComparativeAJ(), this.numWords);
-        setResults(this.superlativeAdj, txt.getNumSuperlativeAJ(), this.numWords);
-        setResults(this.comparativeAdv, txt.getNumComparativeAD(), this.numWords);
-        setResults(this.superlativeAdv, txt.getNumSuperlativeAD(), this.numWords);
-        setResults(this.modalVerbs, txt.getNumModals(), this.numWords);
-        setResults(this.existentialThere, txt.getNumExistential(), this.numWords);
+        setResults(this.view.comparativeAdj, txt.getNumComparativeAJ(), this.numWords);
+        setResults(this.view.superlativeAdj, txt.getNumSuperlativeAJ(), this.numWords);
+        setResults(this.view.comparativeAdv, txt.getNumComparativeAD(), this.numWords);
+        setResults(this.view.superlativeAdv, txt.getNumSuperlativeAD(), this.numWords);
+        setResults(this.view.modalVerbs, txt.getNumModals(), this.numWords);
+        setResults(this.view.existentialThere, txt.getNumExistential(), this.numWords);
 
-        setResults(this.imperativeForms, txt.getNumImperative(), this.numWords);
+        setResults(this.view.imperativeForms, txt.getNumImperative(), this.numWords);
 
         // The calculation is not completely accurate as the form can consist of one or two words,
         // will be improved in the next release
-        setResults(this.presentSimple, txt.getNumPresentSimpleActive(), this.numWords);
+        setResults(this.view.presentSimple, txt.getNumPresentSimpleActive(), this.numWords);
 
         // substract the number of Present Continuous forms from the total number of words in the text
         // as the form always consists of two words
-        setResults(this.presentContinuous, txt.getNumPresentContinuousActive(),
+        setResults(this.view.presentContinuous, txt.getNumPresentContinuousActive(),
                 this.numWords-txt.getNumPresentContinuousActive());
 
         // substract twice the number of Present Perfect Continuous forms from the total number of words
         // in the text as the form always consists of three words
-        setResults(this.presentPerfectContinuousForms, txt.getNumPresentPerfectContinuous(),
+        setResults(this.view.presentPerfectContinuousForms, txt.getNumPresentPerfectContinuous(),
                 this.numWords- 2* txt.getNumPresentPerfectContinuous());
 
         // The calculation is not completely accurate as the form can consist of one or two words,
         // will be improved in the next release
-        setResults(this.pastSimple, txt.getNumPastSimpleActive(), this.numWords);
+        setResults(this.view.pastSimple, txt.getNumPastSimpleActive(), this.numWords);
 
         // substract the number of Past Continuous forms from the total number of words in the text
         // as the form always consists of two words
-        setResults(this.pastContinuous, txt.getNumPastContinuousActive(),
+        setResults(this.view.pastContinuous, txt.getNumPastContinuousActive(),
                 this.numWords-txt.getNumPastContinuousActive());
 
         // substract the number of Present Perfect forms from the total number of words in the text
         // as the form always consists of two words
-        setResults(this.presentPerfect, txt.getNumPresentPerfectActive(),
+        setResults(this.view.presentPerfect, txt.getNumPresentPerfectActive(),
                 this.numWords-txt.getNumPresentPerfectActive());
 
         // substract the number of Past Perfect forms from the total number of words in the text
         // as the form always consists of two words
-        setResults(this.pastPerfect, txt.getNumPastPerfectActive(),
+        setResults(this.view.pastPerfect, txt.getNumPastPerfectActive(),
                 this.numWords-txt.getNumPastPerfectActive());
 
         // substract the number of Future Simple forms from the total number of words in the text
         // as the form always consists of two words
-        setResults(this.futureSimple, txt.getNumFutureSimpleActive(),
+        setResults(this.view.futureSimple, txt.getNumFutureSimpleActive(),
                 this.numWords-txt.getNumFutureSimpleActive());
 
         // substract twice the number of Future Continuous forms from the total number of words in the text
         // as the form always consists of three words
-        setResults(this.futureContinuousForms, txt.getNumFutureContinuous(),
+        setResults(this.view.futureContinuousForms, txt.getNumFutureContinuous(),
                 this.numWords-2*txt.getNumFutureContinuous());
 
         // substract twice the number of Future Perfect forms from the total number of words in the text
         // as the form always consists of three words
-        setResults(this.futurePerfectForms, txt.getNumFuturePerfect(),
+        setResults(this.view.futurePerfectForms, txt.getNumFuturePerfect(),
                 this.numWords-2*txt.getNumFuturePerfect());
 
     }

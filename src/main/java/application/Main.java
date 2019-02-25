@@ -3,9 +3,9 @@ package application;
 import javafx.application.Application;
 import javafx.stage.Stage;
 /**
- * Main gui class
+ * The starting point of the application
  * @author Elena Khasanova
- * @version 1.1;
+ * @version 0.8;
  */
 
 public class Main extends Application {

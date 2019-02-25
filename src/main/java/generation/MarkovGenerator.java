@@ -25,14 +25,13 @@ public class MarkovGenerator {
         FileContent fc = new FileContent(fname);
         Tokenizer tkn = new Tokenizer();
         String content = fc.getContent();
-        this.data = tkn.tokenize("[!?.]+|[a-zA-Z]+", content);
+        this.data = tkn.tokenize("[!?.]+|(\\w+(-\\w+)*)", content);
         this.vocabulary = new HashSet<String>(this.data);
-
     }
 
     public static void main(String[] args){
 
-        MarkovGenerator mg = new MarkovGenerator("src/test/test_data/textKET");
+        MarkovGenerator mg = new MarkovGenerator("data/shakespeare_input.txt");
         mg.trainLm(4);
         mg.addK(1);
         mg.normalization();
@@ -80,7 +79,7 @@ public class MarkovGenerator {
         for (HashMap<String, Float> wc : this.lm.values()) {
             for (String word : vocabulary) {
                 float count = wc.getOrDefault(word, (float) 0);
-                wc.put(word, count + k);
+                    wc.put(word, count + k);
             }
         }
         HashMap<String, Float> wc = new HashMap<>();

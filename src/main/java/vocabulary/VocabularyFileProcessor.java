@@ -23,7 +23,7 @@ import java.util.regex.Pattern;
 class VocabularyFileProcessor {
     public static void main(String[] args) throws IOException {
         VocabularyFileProcessor pr = new VocabularyFileProcessor();
-        pr.createVocabularyFile("data/TOEFL.txt", "data/TOEFLwordlist.txt");
+        pr.createVocabularyFile("data/IELTSwordlist.txt", "data/IELTSwordlist.txt");
         System.out.println("The vocabulary file has been created");
     }
 
@@ -63,7 +63,7 @@ class VocabularyFileProcessor {
      * @return
      */
     private List<String> getVocab(String content) {
-        ArrayList words = tokenizer("[a-zA-Z]+", content);
+        ArrayList words = tokenizer("[a-zA-Z-]+", content);
         //ArrayList words = tokenizer("^.*?(?=\\s\\().", content);
         HashSet<String> set = new HashSet<String>(words);
         List<String> sortedList = new ArrayList(set);

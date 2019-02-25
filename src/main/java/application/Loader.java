@@ -15,10 +15,9 @@ import java.util.HashSet;
 /**
  *  Class to load data from files (reference dictionary and wordlists of different levels of English)
  * @author Elena Khasanova
- * @version 1.0;
- * */
+ * * */
 
-class Loader {
+public class Loader {
 
     private final String dictFile = "data/dict.txt";
     private final String ketWordlist = "data/KETwordlist.txt";
@@ -28,6 +27,17 @@ class Loader {
     private final String flyersWordlist = "data/FLYERSwordlist.txt";
     private final String FCEwordlist = "data/FCEwordlist.txt";
     private final String TOEFLwordlist = "data/TOEFLwordlist.txt";
+    private final String IELTSwordlist = "data/IELTSwordlist.txt";
+
+    public Vocabulary ketVocab;
+    public Vocabulary petVocab;
+    public Vocabulary startersVocab;
+    public Vocabulary moversVocab;
+    public Vocabulary flyersVocab;
+    public Vocabulary fceVocab;
+    public Vocabulary toeflVocab;
+    public Vocabulary ieltsVocab;
+
 
     /** Creates autocomplete instance with a trie structure and loaded reference dictionary
      * @return trie to populate with completions
@@ -35,7 +45,7 @@ class Loader {
 
     public Autocompleter getAutoComplete() {
         AutocompleteOptions tr = new AutocompleteOptions();
-        VocabularyLoader.loadVocabulary(tr, dictFile);
+        VocabularyLoader.loadVocabulary(tr, this.dictFile);
         return tr;
 
     }
@@ -44,8 +54,8 @@ class Loader {
      * @return  reference dictionary
      * **/
     public VocabularyBuilder getDictionary() {
-        VocabularyBuilder d = new DictionaryTree(dictFile);
-        VocabularyLoader.loadVocabulary(d, dictFile);
+        VocabularyBuilder d = new DictionaryTree(this.dictFile);
+        VocabularyLoader.loadVocabulary(d, this.dictFile);
         return d;
     }
 
@@ -62,61 +72,86 @@ class Loader {
      * **/
 
     public HashSet<String> getKetVocab(){
-        Vocabulary vb = new Vocabulary();
-        VocabularyLoader.loadVocabulary(vb, ketWordlist);
-        return vb.getVocab();
+        if (this.ketVocab == null) {
+            this.ketVocab = new Vocabulary();
+            VocabularyLoader.loadVocabulary(this.ketVocab, this.ketWordlist);
+        }
+        return this.ketVocab.getVocab();
     }
     /** Loads wordlist for PET exam into a HashSet structure
      * @return wordlist as HashSet
      * **/
     public HashSet<String> getPetVocab(){
-        Vocabulary vb = new Vocabulary();
-        VocabularyLoader.loadVocabulary(vb, petWordlist);
-        return vb.getVocab();
+        if (this.petVocab == null) {
+            this.petVocab = new Vocabulary();
+            VocabularyLoader.loadVocabulary(this.petVocab, this.petWordlist);
+        }
+        return this.petVocab.getVocab();
     }
     /** Loads wordlist for Starters exam into a HashSet structure
      * @return wordlist as HashSet
      * **/
     public HashSet<String> getStartersVocab(){
-        Vocabulary vb = new Vocabulary();
-        VocabularyLoader.loadVocabulary(vb, startersWordlist);
-        return vb.getVocab();
+        if (this.startersVocab == null) {
+            this.startersVocab = new Vocabulary();
+            VocabularyLoader.loadVocabulary(this.startersVocab, this.startersWordlist);
+        }
+        return this.startersVocab.getVocab();
     }
 
     /** Loads wordlist for Movers exam into a HashSet structure
      * @return wordlist as HashSet
      * **/
     public HashSet<String> getMoversVocab(){
-        Vocabulary vb = new Vocabulary();
-        VocabularyLoader.loadVocabulary(vb, moversWordlist);
-        return vb.getVocab();
+        if (this.moversVocab == null) {
+            this.moversVocab = new Vocabulary();
+            VocabularyLoader.loadVocabulary(this.moversVocab, this.moversWordlist);
+        }
+        return this.moversVocab.getVocab();
     }
 
     /** Loads wordlist for Flyers exam into a HashSet structure
      * @return wordlist as HashSet
      * **/
     public HashSet<String> getFlyersVocab(){
-        Vocabulary vb = new Vocabulary();
-        VocabularyLoader.loadVocabulary(vb, flyersWordlist);
-        return vb.getVocab();
+        if (this.flyersVocab == null) {
+            this.flyersVocab = new Vocabulary();
+            VocabularyLoader.loadVocabulary(this.moversVocab, this.flyersWordlist);
+        }
+        return this.flyersVocab.getVocab();
     }
 
     /** Loads wordlist for FCE exam into a HashSet structure
      * @return wordlist as HashSet
      * **/
     public HashSet<String> getFCEVocab(){
-        Vocabulary vb = new Vocabulary();
-        VocabularyLoader.loadVocabulary(vb, FCEwordlist);
-        return vb.getVocab();
+        if (this.fceVocab == null) {
+            this.fceVocab = new Vocabulary();
+            VocabularyLoader.loadVocabulary(this.fceVocab, this.FCEwordlist);
+        }
+        return this.startersVocab.getVocab();
     }
 
     /** Loads wordlist for TOEFL exam into a HashSet structure
      * @return wordlist as HashSet
      * **/
     public HashSet<String> getTOEFLvocab(){
-        Vocabulary vb = new Vocabulary();
-        VocabularyLoader.loadVocabulary(vb, TOEFLwordlist);
-        return vb.getVocab();
+        if (this.toeflVocab == null) {
+            this.toeflVocab = new Vocabulary();
+            VocabularyLoader.loadVocabulary(this.toeflVocab, this.TOEFLwordlist);
+        }
+        return this.startersVocab.getVocab();
+    }
+
+    /** Loads wordlist for TOEFL exam into a HashSet structure
+     * @return wordlist as HashSet
+     * **/
+    public HashSet<String> getIELTSvocab(){
+        if (this.ieltsVocab == null) {
+            this.ieltsVocab = new Vocabulary();
+            VocabularyLoader.loadVocabulary(this.ieltsVocab, this.IELTSwordlist);
+        }
+        return this.startersVocab.getVocab();
     }
 }
 

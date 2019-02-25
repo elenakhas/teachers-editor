@@ -16,10 +16,10 @@ import javafx.stage.Stage;
 import java.io.IOException;
 
 /**
- *  The popup window containing the TextStatisticsController output
- *
+ *  The popup window containing the TextStatisticsController output:
+ *  statistics on the parts-of-speech and grammar features
+ * @see application.TextStatisticsController
  * @author Elena Khasanova
- * @version 1.2;
  */
 
 
@@ -30,35 +30,35 @@ class TextStatisticsView {
     // Text object fields to display output of the TextStatisticsController calls
 
     // for VOCABULARY
-    private Text numNouns;
-    private Text numAdj;
-    private Text numVerbs;
-    private Text numAdv;
-    private Text numNumbers;
-    private Text numPron;
-    private Text numDet;
-    private Text numWh;
-    private Text numPrepConj;
-    private Text numOther;
+    protected Text numNouns;
+    protected Text numAdj;
+    protected Text numVerbs;
+    protected Text numAdv;
+    protected Text numNumbers;
+    protected Text numPron;
+    protected Text numDet;
+    protected Text numWh;
+    protected Text numPrepConj;
+    protected Text numOther;
 
     // for GRAMMAR
-    private Text comparativeAdj;
-    private Text superlativeAdj;
-    private Text modalVerbs;
-    private Text existentialThere;
-    private Text comparativeAdv;
-    private Text superlativeAdv;
-    private Text imperativeForms;
-    private Text presentSimple;
-    private Text presentContinuous;
-    private Text pastSimple;
-    private Text pastContinuous;
-    private Text presentPerfectContinuousForms;
-    private Text presentPerfect;
-    private Text pastPerfect;
-    private Text futureSimple;
-    private Text futureContinuousForms;
-    private Text futurePerfectForms;
+    protected Text comparativeAdj;
+    protected Text superlativeAdj;
+    protected Text modalVerbs;
+    protected Text existentialThere;
+    protected Text comparativeAdv;
+    protected Text superlativeAdv;
+    protected Text imperativeForms;
+    protected Text presentSimple;
+    protected Text presentContinuous;
+    protected Text pastSimple;
+    protected Text pastContinuous;
+    protected Text presentPerfectContinuousForms;
+    protected Text presentPerfect;
+    protected Text pastPerfect;
+    protected Text futureSimple;
+    protected Text futureContinuousForms;
+    protected Text futurePerfectForms;
 
     public TextStatisticsView(MainTextController ctrl){
 
@@ -98,11 +98,7 @@ class TextStatisticsView {
     /**Get the results of **/
 
     public void getGrammarAndVocabCalculations() throws IOException {
-        TextStatisticsController textStatCtrl = new TextStatisticsController(ctrl, numNouns, numAdj, numVerbs, numAdv, numNumbers,
-                numPron, numDet, numWh, numPrepConj, numOther,  comparativeAdj, superlativeAdj,
-                modalVerbs, existentialThere, comparativeAdv, superlativeAdv, imperativeForms,
-                presentSimple, presentContinuous, pastSimple, pastContinuous, presentPerfectContinuousForms,
-                presentPerfect, pastPerfect, futureSimple, futureContinuousForms, futurePerfectForms);
+        TextStatisticsController textStatCtrl = new TextStatisticsController(ctrl, this);
 
         textStatCtrl.getVocabularyStatistics();
         textStatCtrl.getGrammarStatistics();

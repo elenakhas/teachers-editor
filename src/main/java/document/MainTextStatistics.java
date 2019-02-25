@@ -33,7 +33,7 @@ public interface MainTextStatistics {
     HashMap<String, Integer> wordsOfLevel(List<String> text, HashSet<String> vocab);
 
     /** Caclulates the percentage words of a certain level in a text**/
-    float percentWordsOfLevel();
+    float percentWordsOfLevel(HashMap<String, Integer> words);
 
     /** Calculates the number of different words in a text**/
     int wordsVariety();

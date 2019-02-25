@@ -25,7 +25,7 @@ import java.util.regex.Pattern;
 
 /** Implementation of a StyledTextArea with autocompletion functionality.
  * @author Elena Khasanova
- * @version 1.2
+ *
  * **/
 
 class AutocompleteArea extends StyledTextArea<Boolean> {
