@@ -1,56 +1,71 @@
-### teachers-editor
-A master project
+# ENGLISH TEACHER'S EDITOR
 
-A text processor for language teachers that helps with the selection of teaching materials and evaluations of students’ essays.
+English Teacher's Editor is a Computer-Aided Language Learning Tool, a text processor aimed to help language teachers evaluate reading materials to select the most adequate ones for their students' proficiency level and assess students' written assignments. It implements a simple graphic user interface and NLP techniques.
 
-### Files:
-txt files that store lexical minimum for Cambridge exams corresponding to several levels of English proficiency:
-FCE
-PET
-KET
 
-Originally they are in pdf format on the official Cambridge website in alphabetic order and classified according to a topic.
+## Features:
 
-### Features:
+* Evaluate readability and the level of complexity: 
+*uses Flesch Reading Ease and Flesch-Kincaid Grade Level scores adapted to second language learning;
 
-1) Downloader: follows the link, checks the content type, applies a corresponding parser, returns the content of the file
-2) FileReader: read the text from a file, returns the content
-3) User input: read the text from user input
-4) Evaluator: takes the file and its statistics, returns the level of English
-5) Statistics: takes the file, applies various functions, returns statistics about this file
-6) Spellcheker
-7) Part-Of-Speech tagger
-8) Repetition checks: if the same word is repeated within the same paragraph, it is highlighted
-9) Simple text generator (?)
+* Check if the text is useful for a certain level
+*shows the percentage of words corresponding to a certain ESL exam;
 
-### GUI features
-1) Space for typing in the text
-2) Uploading the file
-3) Statistics button
-4) Level Button
-5) Spellcheck button
-6) POS button
-7) Highlight the words of a certain level 
+* See the top ten most frequent words in the document
 
-### Types of the document:
-- vocabulary - PET, KET, FCE, YLE
-- texts from URLS
-- essays
-- dictionary for a spellchecker
+* Count the word
 
-### Document treatment
-1. Texts for reading:
-	Level: count the proportion of the words of a certain level
-					highlight the words of a certain level
-	POS: highlihgt all words of a certain POS
-	Claculate the complexity of the text: Flesch score
-	Determine the topic (?)
+* Check number of spelling mistakes
+
+* Check the size of vocabulary used in the text
+
+* Check the number of sentences
+
+* Spellchecking
+
+* Autocomplete
+
+* See extended statistics on the text:
+	* Vocabulary features: percentage of the words of major parts of speech;
+	* Grammar features: percentage of the words with particular grammar properties:
+		*  comparative and superlative adjectives;
+     		*  modal verbs;
+    		*  numImperative forms;
+     		*  numExistential;
+     		*  Present Simple Active;
+     		*  Present Perfect Active;
+     		*  Present Continuous Active;
+     		*  Past Simple Active;
+     		*  Past Perfect Active;
+     		*  Past Continuous Active;
+     		*  Present Perfect Continuous;
+     		*  Future Simple Active;
+     		*  Future Perfect Active;
+     		*  Future Continuous;
 	
-2. Essays:
-	Level: count the proportion of the words of a certain level
-	Accuracy: highlight and count the misspelled words, suggest corrections
-	POS: highlights the words of a certain POS
-	Repetitions: highlights the words that are repeated within a certain span
-	
-### Undecided:
-Treatment of grammar
+* Simple Markov text generator
+
+### The levels of English Proficiency treated (according to Cambridge Exams):
+* Young learners:
+	* Starters
+	* Movers
+	* Flyers
+* KET
+* PET
+* FCE
+
+### User Interface
+
+
+## Usage
+* Download the repository
+* Install dependencies:
+
+	* Richtext FX: https://mvnrepository.com/artifact/org.fxmisc.richtext/richtextfx/0.6.10
+	* Stanford Core NLP: https://stanfordnlp.github.io/CoreNLP/download.html
+
+For testing:
+	* JUnit 4.12
+	* HamcrestCore 1.3. https://mvnrepository.com/artifact/org.hamcrest/hamcrest-core/1.3
+	* Slf4j nop binding https://mvnrepository.com/artifact/org.slf4j/slf4j-nop
+
