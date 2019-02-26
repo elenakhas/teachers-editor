@@ -12,7 +12,6 @@ import java.util.List;
 /**
  *  Represents grammar properties of the text and instruments to get them
  * @author Elena Khasanova
- * @version 1.0;
  * **/
 
 class GrammarEvaluation {

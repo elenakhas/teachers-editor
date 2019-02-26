@@ -63,6 +63,7 @@ class MainTextController {
             txt = new ReadingMaterial(fcon.getContent());
             String content = txt.getContent();
             this.view.text.insertText(0, content);
+            this.view.filename.setText(this.fileName);
         }
     }
 
@@ -79,6 +80,8 @@ class MainTextController {
             txt = new Essay(fcon.getContent());
             String content = txt.getContent();
             this.view.text.insertText(0, content);
+            this.view.filename.setText(this.fileName);
+
         }
     }
 
@@ -132,15 +135,10 @@ class MainTextController {
         this.view.frequentWords.setText(output);
     }
 
-    /** Sets the name of the file to the respective text object **/
-    public String getFilename(){
-        return fileName;
-    }
-
     /** Event hadler for checkboxes **/
 
-    public void handleCheckboxes(CheckBox cbKET, CheckBox cbPET, CheckBox cbStarters, CheckBox cbMovers,
-                                 CheckBox cbFlyers, CheckBox cbFCE, CheckBox cbTOEFL, CheckBox cbIELTS) {
+    public void handleLevelCheckboxes(CheckBox cbKET, CheckBox cbPET, CheckBox cbStarters, CheckBox cbMovers,
+                                      CheckBox cbFlyers, CheckBox cbFCE, CheckBox cbTOEFL, CheckBox cbIELTS) {
         ArrayList<String> messageLevel = new ArrayList<>();
         if (cbKET.isSelected()) {
             messageLevel.add(this.txt.levelMessage("KET", this.loader.getKetVocab()));

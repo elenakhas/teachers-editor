@@ -52,7 +52,7 @@ class MainTextView {
     protected AutocompleteArea text;
 
     // Name of the opened file
-    private Text filename;
+    protected Text filename;
 
     // Text displayed on the GridPane upon the method called by clicking on the buttons
     // Left
@@ -212,7 +212,7 @@ class MainTextView {
         spellingBox.setOnAction(event -> ctrl.handleSpelling(spellingBox));
 
         // set actions for checkLevel button:
-        checkLevel.setOnAction(event -> ctrl.handleCheckboxes(cbKET, cbPET, cbStarters, cbMovers,
+        checkLevel.setOnAction(event -> ctrl.handleLevelCheckboxes(cbKET, cbPET, cbStarters, cbMovers,
                 cbFlyers, cbFCE, cbTOEFL, cbIELTS));
     }
 
@@ -223,7 +223,6 @@ class MainTextView {
 
             try {
                 ctrl.loadReadingText();
-                filename.setText(ctrl.getFilename());
             } catch (IOException e) {
                 e.printStackTrace();
             }
@@ -236,7 +235,6 @@ class MainTextView {
 
             try {
                 ctrl.loadEssay();
-                filename.setText(ctrl.getFilename());
             } catch (IOException e) {
                 e.printStackTrace();
             }
