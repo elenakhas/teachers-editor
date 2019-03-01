@@ -9,11 +9,11 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
-@SuppressWarnings("ALL")
 
 /**
  * The class implements Stanford Maximum Entropy POStagger and represents lexical properties of the document
  * @author Elena Khasanova
+ *
  * **/
 public class PosTagger {
 

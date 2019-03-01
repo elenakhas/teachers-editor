@@ -24,7 +24,8 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 /** Implementation of a StyledTextArea with autocompletion functionality.
- * @author Elena Khasanova
+ *  Code partially borrowed from MOOC Text Editor project implemented in the course
+ *  "Data Structures and Performance" by UC San Diego via coursera.org
  *
  * **/
 
