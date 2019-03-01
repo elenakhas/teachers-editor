@@ -20,13 +20,12 @@ public class FileContent {
         this.filename = filename;
     }
 
+    String message;
+
     /**
      * Reads a text character by character from a file and returns its string content
-     * @return s - string content of the file
-     * @throws IOException
+     * @return String content of the file
      */
-
-    String message;
     public String getContent() {
         String s = null;
         try {

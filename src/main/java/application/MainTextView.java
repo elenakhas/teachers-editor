@@ -24,7 +24,7 @@ import java.io.IOException;
  */
 
 
-class MainTextView {
+public class MainTextView {
 
     // text controller containing basic functionality for a text
     private final MainTextController ctrl;

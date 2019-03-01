@@ -11,7 +11,7 @@ import java.io.IOException;
  * @author Elena Khasanova
  */
 
-class TextStatisticsController {
+public class TextStatisticsController {
 
 
     // Create instance of the text document

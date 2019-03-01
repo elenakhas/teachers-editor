@@ -18,12 +18,12 @@ public interface VocabularyBuilder {
     /**
      * Checks if the string is a word according to this dictionary
      * @param s - string to check
-     * @retun True if it is contained in the dictionary
+     * @return True if it is contained in the dictionary
      */
     boolean isWord(String s);
 
     /**
-     * Return the number of words in the vocabulary
+     * @return the number of words in the vocabulary
      */
     int size();
 

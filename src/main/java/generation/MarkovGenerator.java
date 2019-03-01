@@ -122,7 +122,6 @@ public class MarkovGenerator {
     public String[] getHistory(ArrayList<String> data, int order) {
         String[] history = new String[order];
         while (data.size() < order) {
-            //System.err.println("Not enough data");
             order--;
         }
         for (int k = order; k > 0; k--) {
@@ -153,7 +152,7 @@ public class MarkovGenerator {
      * @return A random word occurring after the prevWords
      **/
 
-    public String generate_word(String[] prevWords) {
+    public String generateWord(String[] prevWords) {
         Random rnd = new Random();
         float index = rnd.nextFloat();
         String word = null;
@@ -180,7 +179,7 @@ public class MarkovGenerator {
     public String generateText(int order, int nWords) {
         ArrayList<String> generatedWords = new ArrayList<>();
         for (int i = 1; i <= nWords; i++) {
-            String word = generate_word(getHistory(generatedWords, order));
+            String word = generateWord(getHistory(generatedWords, order));
             generatedWords.add(word);
         }
         return String.join(" ", generatedWords);

@@ -12,7 +12,6 @@ import java.util.List;
 /**
  * An implementation of spellchecker using character distance algorithm
  * @author Elena Khasanova
- * @version 1.0;
  * */
 
 public class SuggestionsSpelling implements Spellcheker {
@@ -50,7 +49,6 @@ public class SuggestionsSpelling implements Spellcheker {
      * @param input       - the original String
      * @param currentList - the list of words to append modified words
      * @param wordsOnly   - controls whether to return only words or any String
-     * @return
      */
     private void oneCharSubstitution(String input, List<String> currentList, boolean wordsOnly) {
         // for each letter in the s and for all possible replacement characters
@@ -78,7 +76,7 @@ public class SuggestionsSpelling implements Spellcheker {
      * @param input       - the original String
      * @param currentList - the list of words to append modified words
      * @param wordsOnly   - controls whether to return only words or any String
-     * @return
+     *
      */
     private void oneCharInsertions(String input, List<String> currentList, boolean wordsOnly) {
         for (int index = 0; index < input.length() + 1; index++) {
@@ -105,7 +103,7 @@ public class SuggestionsSpelling implements Spellcheker {
      * @param input       - the original String
      * @param currentList - the list of words to append modified words
      * @param wordsOnly   - controls whether to return only words or any String
-     * @return
+     *
      */
     private void oneCharDeletions(String input, List<String> currentList, boolean wordsOnly) {
         for (int index = 0; index < input.length(); index++) {

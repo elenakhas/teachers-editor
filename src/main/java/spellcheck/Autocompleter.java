@@ -11,6 +11,10 @@ import java.util.List;
 
 public interface Autocompleter {
 
-    /** Returns the list of completions for a word being typed**/
+    /** Returns the list of completions for a word being typed
+     * @param prefix - the String to complete
+     * @param numCompletions - a desired number of options to complete the prefix
+     * @return List of valid completions
+     * **/
     List<String> predictCompletions(String prefix, int numCompletions);
 }

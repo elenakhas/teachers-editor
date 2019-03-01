@@ -92,6 +92,7 @@ public abstract class AbstractDocument implements MainTextStatistics, ExtendedTe
     // GETTER METHODS FOR PRIVATE VARIABLES
     /**
      *  Getter for the string content of the file
+     * @return the content of the file stored as an attribute
      */
     public String getContent() {
         return this.content;
@@ -221,9 +222,9 @@ public abstract class AbstractDocument implements MainTextStatistics, ExtendedTe
      * The exact formula is: RE = 206.835 – (1.015 x ASL) – (84.6 x ASW),
      * where ASL is an average sentence length (words per sentence);
      * ASW is an average number of syllables per word.
-     * @return float - Flesch score; the
+     * @return float - Flesch score;
      */
-    public float calcFleschScore() { //
+    public float calcFleschScore() {
         return (float) (206.835 - 1.015 * ((float) getNumWords() / (float) getNumSentences())
                 - 84.6 * ((float) getTotalNumSyllables() / (float) getNumWords()));
     }
@@ -270,17 +271,12 @@ public abstract class AbstractDocument implements MainTextStatistics, ExtendedTe
                 + (11.8 * ((float) getTotalNumSyllables() / (float) getNumWords())) - 15.59);
     }
 
-    /** Gives explanation of Flesch-Kincaid score, differs for ReadingMaterial and Essay**/
+    /** Gives explanation of Flesch-Kincaid score, differs for ReadingMaterial and Essay
+     * @param fleschKincaid - Flesch-Kincaid readability score
+     * @return a String interpreting the score
+     * **/
    public abstract String interpretFleshKincaid(float fleschKincaid);
 
-    /**
-     * @param text
-     * @param vocab
-     * @return HashMap from a word in a wordlist of a certain level to its frequency in the text file
-     * We exclude articles from the count as they are frequent but do not contribute
-     * to understanding if the text is of an appropriate level. Other stop words, however,
-     * are very relevant especially for low levels.
-     */
     @SuppressWarnings("unchecked")
 
     /** Selects the words found in a wordlist of a certain level and their frequency of occurrence, exclude articles
@@ -318,7 +314,9 @@ public abstract class AbstractDocument implements MainTextStatistics, ExtendedTe
 
     /**
      * Computes the percentage of unique words of a certain level in a text
-     *  @return float - percentage of words
+     * @param wordsOfALevel - a HashMap containing the words of a certain level
+     * and their counts
+     * @return float - percentage of words
      */
     public float uniqueWordsOfALevel(HashMap<String, Integer> wordsOfALevel) {
         return (float) wordsOfALevel.size() / getNumWords() * 100;
@@ -394,10 +392,9 @@ public abstract class AbstractDocument implements MainTextStatistics, ExtendedTe
         return (HashMap<String, Integer>) sortTopWords;
     }
 
-    /**Returns the number of unknown / misspelled words, implemented in ReadingMaterial and Essay classes**/
-
     /** Calculates the number of spelling mistakes and words not contained in the reference dictionary of a spellcheker
      * @param words - List of words in a document
+     * @param vocab - reference dictionary
      * @return number of mistaken words
      * **/
     public int countUnknownWords(List<String> words, VocabularyBuilder vocab){
@@ -413,10 +410,10 @@ public abstract class AbstractDocument implements MainTextStatistics, ExtendedTe
 
     // PART OF SPEECH TAGGING METHODS
 
-    /**Provides POS tags of the words:
-     * updates the class variable taggedForParser (List<List<TaggedWord>>) further used by the syntax parser
-     * updates the class variable simplePOStagged (HashMap word:simplified POS tag) further used to compute vocabulary properties of a text
-     * This implementation allows for calling the tagger and using the model only once per a document
+    /** Provides POS tags of the words:
+     *  updates the class variable taggedForParser (List of Lists of TaggedWord elements) further used by the syntax parser
+     *  updates the class variable simplePOStagged (HashMap word:simplified POS tag) further used to compute vocabulary properties of a text
+     *  This implementation allows for calling the tagger and using the model only once per a document
      * **/
 
     public void getPosTagging() {
@@ -506,7 +503,12 @@ public abstract class AbstractDocument implements MainTextStatistics, ExtendedTe
         this.numSuperlativeAD = ge.getSuperlativeAD();
     }
 
-    /** Gets the percentage of words of the requested level for the document and its interpretation **/
+    /** Provides the percentage of words of the requested level for the document and its interpretation
+     * @param level - name of the level as a String
+     * @param vocab - reference wordlist of a desired level as a HashSet of Strings
+     * @return String describing the percentage of words of a certain level in a text
+     *  and unique words among them
+     * **/
 
     public String levelMessage(String level, HashSet<String> vocab){
         HashMap <String, Integer> levelWords = wordsOfLevel(this.words, vocab);

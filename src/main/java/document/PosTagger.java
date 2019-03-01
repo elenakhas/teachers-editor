@@ -13,13 +13,13 @@ import java.util.List;
 @SuppressWarnings("ALL")
 
 /**
- * The class implements Stanford MAximum Entropy POStagger and represents lexical properties of the document
+ * The class implements Stanford Maximum Entropy POStagger and represents lexical properties of the document
  * @author Elena Khasanova
- * @version 1.0;
  * **/
-class PosTagger {
+public class PosTagger {
 
     MaxentTagger mxntg;
+
     // Singleton instance of the postagger
     private static PosTagger instance = null;
 

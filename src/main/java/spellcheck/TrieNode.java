@@ -56,6 +56,7 @@ public class TrieNode {
 
     /**
      * Return the text string at this node
+     * @return text as a String
      */
     public String getText() {
         return text;
@@ -63,20 +64,23 @@ public class TrieNode {
 
     /**
      * Set whether or not this node ends a word in the trie.
+     * @param bo - a boolean to state whether the character ends the word
+     *
      */
-    public void setEndsWord(boolean b) {
-        isWord = b;
+    public void setEndsWord(boolean bo) {
+        isWord = bo ;
     }
 
     /**
      * Return whether or not this node ends a word in the trie.
+     * @return a boolean stating if the node end a word
      */
     public boolean endsWord() {
         return isWord;
     }
 
     /**
-     * Return the set of characters that have links from this node
+     * @return  the set of characters that have links from this node
      */
     public Set<Character> getValidNextCharacters() {
         return children.keySet();

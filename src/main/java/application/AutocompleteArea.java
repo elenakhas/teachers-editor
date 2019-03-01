@@ -28,7 +28,7 @@ import java.util.regex.Pattern;
  *
  * **/
 
-class AutocompleteArea extends StyledTextArea<Boolean> {
+public class AutocompleteArea extends StyledTextArea<Boolean> {
 
     // desired number of completions and suggestions returned by autocomplete and spellchecker
     private static final int NUM_COMPLETIONS = 6;

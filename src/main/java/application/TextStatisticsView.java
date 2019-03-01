@@ -23,7 +23,7 @@ import java.io.IOException;
  */
 
 
-class TextStatisticsView {
+public class TextStatisticsView {
 
     private MainTextController ctrl;
 

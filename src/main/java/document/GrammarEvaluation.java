@@ -1,5 +1,6 @@
 package document;
 
+import edu.stanford.nlp.ling.IndexedWord;
 import edu.stanford.nlp.ling.TaggedWord;
 import edu.stanford.nlp.parser.nndep.DependencyParser;
 import edu.stanford.nlp.trees.GrammaticalStructure;
@@ -11,10 +12,26 @@ import java.util.List;
 
 /**
  *  Represents grammar properties of the text and instruments to get them
+ *  *  Handles the following features:
+ *      *  - comparative and superlative adjectives;
+ *      *  - comparative and superlative adverbs;
+ *      *  - modal verbs;
+ *      *  - mumber of imperative forms;
+ *      *  - existential;
+ *      *  - Present Simple Active;
+ *      *  - Present Perfect Active;
+ *      *  - Present Continuous Active;
+ *      *  - Past Simple Active;
+ *      *  - Past Perfect Active;
+ *      *  - Past Continuous Active;
+ *      *  - Present Perfect Continuous;
+ *      *  - Future Simple Active;
+ *      *  - Future Perfect Active;
+ *      *  - Future Continuous;
  * @author Elena Khasanova
  * **/
 
-class GrammarEvaluation {
+public class GrammarEvaluation {
 
     protected static DependencyParser model;
     // counters for lexicalized grammar forms
@@ -28,7 +45,6 @@ class GrammarEvaluation {
     protected static DependencyParser getParser(){
         if (model == null){
             model = DependencyParser.loadFromModelFile("edu/stanford/nlp/models/parser/nndep/english_UD.gz");
-            System.out.println("Loaded the model");
         }
         return model;
     }
@@ -75,13 +91,16 @@ class GrammarEvaluation {
      *  The accuracy of the method largely depends on the output of the PosTagger
      * @param taggedWords - a List of TaggedWord objects, output of a PosTagger using Penn Treebank POS labels
      * @return ArrayList of strings - imperative forms
+     *
+     * The method needs to be revised as its output is incorrect on complex sentences
      *  **/
     public ArrayList<String> imperatives(List<TaggedWord> taggedWords) {
         ArrayList<String> imp = new ArrayList<>();
         //check the first word: if it is not a question, and the tagged word is a base form
         // or non 3rd person present according to Penn Treebank POS labeling,
         //add the TaggedWord to the list of imperatives
-        if (!taggedWords.get(taggedWords.size() - 1).toString().equals("?/.") && (taggedWords.get(0).tag().equals("VB") || taggedWords.get(0).tag().equals("VBP"))) {
+        if (!taggedWords.get(taggedWords.size() - 1).toString().equals("?/.") && (taggedWords.get(0).tag().equals("VB")
+            || taggedWords.get(0).tag().equals("VBP"))) {
             imp.add(taggedWords.get(0).toString());
         }
         //check other TaggedWords starting from the 2nd
@@ -90,8 +109,8 @@ class GrammarEvaluation {
             //if the sentence is not a question, the tagged word is a VB or VBP, and the previous word is not "TO"
             // or a modal verb, add the tagged word to the list of imperatives
             if (!taggedWords.get(taggedWords.size() - 1).toString().equals("?/.") &&
-                    (taggedWords.get(j).tag().equals("VB") || taggedWords.get(j).tag().equals("VBP")) &&
-                    !taggedWords.get(j - 1).tag().equals("TO") && !taggedWords.get(j - 1).tag().equals("MD")) {
+                    (taggedWords.get(j).tag().equals("VB") &&
+                    !taggedWords.get(j - 1).tag().equals("TO") && !taggedWords.get(j - 1).tag().equals("MD"))) {
                 imp.add(taggedWords.get(j).toString());
             }
         }
@@ -132,6 +151,24 @@ class GrammarEvaluation {
         // SIMPLE, CONTINUOUS, PERFECT ASPECTS; ACTIVE VOICE; THESE METHODS DEPEND ON THE PARSER OUTPUT,
         // EXTRA CONSTRAINTS SHOULD BE INTRODUCED IN THE NEXT RELEASE TO LEVERAGE THE MISTAKES OF THE PARSER
 
+    /** A helper method to check if the governor of the dependency participates in another
+     * dependency, in which the dependent has a specified tag;
+     * @param typedDependencies - Collection of typedDependencies (td), output of a parser for one sentence
+     * @param governor - IndexedWord object, a governor of the dependency
+     * @param tag - POS tag of a dependent to check
+     * @return true if the governor of the dependency does not participate in another
+     *  dependency with a dependent having a requested tag
+     * **/
+    private boolean checkDependency(Collection<TypedDependency> typedDependencies, IndexedWord governor, String tag) {
+        for (TypedDependency typedDependency : typedDependencies) {
+            if (typedDependency.gov().equals(governor) && typedDependency.reln().getShortName().equals("aux")
+                    && typedDependency.dep().tag().equals(tag))
+                return false;
+        }
+        return true;
+    }
+
+
     /** Extracts the dependencies corresponding to Present Simple Active form;
      * @param typedDependencies - Collection of typedDependencies (td), output of a UD parser for one sentence
      * @return ArrayList of respective typed dependencies
@@ -145,11 +182,13 @@ class GrammarEvaluation {
             if (((typedDependency.reln().getShortName().equals("cop")|| typedDependency.reln().getShortName().equals("aux"))
                 && (typedDependency.dep().tag().equals("VBP") || typedDependency.dep().tag().equals("VBZ")
                 || typedDependency.dep().tag().equals("VB"))) || (typedDependency.reln().getShortName().equals("nsubj")
-                && (typedDependency.gov().tag().equals("VBP") || typedDependency.gov().tag().equals("VBZ")))) {
+                    && (typedDependency.gov().tag().equals("VBP") ||  typedDependency.gov().tag().equals("VBZ")) &&
+                    checkDependency(typedDependencies, typedDependency.gov(), "VBD"))){
 
                 presentSimple.add(typedDependency);
             }
         }
+
         return presentSimple;
     }
 
@@ -238,19 +277,19 @@ class GrammarEvaluation {
     /** Extracts the dependencies corresponding to Past Simple form;
      * @param typedDependencies - Collection of typedDependencies (td), output of a UD parser for one sentence
      * @return ArrayList of respective typed dependencies
-     *
-     * #TODO: note: sometimes erroneously extracts passive forms
-     * **/
+     ** **/
     public ArrayList<TypedDependency> getPastSimple(Collection<TypedDependency> typedDependencies) {
         ArrayList<TypedDependency> pastSimple = new ArrayList<>();
         for (TypedDependency typedDependency : typedDependencies) {
-            // if the td is an auxiliary, an nonimal subj, a copula, or a root
-            if (typedDependency.reln().getShortName().equals("aux") || typedDependency.reln().getShortName().equals("nsubj")
-                || typedDependency.reln().getShortName().equals("cop") || typedDependency.reln().getShortName().equals("root"))
-                // if the dependent is a verb in the past tense, add td to the list
-                if (typedDependency.dep().tag().equals("VBD")) {
+            // if the dependent is a verb in the past tense
+            if (typedDependency.dep().tag().equals("VBD")){
+                // if the td is an auxiliary, an nonimal subj, a copula, or a root
+                if (typedDependency.reln().getShortName().equals("aux") || typedDependency.reln().getShortName().equals("nsubj")
+                || typedDependency.reln().getShortName().equals("cop") || typedDependency.reln().getShortName().equals("root")) {
 
+                    //add td to the list
                     pastSimple.add(typedDependency);
+                }
                 }
         }
         return pastSimple;

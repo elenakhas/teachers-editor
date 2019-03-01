@@ -5,7 +5,6 @@ import javafx.stage.Stage;
 /**
  * The starting point of the application
  * @author Elena Khasanova
- * @version 0.8;
  */
 
 public class Main extends Application {

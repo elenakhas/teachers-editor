@@ -60,7 +60,8 @@ public class Loader {
     }
 
     /** Creates a SuggestionsSpelling object with a reference dictionary
-     * @return trie
+     * @param dict - reference dictionary
+     * @return spelling suggestions as a trie
      * **/
 
     public Spellcheker getSuggestionsSpelling(VocabularyBuilder dict) {

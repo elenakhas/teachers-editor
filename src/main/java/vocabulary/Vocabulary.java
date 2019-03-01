@@ -19,7 +19,8 @@ public class Vocabulary implements VocabularyBuilder {
         this.vocab = new HashSet<>();
     }
 
-    /** Getter method for Vocabulary **/
+    /** Getter method for Vocabulary
+     * @return vocabulary as a HashSet**/
     public HashSet<String> getVocab() {
         return this.vocab;
     }
@@ -37,7 +38,7 @@ public class Vocabulary implements VocabularyBuilder {
     /**
      * Checks if the string is a word according to this dictionary
      * @param s - string to check
-     * @retun True if it is contained in the dictionary
+     * @return True if it is contained in the dictionary
      */
     public boolean isWord(String s) {
         return vocab.contains(s.toLowerCase());

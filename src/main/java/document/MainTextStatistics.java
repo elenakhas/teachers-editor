@@ -14,28 +14,39 @@ import java.util.List;
 
 public interface MainTextStatistics {
 
-    /** Returns the number of words in the text**/
+    /**
+     * @return  the number of words in the text**/
     int getNumWords();
 
-    /** Returns the number of sentences in the text**/
+    /**
+     * @return  the number of sentences in the text**/
     int getNumSentences();
 
-    /** Returns the total number of syllables in the text**/
+    /** @return  the total number of syllables in the text**/
     int getTotalNumSyllables();
 
-    /** Calculates the Flesch Reading Ease score**/
+    /** Calculates the Flesch Reading Ease score
+     * @return score as a float**/
     float calcFleschScore();
 
-    /** Calculates the Flesch-Kincaid Reading Ease score**/
+    /** Calculates the Flesch-Kincaid Reading Ease score
+     * @return score as a float**/
     float calcFleschKincaid();
 
-    /** Returns the words of a certain level and their frequencies**/
+    /** Returns the words of a certain level and their frequencies
+     * @param text - text to evaluate as a list of words
+     * @param vocab - reference wordlist of a desired level
+     * @return HashMap of words and their frequency of occurrence**/
     HashMap<String, Integer> wordsOfLevel(List<String> text, HashSet<String> vocab);
 
-    /** Caclulates the percentage words of a certain level in a text**/
+    /** Caclulates the percentage words of a certain level in a text
+     * @param words - HashMap storing words of a certain level and their frequencies
+     * @return percentage
+     * **/
     float percentWordsOfLevel(HashMap<String, Integer> words);
 
-    /** Calculates the number of different words in a text**/
+    /** Calculates the number of different words in a text
+     * @return - number of unique words**/
     int wordsVariety();
 
 }

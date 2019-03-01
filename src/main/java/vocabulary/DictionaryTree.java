@@ -38,7 +38,7 @@ public class DictionaryTree implements VocabularyBuilder {
     /**
      * Checks if the string is a word according to this dictionary
      * @param s - string to check
-     * @retun True if it is contained in the dictionary
+     * @return True if it is contained in the dictionary
      */
     public boolean isWord(String s) {
         return dict.contains(s.toLowerCase());

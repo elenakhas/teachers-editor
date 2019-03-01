@@ -16,7 +16,7 @@ import java.util.ArrayList;
  * @author Elena Khasanova
  * */
 
-class MainTextController {
+public class MainTextController {
 
     // The View Object
     MainTextView view;
