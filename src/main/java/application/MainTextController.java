@@ -12,7 +12,8 @@ import java.io.IOException;
 import java.util.ArrayList;
 
 /**
- *
+ * The class provides a link between the MainTextStatistics interface methods implemented in AbstractDocument
+ * and the user interface
  * @author Elena Khasanova
  * */
 

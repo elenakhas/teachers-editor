@@ -8,7 +8,6 @@ import java.util.List;
 /**
  *  An implementation of autocomplete using a trie structure
  * @author Elena Khasanova
- * @version 1.0;
  * */
 
 @SuppressWarnings({"unchecked", "ForLoopReplaceableByForEach"})

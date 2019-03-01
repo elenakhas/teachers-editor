@@ -9,7 +9,6 @@ import java.util.List;
  *  The interface itself is never called and used to conveniently separate the methods for basic and extended
  *  analysis of the text.
  * @author Elena Khasanova
- * @version 1.0;
  * **/
 
 public interface MainTextStatistics {

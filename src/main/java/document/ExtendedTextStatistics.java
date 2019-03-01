@@ -16,6 +16,4 @@ public interface ExtendedTextStatistics {
     /** Calculates the number of occurrences of certain grammar forms**/
     void getGrammarStatistics();
 
-/// add the method that returns the level based on several wordlists;
-// add the method that decides on the level considering grammar
 }

@@ -10,7 +10,6 @@ import java.nio.file.Paths;
  *  A class for getting the string content of the text file; will be updated with the methods treating
  *  various formats of the file
  * @author Elena Khasanova
- * @version 1.0;
  * **/
 public class FileContent {
 

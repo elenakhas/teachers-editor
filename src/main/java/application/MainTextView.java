@@ -335,5 +335,3 @@ public class MainTextView {
 
 }
 
-// save button
-/*#TODO: save; unit tests;*/

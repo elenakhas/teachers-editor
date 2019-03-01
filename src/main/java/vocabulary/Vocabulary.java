@@ -4,7 +4,6 @@ import java.util.HashSet;
 /**
  * This class represents vocabulary (wordlist or a reference dictionary)
  * @author Elena Khasanova
- * @version 1.1;
  */
 
 public class Vocabulary implements VocabularyBuilder {

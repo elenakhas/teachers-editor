@@ -7,7 +7,6 @@ import java.io.IOException;
  *  Class to load vocabulary from files into VocabularyBuilder object representing reference dictionary and
  *  wordlists of different levels of English
  * @author Elena Khasanova
- * @version 1.2;
  * */
 
 public class VocabularyLoader {

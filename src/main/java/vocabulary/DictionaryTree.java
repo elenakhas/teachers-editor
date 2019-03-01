@@ -5,7 +5,6 @@ import java.util.TreeSet;
 /**
  * Represents a reference dictionary implementing a TreeSet data structure
  * @author Elena Khasanova
- * @version 1.0;
  */
 
 public class DictionaryTree implements VocabularyBuilder {

@@ -22,10 +22,13 @@ public class Essay extends AbstractDocument {
 
     @Override
     public String interpretFleshKincaid(float score) {
-        String complexity = null;
-        String explanation = null;
-
-        if (score <= 3) {
+        String complexity;
+        String explanation;
+        if (Float.isNaN(score)){
+            complexity = "NO CATEGORY";
+            explanation = "Can not evaluate using this score, check it's not empty";
+        }
+        else if (score <= 3) {
             complexity = "NO CATEGORY";
             explanation = "This is not an essay. Please, resubmit your work.";
         } else if (score <= 6) {
@@ -45,29 +48,31 @@ public class Essay extends AbstractDocument {
             explanation = "High-level writing";
         }
 
-        String fleschKincaidEvaluation = complexity + ": " + explanation;
+        String fleschKincaidEvaluation = score + "; " +complexity + ": " + explanation;
         return fleschKincaidEvaluation;
     }
 
     public String interpretFlesch(float score) {
         String explanation;
-
-        if (score <= 0) {
+        if (Float.isNaN(score)){
+            explanation = "Can not evaluate using this score, check it's not empty";
+        }
+        else if (score <= 0) {
             explanation = "Can not evaluate using Flesch score";
-        }else if (score < 50) {
+        }else if (score < 30) {
             explanation = "Very complex advanced writing, C2 Mastery level.";
-        } else if (score < 60) {
+        } else if (score < 50) {
             explanation = "Fairly complex writing, C1 Advanced level";
-        } else if (score < 70) {
+        } else if (score < 60) {
             explanation = "Plain English, B2 Upper-Intermediate level";
-        } else if (score < 80) {
+        } else if (score < 70) {
             explanation = "Intermediate writing, B1 Intermediate level";
-        } else if (score < 90) {
+        } else if (score < 80) {
             explanation = "Simple writing, A2 Elementary level";
         } else {
             explanation = "Very simple, A1 Beginners level";
         }
 
-            return explanation;
+            return score + ";" + explanation;
     }
 }

@@ -5,7 +5,6 @@ import java.util.List;
 /**
  *  Interface representing autocompleter
  * @author Elena Khasanova
- * @version 1.0;
  *
  **/
 

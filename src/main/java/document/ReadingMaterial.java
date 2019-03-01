@@ -19,10 +19,14 @@ public class ReadingMaterial extends AbstractDocument {
      * @return interpretation message
      */
     public String interpretFleshKincaid(float score) {
-        String complexity = null;
-        String explanation = null;
+        String complexity;
+        String explanation;
 
-        if (score <= 0) {
+        if (Float.isNaN(score)){
+            complexity = "NO CATEGORY";
+            explanation = "Can not evaluate using this score, check it's not empty";
+        }
+        else if (score <= 0) {
             complexity = "NO CATEGORY";
             explanation = "This is not really a reading material";
         }
@@ -51,7 +55,7 @@ public class ReadingMaterial extends AbstractDocument {
             explanation = "Proficient reader. Can read everything, including academic papers";
         }
 
-        String fleschKincaidEvaluation = complexity + ": " + explanation;
+        String fleschKincaidEvaluation = score + ";" + complexity + ": " + explanation;
         return fleschKincaidEvaluation;
     }
 
@@ -64,23 +68,26 @@ public class ReadingMaterial extends AbstractDocument {
         String explanation;
 
 
-        if (score <= 0) {
-            explanation = "Can not evaluate using Flesch score; not suitable for reading";
-        } else if (score < 50) {
+        if (Float.isNaN(score)){
+            explanation = "Can not evaluate using this score, check it's not empty";
+        }
+        else if (score <= 0) {
+            explanation = "Can not evaluate using this score; not suitable for reading";
+        } else if (score < 30) {
             explanation = "Very difficult, C2 Mastery level.";
-        } else if (score < 60) {
+        } else if (score < 50) {
             explanation = "Fairly difficult, C1 Advanced level";
-        } else if (score < 70) {
+        } else if (score < 60) {
             explanation = "Plain English, B2 Upper-Intermediate level";
-        } else if (score < 80) {
+        } else if (score < 70) {
             explanation = "Fairly easy, B1 Intermediate level";
-        } else if (score < 90) {
+        } else if (score < 80) {
             explanation = "Easy, A2 Elementary level";
         } else {
             explanation = "Very easy, A1 Beginners level";
         }
 
-        return explanation;
+        return score + ";" + explanation;
     }
 
 

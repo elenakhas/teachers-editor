@@ -1,8 +1,6 @@
 package vocabulary;
 /**
  *  Interface representing the functionality of a vocabulary object
- * @author Elena Khasanova
- * @version 1.2;
  *
  */
 public interface VocabularyBuilder {

@@ -7,7 +7,6 @@ import java.util.regex.Pattern;
 /**
  * A helper class used for tokenization of text files
  * @author Elena Khasanova
- * @version 1.1;
  */
 @SuppressWarnings("unchecked")
 

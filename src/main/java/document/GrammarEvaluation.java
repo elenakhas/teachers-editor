@@ -12,22 +12,22 @@ import java.util.List;
 
 /**
  *  Represents grammar properties of the text and instruments to get them
- *  *  Handles the following features:
- *      *  - comparative and superlative adjectives;
- *      *  - comparative and superlative adverbs;
- *      *  - modal verbs;
- *      *  - mumber of imperative forms;
- *      *  - existential;
- *      *  - Present Simple Active;
- *      *  - Present Perfect Active;
- *      *  - Present Continuous Active;
- *      *  - Past Simple Active;
- *      *  - Past Perfect Active;
- *      *  - Past Continuous Active;
- *      *  - Present Perfect Continuous;
- *      *  - Future Simple Active;
- *      *  - Future Perfect Active;
- *      *  - Future Continuous;
+ *  Handles the following features:
+ *      - comparative and superlative adjectives;
+ *      - comparative and superlative adverbs;
+ *      - modal verbs;
+ *      - mumber of imperative forms;
+ *      - existential;
+ *      - Present Simple Active;
+ *      - Present Perfect Active;
+ *      - Present Continuous Active;
+ *      - Past Simple Active;
+ *      - Past Perfect Active;
+ *      - Past Continuous Active;
+ *      - Present Perfect Continuous;
+ *      - Future Simple Active;
+ *      - Future Perfect Active;
+ *      - Future Continuous;
  * @author Elena Khasanova
  * **/
 
@@ -55,26 +55,6 @@ public class GrammarEvaluation {
     public int getSuperlativeAD() {return this.superlativeAD;}
     public int getModals() {return this.modals;}
     public int getExistential() {return this.existential;}
-
-
-
-//    public static void main(String[] args) {
-//        //FileContent fcon = new FileContent("data/ket_example.txt");
-//        //String s = fcon.getContent();
-//        GrammarEvaluation ud = new GrammarEvaluation();
-//        PosTagger sfp = new PosTagger();
-//        List<List<TaggedWord>> taggedList = PosTagger.getsTaggedSentences("Will he ever have been coming? I will have ever been coming"); //incorrectly parses cases with "most"; mixes aux with cop
-//        System.out.println("Ptinting the tagged list" + taggedList);
-//
-//        for (List<TaggedWord> tags : taggedList) { // iterate over list
-//            ud.posAnalysis(tags);
-//            Collection<TypedDependency> td = ud.parsingSentence(tags);
-//            System.out.println("Printing the tree" + td);
-//            System.out.println(ud.getFuturePerfect(td));
-//        }
-//        System.out.println(ud.comparativeAD + "\n" + ud.comparativeAJ + "\n" + ud.existential + "\n"
-//                            + ud.modals + "\n" + ud.superlativeAD + "\n" + ud.superlativeAJ);
-//    }
 
 
     /** Parses a sentence using the Stanford Universal Dependency Parser

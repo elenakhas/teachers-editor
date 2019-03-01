@@ -15,7 +15,6 @@ import static java.util.stream.Collectors.toMap;
  *  Represents a text document: string content of the file and its properties: words, frequencies.
  *  Extended by ReadingMaterial and Essay classes
  * @author Elena Khasanova
- * @version 1.0;
  * **/
 @SuppressWarnings({"unchecked", "CanBeFinal"})
 public abstract class AbstractDocument implements MainTextStatistics, ExtendedTextStatistics {

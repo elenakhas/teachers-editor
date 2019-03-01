@@ -6,7 +6,6 @@ import java.util.List;
 /**
  *  Interface representing spelling checking functionality
  * @author Elena Khasanova
- * @version 1.0;
  * **/
 public interface Spellcheker {
 

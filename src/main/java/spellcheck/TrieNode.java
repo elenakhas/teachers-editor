@@ -34,7 +34,7 @@ public class TrieNode {
      * @return The TrieNode that is the next from this character; return null if there is no link to the next.
      */
     public TrieNode getChild(Character ch) {
-        return children.get(ch);
+        return this.children.get(ch);
     }
 
     /**
@@ -45,12 +45,12 @@ public class TrieNode {
      * @return The new TrieNode, or null if the node is already in the trie.
      */
     public TrieNode insert(Character ch) {
-        if (children.containsKey(ch)) {
+        if (this.children.containsKey(ch)) {
             return null;
         }
 
-        TrieNode next = new TrieNode(text + ch.toString());
-        children.put(ch, next);
+        TrieNode next = new TrieNode(this.text + ch.toString());
+        this.children.put(ch, next);
         return next;
     }
 
@@ -59,7 +59,7 @@ public class TrieNode {
      * @return text as a String
      */
     public String getText() {
-        return text;
+        return this.text;
     }
 
     /**
@@ -68,7 +68,7 @@ public class TrieNode {
      *
      */
     public void setEndsWord(boolean bo) {
-        isWord = bo ;
+        this.isWord = bo ;
     }
 
     /**
@@ -76,14 +76,14 @@ public class TrieNode {
      * @return a boolean stating if the node end a word
      */
     public boolean endsWord() {
-        return isWord;
+        return this.isWord;
     }
 
     /**
      * @return  the set of characters that have links from this node
      */
     public Set<Character> getValidNextCharacters() {
-        return children.keySet();
+        return this.children.keySet();
     }
 
 }

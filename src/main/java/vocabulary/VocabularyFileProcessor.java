@@ -17,7 +17,6 @@ import java.util.regex.Pattern;
  *  the file is then manually reviewed
  *
  * @author Elena Khasanova
- * @version 1.2;
  */
 @SuppressWarnings("unchecked")
 class VocabularyFileProcessor {
@@ -57,10 +56,10 @@ class VocabularyFileProcessor {
     }
 
     /**
-     * 3. Returns all words from a file as a set
+     * 3. Returns all words from a file as a list
      *
      * @param content
-     * @return
+     * @return Vocabulary content as a list of strings
      */
     private List<String> getVocab(String content) {
         ArrayList words = tokenizer("[a-zA-Z-]+", content);

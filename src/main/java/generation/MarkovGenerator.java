@@ -7,7 +7,9 @@ import java.util.*;
 
 
 
-/** An implementation of MarkovGenerator using a HashMap containing a HashMap**/
+/** An implementation of MarkovGenerator using a HashMap containing a HashMap
+ * @author Elena Khasanova
+ * **/
 
 public class MarkovGenerator {
 
@@ -184,10 +186,4 @@ public class MarkovGenerator {
         }
         return String.join(" ", generatedWords);
     }
-
-
-
-    // #TODO: write a function to loop over the orders - from max to min, add_k, finish with normalization
-
-
 }
