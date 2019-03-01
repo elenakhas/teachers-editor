@@ -54,15 +54,17 @@ English Teacher's Editor is a Computer-Aided Language Learning Tool, a text proc
 * PET
 * FCE
 
-### User Interface
-
-
 ## Usage
 * Download the repository
-* Install dependencies:
+* The system depends on the installation of a number of external tools. The links to download the libraries are provided below.
+  - Java version 1.8.0
+  - Java FX Maven Plugin: https://mvnrepository.com/artifact/com.zenjava/javafx-maven-plugin/8.8.3
+  - Richtext FX: https://mvnrepository.com/artifact/org.fxmisc.richtext/richtextfx/0.6.10
+  - Stanford CoreNLP 3.9.2: https://stanfordnlp.github.io/CoreNLP/download.html
+  - Stanford CoreNLP models: http://nlp.stanford.edu/software/stanford-corenlp-models-current.jar
+  - Stanford CoreNLP POStagger english-left3words-distsim.tagger model:
+   https://github.com/richardwilly98/test-stanford-tagger/blob/master/models/english-left3words-distsim.tagger
 
-	* Richtext FX: https://mvnrepository.com/artifact/org.fxmisc.richtext/richtextfx/0.6.10
-	* Stanford Core NLP: https://stanfordnlp.github.io/CoreNLP/download.html
 
 For testing:
 	* JUnit 4.12

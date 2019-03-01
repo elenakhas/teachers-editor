@@ -8,8 +8,6 @@
     <artifactId>teachers-editor</artifactId>
     <version>1.0-SNAPSHOT</version>
     <packaging>jar</packaging>
-    <!-- https://mvnrepository.com/artifact/org.apache.opennlp/opennlp-tools -->
-
     <build>
         <plugins>
             <plugin>
@@ -26,6 +24,30 @@
                 <configuration>
                     <source>8</source>
                     <target>8</target>
+                </configuration>
+            </plugin>
+            <plugin>
+                <artifactId>maven-assembly-plugin</artifactId>
+                <version>3.1.1</version>
+                <executions>
+                    <execution>
+                        <phase>package</phase>
+                        <goals>
+                            <goal>single</goal>
+                        </goals>
+                    </execution>
+                </executions>
+                <configuration>
+                    <descriptorRefs>
+                        <descriptorRef>jar-with-dependencies</descriptorRef>
+                    </descriptorRefs>
+                    <finalName>${project.artifactId}</finalName>
+                    <appendAssemblyId>false</appendAssemblyId>
+                    <archive>
+                        <manifest>
+                            <mainClass>application.Main</mainClass>
+                        </manifest>
+                    </archive>
                 </configuration>
             </plugin>
         </plugins>
@@ -54,6 +76,7 @@
             <version>0.6.10</version>
         </dependency>
     </dependencies>
+
 
 
 </project>

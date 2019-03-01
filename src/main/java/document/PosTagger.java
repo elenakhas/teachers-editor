@@ -4,7 +4,6 @@ import edu.stanford.nlp.ling.HasWord;
 import edu.stanford.nlp.ling.TaggedWord;
 import edu.stanford.nlp.tagger.maxent.MaxentTagger;
 
-import java.io.IOException;
 import java.io.StringReader;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -35,15 +34,6 @@ public class PosTagger {
          return instance;
     }
 
-
-    public static void main(String[] args) throws IOException {
-        FileContent fcon = new FileContent("src/test/test_data/textKET");
-        String s = fcon.getContent();
-        PosTagger sfp = new PosTagger();
-        List<List<TaggedWord>> taggedSentences = sfp.getsTaggedSentences(s);
-        System.out.println(taggedSentences);
-        System.out.println(sfp.simplifiedTags(taggedSentences));
-    }
 
     /** Replaces the Penn Treebank POS tags with simplified basic POS tags, stores them in a HashMap
      * @param taggedList - output of Stanford Maxent Tagger for the sentences in a text
