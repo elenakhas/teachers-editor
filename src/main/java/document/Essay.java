@@ -48,7 +48,7 @@ public class Essay extends AbstractDocument {
             explanation = "High-level writing";
         }
 
-        String fleschKincaidEvaluation = score + "; " +complexity + ": " + explanation;
+        String fleschKincaidEvaluation = String.format("%.2f", score) + " " +complexity + ": " + explanation;
         return fleschKincaidEvaluation;
     }
 
@@ -73,6 +73,6 @@ public class Essay extends AbstractDocument {
             explanation = "Very simple, A1 Beginners level";
         }
 
-            return score + ";" + explanation;
+            return explanation;
     }
 }

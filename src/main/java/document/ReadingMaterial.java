@@ -55,7 +55,7 @@ public class ReadingMaterial extends AbstractDocument {
             explanation = "Proficient reader. Can read everything, including academic papers";
         }
 
-        String fleschKincaidEvaluation = score + ";" + complexity + ": " + explanation;
+        String fleschKincaidEvaluation = String.format("%.2f",score) + " " + complexity + ": " + explanation;
         return fleschKincaidEvaluation;
     }
 
@@ -87,7 +87,7 @@ public class ReadingMaterial extends AbstractDocument {
             explanation = "Very easy, A1 Beginners level";
         }
 
-        return score + ";" + explanation;
+        return explanation;
     }
 
 
