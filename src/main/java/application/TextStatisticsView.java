@@ -95,7 +95,7 @@ public class TextStatisticsView {
         this.futurePerfectForms = new Text();
     }
 
-    /**Get the results of **/
+    /**Get the results of grammar and vocabulary statistics **/
 
     public void getGrammarAndVocabCalculations() throws IOException {
         TextStatisticsController textStatCtrl = new TextStatisticsController(ctrl, this);
@@ -142,8 +142,6 @@ public class TextStatisticsView {
         wh.setText("Wh- words: ");
         Text other = new Text();
         other.setText("Other: ");
-
-       // vocab.addRow(0, );
 
         // set the results of calculations on vocabulary properties to respective text area to display
         vocab.addRow(1, subtitleColumn1);
