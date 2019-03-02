@@ -5,7 +5,6 @@ import edu.stanford.nlp.ling.TaggedWord;
 import edu.stanford.nlp.parser.nndep.DependencyParser;
 import edu.stanford.nlp.trees.GrammaticalStructure;
 import edu.stanford.nlp.trees.TypedDependency;
-
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
