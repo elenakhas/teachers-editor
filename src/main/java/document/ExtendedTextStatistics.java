@@ -5,7 +5,6 @@ package document;
  *  The interface itself is never called and used to conveniently separate the methods for basic and extended
  *  analysis of the text. The first to be updated in the next release.
  * @author Elena Khasanova
- * @version 1.0;
  * **/
 
 public interface ExtendedTextStatistics {
