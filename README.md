@@ -54,8 +54,13 @@ English Teacher's Editor is a Computer-Aided Language Learning Tool, a text proc
 * PET
 * FCE
 
+## User Interface
+![Main view](MainView.png)
+
+
 ## Usage
-* Download the repository
+1. Download the repository
+
 * The system depends on the installation of a number of external tools. The links to download the libraries are provided below.
   - Java version 1.8.0
   - Java FX Maven Plugin: https://mvnrepository.com/artifact/com.zenjava/javafx-maven-plugin/8.8.3
@@ -64,10 +69,11 @@ English Teacher's Editor is a Computer-Aided Language Learning Tool, a text proc
   - Stanford CoreNLP models: http://nlp.stanford.edu/software/stanford-corenlp-models-current.jar
   - Stanford CoreNLP POStagger english-left3words-distsim.tagger model:
    https://github.com/richardwilly98/test-stanford-tagger/blob/master/models/english-left3words-distsim.tagger
+   
+ #### Execution
+3. Install the dependencies written above; the models are to be stored in the folder “model” in the project
+directory;
+4. Make sure your downloaded the "data" folder and placed it in the project directory;
+5. Run the class application.Main.java.
 
-
-For testing:
-	* JUnit 4.12
-	* HamcrestCore 1.3. https://mvnrepository.com/artifact/org.hamcrest/hamcrest-core/1.3
-	* Slf4j nop binding https://mvnrepository.com/artifact/org.slf4j/slf4j-nop
 
