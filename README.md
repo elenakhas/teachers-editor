@@ -54,10 +54,19 @@ English Teacher's Editor is a Computer-Aided Language Learning Tool, a text proc
 * FCE
 
 ## User Interface
+
+Simple and easy to use interface
+Main Window: 
 ![Main view](MainView.jpg)
+
+Grammar and vocabulary calculations
+![Extended view](ExtendedView.jpg)
 
 
 ## Usage
+
+[Javadoc](https://drive.google.com/open?id=1jSW4UFcnZPULBXBbLC1vSdi2jnIsSJ-o)
+
 1. Download the repository
 
 * The system depends on the installation of a number of external tools. The links to download the libraries are provided below.
@@ -68,8 +77,9 @@ English Teacher's Editor is a Computer-Aided Language Learning Tool, a text proc
   - Stanford CoreNLP models: http://nlp.stanford.edu/software/stanford-corenlp-models-current.jar
   - Stanford CoreNLP POStagger english-left3words-distsim.tagger model:
    https://github.com/richardwilly98/test-stanford-tagger/blob/master/models/english-left3words-distsim.tagger
-   
- #### Execution
+
+**Execution
+
 3. Install the dependencies written above; the models are to be stored in the folder “model” in the project
 directory;
 4. Make sure your downloaded the "data" folder and placed it in the project directory;
