@@ -66,27 +66,12 @@ public abstract class AbstractDocument implements MainTextStatistics, ExtendedTe
      * number of sentences;
      * number of words;
      * number of syllables
-     * initialize a PosTagger object
      */
     AbstractDocument(String content) {
         this.content = content;
         calcTextProperties(content);
     }
 
-    public static void main(String[] args) throws IOException {
-        AbstractDocument doc = new ReadingMaterial("a cat sat on a mat. Sit, cat, sit! He walks often. She calls mom. " +
-                "Will you please? Cat should sit.");
-        doc.getPosTagging();
-        doc.getPosStatistics();
-        System.out.println(doc.numNouns);
-        System.out.println(doc.numVerbs);
-        System.out.println(doc.numAdj);
-        System.out.println(doc.simplePOSTagged);
-        doc.getGrammarStatistics();
-        System.out.println(doc.numModals);
-        System.out.println(doc.numImperative);
-        System.out.println(doc.numPresentSimpleActive);
-    }
 
     // GETTER METHODS FOR PRIVATE VARIABLES
     /**
@@ -300,7 +285,7 @@ public abstract class AbstractDocument implements MainTextStatistics, ExtendedTe
 
     /**
      * Gives the percentage of words of a certain level in a document
-     * @return float
+     * @return float - percentage of words
      */
 
     public float percentWordsOfLevel(HashMap<String, Integer> wordsOfALevel) {
