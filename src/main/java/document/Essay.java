@@ -4,7 +4,6 @@ package document;
  *  Represents a document of a type Essay, a student's written work
  *  Extends AbstractDocument
  * @author Elena Khasanova
- * @version 1.0;
  * **/
 
 public class Essay extends AbstractDocument {
