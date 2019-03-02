@@ -65,7 +65,6 @@ Grammar and vocabulary calculations
 
 ## Usage
 
-[Javadoc](https://drive.google.com/open?id=1jSW4UFcnZPULBXBbLC1vSdi2jnIsSJ-o)
 
 1. Download the repository
 
