@@ -30,8 +30,7 @@ English Teacher's Editor is a Computer-Aided Language Learning Tool, a text proc
 	* Grammar features: percentage of the words with particular grammar properties:
 		*  comparative and superlative adjectives;
      		*  modal verbs;
-    		*  numImperative forms;
-     		*  numExistential;
+     		*  number of existential pronouns;
      		*  Present Simple Active;
      		*  Present Perfect Active;
      		*  Present Continuous Active;
@@ -55,7 +54,7 @@ English Teacher's Editor is a Computer-Aided Language Learning Tool, a text proc
 * FCE
 
 ## User Interface
-![Main view](MainView.png)
+![Main view](MainView.jpg)
 
 
 ## Usage
