@@ -56,11 +56,10 @@ English Teacher's Editor is a Computer-Aided Language Learning Tool, a text proc
 ## User Interface
 
 Simple and easy to use interface
+
+
 Main Window: 
 ![Main view](MainView.jpg)
-
-Grammar and vocabulary calculations
-![Extended view](ExtendedView.jpg)
 
 
 ## Usage
