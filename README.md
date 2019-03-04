@@ -66,59 +66,60 @@ Main Window:
 ![Main view](theview.png)
 
 ## Folders and Files:
-* `Javadoc` - contains html files; You can download the folder and open `index.html` to view the full API;
-* `data` - contains the dictionary file, the wordlists and the sample texts;
-* `src` - contains the source code;
+**`Javadoc`** - contains html files; You can download the folder and open `index.html` to view the full API;  
+**`data`** - contains the dictionary file, the wordlists and the sample texts;  
+**`src`** - contains the source code;  
 * `main` - contains the source code and the test code;
-* `java` - contains the source code:
-	* `application`: view and controller classes:
-		* `AutocompleteArea.java` - contains the implementation of the text area;\
-		* `Loader.java` - contains a class to load data from files (reference dictionary and wordlists).\
-		* `Main.java` - the file to start the application.\
-		* `MainTextController.java` - contains the class that links MainTextStatistics interface methods implemented in
-		AbstractDocument and the user interface; linked to MainTextView.
-		* `MainTextView.java` - contains the main window of the GUI, with AutocompleteArea and .
-		* `TextStatisticsController.java` - contains the class that links ExtendedTextStatistics interface methods
-		implemented in AbstractDocument with the TextStatisticsView.
-		* `TextStatisticsView.java` - contains the popup window with the TextStatisticsController output:
-		statistics on the parts-of-speech and grammar features.	
-	* `document` : main text processing functionality:
-		* `AbstractDocument.java` - contains the string content of a text file, its attributes (lists and frequencies of
-		different features), methods to extract them.
-		* `Essay.java`  - contains the functionality of the document of a type Essay, a student's written work Extends
-		AbstractDocument.
-		* `ExtendedTextStatistics.java` - contains the interface to record the methods requested by a user when pressing
-		"Show statistics" button in the GUI. It is used to conveniently separate the methods for basic and extended
-		analysis of the text. 
-		* `FileContent.java` - contains methods to get the string content of the text file; 
-		will be updated with the methods treating various file formats.
-		* `GrammarEvaluation.java` - contains the clas for grammar properties of the text and instruments to get them.
-		* `MainTextStatistics.java` - contains the interface to record the methods with output displayed in the main
-		view of the GUI.
-		* `PosTagger.java` - contains the methods to get lexical properties of the documens. Uses Stanford Maximum
-		Entropy POS-tagger.
-		* `ReadingMaterial` - contains the functionality of a text used for reading exercises, extends AbstractDocument.
-		* `Tokenizer` - contains a helper class used for tokenization of text files.	
-	* `generation`: Markov text generator:
-		* `MarkovGenerator.java` - contains an implementation of MarkovGenerator using a HashMap of a String array and a
-		HashMap.	
-	* `spellcheck`: contains spellchecker and autocomplete
-		* `AutocompleteOptions.java` - contains an implementation of autocomplete using a trie structure; accessed via
-		interface Autocompleter.
-		* `Autocompleter.java` - contains the interface representing autocompleter, called in GUI.
-		* `Spellcheker.java` - contains the interface representing spelling checking functionality, called in GUI.
-		* `SuggestionsSpelling.java` - contains an implementation of a spellchecker using character distance algorithm;
-		accessed via Spellchecker interface.
-		* `TrieNode.java` - contains a helper class to create the Trie structure used in Autocompleter.	
-	* `vocabulary` : contains the classes to process and store reference dictionaries and wordlists:
-		* `DictionaryTree.java` - contains a class with a reference dictionary built as a TreeSet data structure.
-		* `Vocabulary.java` - contains a class with wordlist and its methods built as a HashSet.
-		* `VocabularyBuilder.java` - contains the interface representing the functionality of a vocabulary object;
-		accessed in GUI.
-		* `VocabularyFileProcessor.java` - contains a helper class to extract words from vocabulary files and rewrite
-		wordlists into 1 word per line files.
-		* `VocabularyLoader` - contains a class to load vocabulary from files into VocabularyBuilder object.
-* `resources` - contains configuration .ini file, can be ignored;
+	* `java` - contains the source code:
+		* `application`: view and controller classes:
+			* `AutocompleteArea.java` - contains the implementation of the text area;\
+			* `Loader.java` - contains a class to load data from files (reference dictionary and wordlists).\
+			* `Main.java` - the file to start the application.\
+			* `MainTextController.java` - contains the class that links MainTextStatistics interface methods implemented in
+			AbstractDocument and the user interface; linked to MainTextView.
+			* `MainTextView.java` - contains the main window of the GUI, with AutocompleteArea and .
+			* `TextStatisticsController.java` - contains the class that links ExtendedTextStatistics interface methods
+			implemented in AbstractDocument with the TextStatisticsView.
+			* `TextStatisticsView.java` - contains the popup window with the TextStatisticsController output:
+			statistics on the parts-of-speech and grammar features.	
+		* `document` : main text processing functionality:
+			* `AbstractDocument.java` - contains the string content of a text file, its attributes (lists and frequencies of
+			different features), methods to extract them.
+			* `Essay.java`  - contains the functionality of the document of a type Essay, a student's written work Extends
+			AbstractDocument.
+			* `ExtendedTextStatistics.java` - contains the interface to record the methods requested by a user when pressing
+			"Show statistics" button in the GUI. It is used to conveniently separate the methods for basic and extended
+			analysis of the text. 
+			* `FileContent.java` - contains methods to get the string content of the text file; 
+			will be updated with the methods treating various file formats.
+			* `GrammarEvaluation.java` - contains the clas for grammar properties of the text and instruments to get them.
+			* `MainTextStatistics.java` - contains the interface to record the methods with output displayed in the main
+			view of the GUI.
+			* `PosTagger.java` - contains the methods to get lexical properties of the documens. Uses Stanford Maximum
+			Entropy POS-tagger.
+			* `ReadingMaterial` - contains the functionality of a text used for reading exercises, extends
+			AbstractDocument.
+			* `Tokenizer` - contains a helper class used for tokenization of text files.	
+		* `generation`: Markov text generator:
+			* `MarkovGenerator.java` - contains an implementation of MarkovGenerator using a HashMap of a String array and a
+			HashMap.	
+		* `spellcheck`: contains spellchecker and autocomplete
+			* `AutocompleteOptions.java` - contains an implementation of autocomplete using a trie structure; accessed via
+			interface Autocompleter.
+			* `Autocompleter.java` - contains the interface representing autocompleter, called in GUI.
+			* `Spellcheker.java` - contains the interface representing spelling checking functionality, called in GUI.
+			* `SuggestionsSpelling.java` - contains an implementation of a spellchecker using character distance algorithm;
+			accessed via Spellchecker interface.
+			* `TrieNode.java` - contains a helper class to create the Trie structure used in Autocompleter.	
+		* `vocabulary` : contains the classes to process and store reference dictionaries and wordlists:
+			* `DictionaryTree.java` - contains a class with a reference dictionary built as a TreeSet data structure.
+			* `Vocabulary.java` - contains a class with wordlist and its methods built as a HashSet.
+			* `VocabularyBuilder.java` - contains the interface representing the functionality of a vocabulary object;
+			accessed in GUI.
+			* `VocabularyFileProcessor.java` - contains a helper class to extract words from vocabulary files and rewrite
+			wordlists into 1 word per line files.
+			* `VocabularyLoader` - contains a class to load vocabulary from files into VocabularyBuilder object.
+	* `resources` - contains configuration .ini file, can be ignored;
 * `test`: test resources (not complete, is being update).
 		
 
