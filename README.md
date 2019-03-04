@@ -13,7 +13,7 @@ English Teacher's Editor is a Computer-Aided Language Learning Tool, a text proc
 
 * See the top ten most frequent words in the document
 
-* Count the word
+* Count the words
 
 * Check number of spelling mistakes
 
@@ -45,13 +45,16 @@ English Teacher's Editor is a Computer-Aided Language Learning Tool, a text proc
 * Simple Markov text generator
 
 ### The levels of English Proficiency treated (according to Cambridge Exams):
-* Young learners:
-	* Starters
-	* Movers
-	* Flyers
-* KET
-* PET
-* FCE
+
+Level | Young Learners | School
+------|--------------- | -------
+Pre A1|Starters	| -
+A1|Movers | -
+A2 |Flyers | KET
+B1 |-	|PET
+B2 | - | FCE
+| |IELTS
+| |TOEFL
 
 ## User Interface
 
