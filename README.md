@@ -53,8 +53,8 @@ A1|Movers | -
 A2 |Flyers | KET
 B1 |-	|PET
 B2 | - | FCE
-| |IELTS
-| |TOEFL
+|- |IELTS
+|- |TOEFL
 
 ## User Interface
 
@@ -70,7 +70,7 @@ Main Window:
 
 1. Download the repository
 
-* The system depends on the installation of a number of external tools. The links to download the libraries are provided below.
+The system depends on the installation of a number of external tools. The links to download the libraries are provided below.
   - Java version 1.8.0
   - Java FX Maven Plugin: https://mvnrepository.com/artifact/com.zenjava/javafx-maven-plugin/8.8.3
   - Richtext FX: https://mvnrepository.com/artifact/org.fxmisc.richtext/richtextfx/0.6.10
@@ -79,7 +79,7 @@ Main Window:
   - Stanford CoreNLP POStagger english-left3words-distsim.tagger model:
    https://github.com/richardwilly98/test-stanford-tagger/blob/master/models/english-left3words-distsim.tagger
 
-**Execution
+### Execution
 
 3. Install the dependencies written above; the models are to be stored in the folder “model” in the project
 directory;
