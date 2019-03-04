@@ -66,9 +66,9 @@ Main Window:
 ![Main view](theview.png)
 
 ## Folders and Files:
-`Javadoc` - contains html files; You can download the folder and open `index.html` to view the full API;
-`data` - contains the dictionary file, the wordlists and the sample texts;
-`src` - contains the source code;
+* `Javadoc` - contains html files; You can download the folder and open `index.html` to view the full API;
+* `data` - contains the dictionary file, the wordlists and the sample texts;
+* `src` - contains the source code;
 * `main` - contains the source code and the test code;
 * `java` - contains the source code:
 	* `application`: view and controller classes:
