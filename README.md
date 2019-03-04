@@ -2,14 +2,13 @@
 
 English Teacher's Editor is a Computer-Aided Language Learning Tool, a text processor aimed to help language teachers evaluate reading materials to select the most adequate ones for their students' proficiency level and assess students' written assignments. It implements a simple graphic user interface and NLP techniques.
 
-
 ## Features:
 
-* Evaluate readability and the level of complexity: 
+* Evaluate readability and the level of complexity:
 *uses Flesch Reading Ease and Flesch-Kincaid Grade Level scores adapted to second language learning;
 
 * Check if the text is useful for a certain level
-*shows the percentage of words corresponding to a certain ESL exam;
+	*shows the percentage of words corresponding to a certain ESL exam;
 
 * See the top ten most frequent words in the document
 
@@ -53,8 +52,10 @@ A1|Movers | -
 A2 |Flyers | KET
 B1 |-	|PET
 B2 | - | FCE
-- |- |IELTS
-- |- |TOEFL
+B1-C2 | - | IELTS
+B1-C2 | - | TOEFL
+
+
 
 ## User Interface
 
@@ -62,13 +63,19 @@ Simple and easy to use interface
 
 
 Main Window: 
-![Main view](MainView.jpg)
+![Main view](theview.jpg)
 
 
-## Usage
+## Setup & Usage
+
+### Execution
+
+The project is built using Java version 1.8.0 and Maven framework with IntelliJ IDEA IDE.
 
 
-1. Download the repository
+1. Download the repository;
+
+2. Install the dependencies:
 
 The system depends on the installation of a number of external tools. The links to download the libraries are provided below.
   - Java version 1.8.0
@@ -79,11 +86,9 @@ The system depends on the installation of a number of external tools. The links 
   - Stanford CoreNLP POStagger english-left3words-distsim.tagger model:
    https://github.com/richardwilly98/test-stanford-tagger/blob/master/models/english-left3words-distsim.tagger
 
-### Execution
-
-3. Install the dependencies written above; the models are to be stored in the folder “model” in the project
-directory;
+3. Create the folder "models" in your project directory, save the Stanford CoreNLP models file `stanford-english-corenlp-2018-10-05-models` to this foolder;
 4. Make sure your downloaded the "data" folder and placed it in the project directory;
+5. Compile the project: you can use one of the IDE
 5. Run the class application.Main.java.
 
 
