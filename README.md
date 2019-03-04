@@ -66,16 +66,16 @@ Main Window:
 ![Main view](theview.png)
 
 ## Folders and Files:
-`Javadoc` - contains html files; You can download the folder and open `index.html` to view the full API;
-`data` - contains the dictionary file, the wordlists and the sample texts;
-`src` - contains the source code;
-	* `main` - contains the source code and the test code;
-		* `application`: view and controller classes:
-			* `AutocompleteArea.java` - contains the implementation of the text area;
-			* `Loader.java` - contains a class to load data from files (reference dictionary and wordlists).
-			* `Main.java` - the file to start the application.
-			* `MainTextController.java` - contains the class that links MainTextStatistics interface methods implemented in
-			AbstractDocument and the user interface; linked to MainTextView.
+`Javadoc` - contains html files; You can download the folder and open `index.html` to view the full API;\
+`data` - contains the dictionary file, the wordlists and the sample texts;\
+`src` - contains the source code;\
+* `main` - contains the source code and the test code;\
+	* `application`: view and controller classes:\
+		* `AutocompleteArea.java` - contains the implementation of the text area;\
+		* `Loader.java` - contains a class to load data from files (reference dictionary and wordlists).\
+		* `Main.java` - the file to start the application.\
+		* `MainTextController.java` - contains the class that links MainTextStatistics interface methods implemented in
+		AbstractDocument and the user interface; linked to MainTextView.
 			* `MainTextView.java` - contains the main window of the GUI, with AutocompleteArea and .
 			* `TextStatisticsController.java` - contains the class that links ExtendedTextStatistics interface methods
 			implemented in AbstractDocument with the TextStatisticsView.
