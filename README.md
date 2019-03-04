@@ -65,12 +65,11 @@ Simple and easy to use interface
 Main Window: 
 ![Main view](theview.png)
 
-## Folders:
+## Folders and Files:
 `Javadoc` - contains html files; You can download the folder and open `index.html` to view the full API;
 `data` - contains the dictionary file, the wordlists and the sample texts;
 `src` - contains the source code;
 	* `main` - contains the source code and the test code;
-	
 		* `application`: view and controller classes:
 			* `AutocompleteArea.java` - contains the implementation of the text area;
 			* `Loader.java` - contains a class to load data from files (reference dictionary and wordlists).
@@ -81,8 +80,7 @@ Main Window:
 			* `TextStatisticsController.java` - contains the class that links ExtendedTextStatistics interface methods
 			implemented in AbstractDocument with the TextStatisticsView.
 			* `TextStatisticsView.java` - contains the popup window with the TextStatisticsController output:
-			statistics on the parts-of-speech and grammar features.
-			
+			statistics on the parts-of-speech and grammar features.	
 		* `document` : main text processing functionality:
 			* `AbstractDocument.java` - contains the string content of a text file, its attributes (lists and frequencies of
 			different features), methods to extract them.
@@ -99,12 +97,10 @@ Main Window:
 			* `PosTagger.java` - contains the methods to get lexical properties of the documens. Uses Stanford Maximum
 			Entropy POS-tagger.
 			* `ReadingMaterial` - contains the functionality of a text used for reading exercises, extends AbstractDocument.
-			* `Tokenizer` - contains a helper class used for tokenization of text files.
-			
+			* `Tokenizer` - contains a helper class used for tokenization of text files.	
 		* `generation`: Markov text generator:
 			* `MarkovGenerator.java` - contains an implementation of MarkovGenerator using a HashMap of a String array and a
-			HashMap.
-			
+			HashMap.	
 		* `spellcheck`: contains spellchecker and autocomplete
 			* `AutocompleteOptions.java` - contains an implementation of autocomplete using a trie structure; accessed via
 			interface Autocompleter.
@@ -112,8 +108,7 @@ Main Window:
 			* `Spellcheker.java` - contains the interface representing spelling checking functionality, called in GUI.
 			* `SuggestionsSpelling.java` - contains an implementation of a spellchecker using character distance algorithm;
 			accessed via Spellchecker interface.
-			* `TrieNode.java` - contains a helper class to create the Trie structure used in Autocompleter.
-			
+			* `TrieNode.java` - contains a helper class to create the Trie structure used in Autocompleter.	
 		* `vocabulary` : contains the classes to process and store reference dictionaries and wordlists:
 			* `DictionaryTree.java` - contains a class with a reference dictionary built as a TreeSet data structure.
 			* `Vocabulary.java` - contains a class with wordlist and its methods built as a HashSet.
@@ -122,7 +117,6 @@ Main Window:
 			* `VocabularyFileProcessor.java` - contains a helper class to extract words from vocabulary files and rewrite
 			wordlists into 1 word per line files.
 			* `VocabularyLoader` - contains a class to load vocabulary from files into VocabularyBuilder object.
-
 	* `resources` - contains configuration .ini file, can be ignored;
 		
 
