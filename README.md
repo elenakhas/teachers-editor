@@ -63,7 +63,7 @@ Simple and easy to use interface
 
 
 Main Window: 
-![Main view] (theview.jpg)
+! [Main view](theview.jpg)
 
 
 ## Setup & Usage
