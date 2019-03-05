@@ -135,8 +135,8 @@ The project is built using Java version 1.8.0 and Maven framework with IntelliJ 
 
 The system depends on the installation of a number of external tools. The links to download the libraries are provided below.
   - Java version 1.8.0
+  Make sure the following libraries are installed. If not, download and add them to the class/build path:
   
-  Add these dependencies:
   - SLF4J NOP Binding https://mvnrepository.com/artifact/org.slf4j/slf4j-nop
   - Java FX Maven Plugin: https://mvnrepository.com/artifact/com.zenjava/javafx-maven-plugin/8.8.3
   - Richtext FX: https://mvnrepository.com/artifact/org.fxmisc.richtext/richtextfx/0.6.10
