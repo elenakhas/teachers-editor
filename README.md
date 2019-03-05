@@ -141,8 +141,9 @@ The system depends on the installation of a number of external tools. The links 
   - Stanford CoreNLP models: http://nlp.stanford.edu/software/stanford-corenlp-models-current.jar
   - Stanford CoreNLP POStagger english-left3words-distsim.tagger model:
    https://github.com/richardwilly98/test-stanford-tagger/blob/master/models/english-left3words-distsim.tagger
+   - SLF4J NOP Binding https://mvnrepository.com/artifact/org.slf4j/slf4j-nop
 
-3. Create the folder "models" in your project directory, save the Stanford CoreNLP models file `stanford-english-corenlp-2018-10-05-models` to this foolder;
+3. Create the folder "models" in your project directory, save the Stanford CoreNLP models file `stanford-english-corenlp-2018-10-05-models` to this foolder; add the POS tagger model to this folder;
 4. Make sure your downloaded the "data" folder and placed it in the project directory;
 5. Compile the project: you can use one of the IDE
 5. Run the class application.Main.java.
