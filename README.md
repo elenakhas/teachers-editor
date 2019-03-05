@@ -124,8 +124,7 @@ Main Window:
 		
 
 ## Setup & Usage
-### Execution
-
+### Setup and Dependencies
 The project is built using Java version 1.8.0 and Maven framework with IntelliJ IDEA IDE.
 
 
@@ -133,18 +132,18 @@ The project is built using Java version 1.8.0 and Maven framework with IntelliJ 
 2. Open the project in one of the IDEs, such as Eclipse or IntelliJ.
 3. Install the dependencies:
 
-The system depends on the installation of a number of external tools. The links to download the libraries are provided below.
-  - Java version 1.8.0
+    The system depends on the installation of a number of external tools. The links to download the libraries are provided below.
+    - Java version 1.8.0
   
-  Make sure the following libraries are installed. If not, download and add them to the class/build path:
+    Make sure the following libraries are installed. If not, download and add them to the class/build path:
   
-  - SLF4J NOP Binding https://mvnrepository.com/artifact/org.slf4j/slf4j-nop
-  - Java FX Maven Plugin: https://mvnrepository.com/artifact/com.zenjava/javafx-maven-plugin/8.8.3
-  - Richtext FX: https://mvnrepository.com/artifact/org.fxmisc.richtext/richtextfx/0.6.10
-  - Stanford CoreNLP 3.9.2: https://stanfordnlp.github.io/CoreNLP/download.html
-  - Stanford CoreNLP models: http://nlp.stanford.edu/software/stanford-corenlp-models-current.jar
+    - SLF4J NOP Binding https://mvnrepository.com/artifact/org.slf4j/slf4j-nop
+    - Java FX Maven Plugin: https://mvnrepository.com/artifact/com.zenjava/javafx-maven-plugin/8.8.3
+    - Richtext FX: https://mvnrepository.com/artifact/org.fxmisc.richtext/richtextfx/0.6.10
+    - Stanford CoreNLP 3.9.2: https://stanfordnlp.github.io/CoreNLP/download.html
+    - Stanford CoreNLP models: http://nlp.stanford.edu/software/stanford-corenlp-models-current.jar
   
-4. Create the folder "models" in your project directory, save the Stanford CoreNLP models file `stanford-english-corenlp-2018-10-05-models` to this foolder; save the POS tagger `english-left3words-distsim.tagger` model to this folder;
+4. Create the folder "models" in your project directory, save the Stanford CoreNLP models file `stanford-english-corenlp-2018-10-05-models` to this folder; save the POS tagger `english-left3words-distsim.tagger` model to this folder;
 5. Make sure your downloaded the "data" folder and placed it in the project directory;
 6. Run the class `application.Main.java`.
 
