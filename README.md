@@ -135,6 +135,7 @@ The project is built using Java version 1.8.0 and Maven framework with IntelliJ 
 
 The system depends on the installation of a number of external tools. The links to download the libraries are provided below.
   - Java version 1.8.0
+  
   Make sure the following libraries are installed. If not, download and add them to the class/build path:
   
   - SLF4J NOP Binding https://mvnrepository.com/artifact/org.slf4j/slf4j-nop
