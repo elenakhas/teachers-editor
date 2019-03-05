@@ -156,12 +156,16 @@ The project is built using Java version 1.8.0 and Maven framework with IntelliJ 
 *Vocabulary features*: number and percentage of words of major parts of speech (nouns, verbs, adjectives, adverbs, prepositions and conjunctions, pronouns, numerals, determiners, wh-words; other – for the words that don’t fit into any of these categories);  
 *Grammar features*: number and percentage of the words with particular grammar properties: comparative and superlative adjectives; modal verbs; number of imperative forms; number of existential pronouns; Present Simple Active; Present Perfect Active; Present Continuous Active; Past Simple Active; Past Perfect Active. Past Continuous Active; Present Perfect Continuous; Future Simple Active; Future Perfect Active; Future Continuous;   
         
-Click *Show properties* – to see the top ten most frequent words in the document, number of words and sentences, number of spelling mistakes or unknown words, the size of vocabulary (number of unique words) used in the text.  
+  Click *Show properties* – to see the top ten most frequent words in the document, number of words and sentences, number of spelling
+  mistakes or unknown words, the size of vocabulary (number of unique words) used in the text.  
 
-To see the percentage of words corresponding to a certain ESL exam, check the boxes with a corresponding level and click *Check the level* button.
+  To see the percentage of words corresponding to a certain ESL exam, check the boxes with a corresponding level and click *Check the
+  level* button.
 
-To enable *Spellchecking* and *Autocomplete*, check the corresponding boxes. The options for autocomplete will appear near the cursor as soon as you start typing. To see spelling suggestions, click on the highlighted word.   
-To replace the word with this option, select the option from the menu. You can save a highlighted word in the program’s dictionary by choosing *“Add to dictionary”* option.
+  To enable *Spellchecking* and *Autocomplete*, check the corresponding boxes. The options for autocomplete will appear near the cursor
+  as soon as you start typing. To see spelling suggestions, click on the highlighted word.   
+  To replace the word with this option, select the option from the menu. You can save a highlighted word in the program’s dictionary by
+  choosing *“Add to dictionary”* option.
 
 
 
