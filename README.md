@@ -130,23 +130,22 @@ The project is built using Java version 1.8.0 and Maven framework with IntelliJ 
 
 
 1. Download the repository;
-
-2. Install the dependencies:
+2. Open the project in one of the IDEs, such as Eclipse or IntelliJ.
+3. Install the dependencies:
 
 The system depends on the installation of a number of external tools. The links to download the libraries are provided below.
   - Java version 1.8.0
+  
+  Add these dependencies:
+  - SLF4J NOP Binding https://mvnrepository.com/artifact/org.slf4j/slf4j-nop
   - Java FX Maven Plugin: https://mvnrepository.com/artifact/com.zenjava/javafx-maven-plugin/8.8.3
   - Richtext FX: https://mvnrepository.com/artifact/org.fxmisc.richtext/richtextfx/0.6.10
   - Stanford CoreNLP 3.9.2: https://stanfordnlp.github.io/CoreNLP/download.html
   - Stanford CoreNLP models: http://nlp.stanford.edu/software/stanford-corenlp-models-current.jar
-  - Stanford CoreNLP POStagger english-left3words-distsim.tagger model:
-   https://github.com/richardwilly98/test-stanford-tagger/blob/master/models/english-left3words-distsim.tagger
-   - SLF4J NOP Binding https://mvnrepository.com/artifact/org.slf4j/slf4j-nop
-
-3. Create the folder "models" in your project directory, save the Stanford CoreNLP models file `stanford-english-corenlp-2018-10-05-models` to this foolder; add the POS tagger model to this folder;
-4. Make sure your downloaded the "data" folder and placed it in the project directory;
-5. Compile the project: you can use one of the IDE
-5. Run the class application.Main.java.
+  
+4. Create the folder "models" in your project directory, save the Stanford CoreNLP models file `stanford-english-corenlp-2018-10-05-models` to this foolder; save the POS tagger `english-left3words-distsim.tagger` model to this folder;
+5. Make sure your downloaded the "data" folder and placed it in the project directory;
+6. Run the class `application.Main.java`.
 
 #### Usage
 1. Open the file: you have options to open your files as a Text or as an Essay. The difference is in the desired interpretation of the readability scores  
